@@ -20,7 +20,30 @@ const requestTypeToPerson = {
   'Xác nhận liên quan đến tuyển sinh': 'Phùng Văn Trúc',
   'Đăng ký tiếng Anh bổ sung': 'Phạm Thị Kim Điệp',
   'Đơn đề nghị miễn Tiếng Anh': 'Phạm Uyên Thy',
+  'Hủy lịch học Tiếng Anh': 'Phạm Thị Kim Điệp',
 };
+
+const keepColumns = [
+  'Người giải quyết đơn',
+  'Số BN',
+  'Loại đơn (Tên đơn)',
+  'MSSV',
+  'Họ và tên'
+];
+
+function filterObject(obj) {
+  Object.keys(obj)
+    .filter(key => !keepColumns.includes(key))
+    .forEach(key => delete obj[key]);
+  return obj;
+}
+
+function replacePerson(obj) {
+  if (obj['Loại đơn (Tên đơn)'] in requestTypeToPerson) {
+    obj['Người giải quyết đơn'] = requestTypeToPerson[obj['Loại đơn (Tên đơn)']];
+  }
+  return obj;
+}
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');
@@ -52,12 +75,45 @@ function getArrayOfObjects(sheet) {
 
 app.get('/table', (req, res) => {
   // Read the Excel file
-  // const workbook = xlsx.readFile('DS_NopDon.xlsx');
   const workbook = xlsx.readFile('DS_NopDon.xlsx');
+  // const workbook = xlsx.readFile('DS_NopDon (1).xlsx');
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
 
   const processedData = getArrayOfObjects(sheet);
+
+  // Filter out columns that are not needed
+  processedData.forEach(obj => filterObject(obj));
+
+  // Replace the person who will handle the request
+  processedData.forEach(obj => replacePerson(obj));
+
+  processedData.sort((a, b) => {
+    if (a['Người giải quyết đơn'] < b['Người giải quyết đơn']) {
+      return -1;
+    }
+    if (a['Người giải quyết đơn'] > b['Người giải quyết đơn']) {
+      return 1;
+    }
+    return 0;
+  });
+
+  // Define an object with all keys from the first object in processedData set to ''
+  const emptyObj = Object.fromEntries(Object.keys(processedData[0]).map(key => [key, '']));
+
+  let prevPerson = null;
+  for (let i = 0; i < processedData.length; i++) {
+    if (prevPerson !== null && processedData[i]['Người giải quyết đơn'] !== prevPerson) {
+      processedData.splice(i, 0, { ...emptyObj });
+      i++; // Skip the newly inserted empty object
+    }
+    prevPerson = processedData[i]['Người giải quyết đơn'];
+  }
+
+  processedData.unshift(emptyObj);
+
+  console.log(`🚀 🚀 file: index.js:79 🚀 app.get 🚀 processedData`, processedData);
+
   res.render('table', { data: processedData });
 });
 
