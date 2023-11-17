@@ -257,6 +257,15 @@ app.post('/', (req, res) => {
     }
 });
 
+app.use(function (req, res) {
+    res.status(404).render('404');
+});
+
+app.use(function (err, req, res, next) {
+    console.error(err.stack);
+    res.status(500).render('500');
+});
+
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
 });
