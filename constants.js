@@ -14,7 +14,8 @@ exports.requestTypeToPerson = {
     'Đơn đề nghị miễn Tiếng Anh': 'Phạm Uyên Thy',
     'Hủy lịch học Tiếng Anh': 'Phạm Thị Kim Điệp',
     'Xác nhận tình hình nợ môn học': 'Nguyễn Thanh Song Trúc',
-    'Đơn đề nghị miễn Tiếng Anh': 'Phạm Thị Phương Trinh'
+    'Đơn đề nghị miễn Tiếng Anh': 'Phạm Thị Phương Trinh',
+    'Đơn xem xét kết quả xét môn thay thế tốt nghiệp': 'Nguyễn Văn Khoa'
 };
 
 exports.keepColumns = [
