@@ -1,0 +1,53 @@
+<!-- views/index.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel Table</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+  </style>
+</head>
+<body>
+  <h1>Excel Table</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>STT</th>
+        <th>Số BN</th>
+        <th>MSSV</th>
+        <th>Họ và tên</th>
+        <th>Người giải quyết đơn</th>
+        <th>Ghi chú</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% data.forEach(function(row) { %>
+        <tr>
+          <td><%= row['STT'] %></td>
+          <td><%= row['Số BN'] %></td>
+          <td><%= row['MSSV'] %></td>
+          <td><%= row['Họ và tên'] %></td>
+          <td><%= row['Người giải quyết đơn'] %></td>
+          <td><%= row['Ghi chú'] %></td>
+        </tr>
+      <% }); %>
+    </tbody>
+  </table>
+</body>
+</html>
