@@ -58,8 +58,41 @@ app.use(express.urlencoded({ extended: true }));
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
+function removeOldFiles(directoryPath = 'uploads/') {
+    fs.readdir(directoryPath, (err, files) => {
+        if (err) {
+            console.log(`🚀 🚀 file: index.js:64 🚀 fs.readdir 🚀 err`, err);
+            return;
+        }
+
+        files.forEach(file => {
+            const filePath = path.join(directoryPath, file);
+
+            fs.stat(filePath, (err, stats) => {
+                if (err) {
+                    console.log(`🚀 🚀 file: index.js:71 🚀 fs.stat 🚀 err`, err);
+                    return;
+                }
+
+                const now = moment();
+                const fileTime = moment(stats.mtime);
+                const diffMinutes = now.diff(fileTime, 'minutes');
+
+                if (diffMinutes > 5) {
+                    fs.unlink(filePath, err => {
+                        if (err) throw err;
+                        console.log(`Deleted file: ${filePath}`);
+                    });
+                }
+            });
+        });
+    });
+}
+
 app.post('/upload', upload.single('file'), (req, res) => {
     try {
+        removeOldFiles();
+
         if (req.file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
             console.log(req.file);
 
