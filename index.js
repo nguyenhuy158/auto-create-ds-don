@@ -72,6 +72,10 @@ function getArrayOfObjects(sheet) {
 
   return arrayOfObjects;
 }
+function filterData(data, removeTypes) {
+  return data.filter(obj => !removeTypes.includes(obj['Loại đơn (Tên đơn)']));
+}
+const removeTypes = ['Đơn xin cấp bảng điểm', 'Đơn đề nghị miễn Tiếng Anh'];
 
 app.get('/table', (req, res) => {
   // Read the Excel file
@@ -80,7 +84,7 @@ app.get('/table', (req, res) => {
   const sheetName = workbook.SheetNames[0];
   const sheet = workbook.Sheets[sheetName];
 
-  const processedData = getArrayOfObjects(sheet);
+  let processedData = getArrayOfObjects(sheet);
 
   // Filter out columns that are not needed
   processedData.forEach(obj => filterObject(obj));
@@ -111,6 +115,52 @@ app.get('/table', (req, res) => {
   }
 
   processedData.unshift(emptyObj);
+
+  processedData = filterData(processedData, removeTypes);
+
+  for (let i = 0; i < processedData.length - 1; i++) {
+    if (JSON.stringify(processedData[i]) === JSON.stringify(emptyObj)) {
+      processedData[i] = {
+        'Người giải quyết đơn': processedData[i + 1]['Người giải quyết đơn'],
+        'Loại đơn (Tên đơn)': processedData[i + 1]['Loại đơn (Tên đơn)'],
+      };
+    }
+  }
+
+  for (let i = 0; i < processedData.length; i++) {
+    if (Object.keys(processedData[i]).length === 5) {
+      processedData[i]['Người giải quyết đơn'] = '';
+    }
+  }
+
+  let stt = 1;
+  prevPerson = null;
+  for (let i = 0; i < processedData.length; i++) {
+    if (processedData[i]['Người giải quyết đơn'] !== prevPerson) {
+      stt = 1;
+    }
+    if (Object.keys(processedData[i]).length > 2) {
+      processedData[i]['STT'] = stt++;
+    }
+    prevPerson = processedData[i]['Người giải quyết đơn'];
+  }
+
+  let prevType = null;
+  for (let i = 0; i < processedData.length; i++) {
+    if (Object.keys(processedData[i]).length === 2) {
+      prevType = processedData[i]['Loại đơn (Tên đơn)'];
+      continue;
+    }
+    if (processedData[i]['Loại đơn (Tên đơn)'] !== prevType) {
+      const newObj = {
+        'Người giải quyết đơn': processedData[i]['Người giải quyết đơn'],
+        'Loại đơn (Tên đơn)': processedData[i]['Loại đơn (Tên đơn)'],
+      };
+      processedData.splice(i, 0, newObj);
+      i++; // Skip the newly inserted object
+    }
+    prevType = processedData[i]['Loại đơn (Tên đơn)'];
+  }
 
   console.log(`🚀 🚀 file: index.js:79 🚀 app.get 🚀 processedData`, processedData);
 
