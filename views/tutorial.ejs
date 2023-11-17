@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>500 - Tạo danh sách đơn</title>
+        <title>Hướng dẫn sử dụng - Tạo danh sách đơn</title>
 
         <%- include('./partials/head'); -%>
 
@@ -16,29 +16,93 @@
         <!-- nav -->
         <%- include('./partials/nav'); -%>
 
-        <section class="page_404">
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                        <div class="col col-sm-offset-1 text-center">
-                            <div class="four_zero_four_bg">
-                                <h1 class="text-center">500</h1>
-                            </div>
+        <!-- tutorial -->
+        <div class="container my-5">
+            <h1 class="text-center">Cách sử dụng website nè bà con ơii</h1>
 
-                            <div class="contant_box_404">
-                                <h3 class="h2">Lỗi mất tiêu rồi 😭😭</h3>
+            <!-- Step 0 -->
+            <div class="row my-5">
+                <div class="col-md-6">
+                    <h2>Bước 0: Tải file DS_NopDon.xlsx từ trên website nhập đơn về nè.</h2>
+                    <p>Bấm vào "Xuất dữ liệu" tải file về và lưu lại nhen mọi người.</p>
+                    <pre><code>http://nopdon.tdtu.edu.vn/internship</code></pre>
+                </div>
+                <div class="col-md-6">
+                    <img src="/images/step0.png" alt="Step 1 Image" class="img-fluid" />
+                </div>
+            </div>
 
-                                <p>Mọi người báo huy để huy fix lại với nha</p>
+            <!-- Step 1 -->
+            <div class="row my-5">
+                <div class="col-md-6">
+                    <img src="/images/step1.png" alt="Step 1 Image" class="img-fluid" />
+                    <img src="/images/step1.1.png" alt="Step 1 Image" class="img-fluid" />
+                    <img src="/images/step1.2.png" alt="Step 1 Image" class="img-fluid" />
+                    <img src="/images/step1.3.png" alt="Step 1 Image" class="img-fluid" />
+                </div>
+                <div class="col-md-6">
+                    <h2>Bước 1: Upload file đã tải về lên website và bấm vào nút "Tải lên"</h2>
+                    <p>Nhớ là chỉ chọn file excel thôi nhen mọi người hong là bị lỗi ớ.</p>
+                    <p>Mọi người chọn file xong bấm nút tải lên và thấy thông báo màu xanh là upload thành công rồi.</p>
+                    <p>
+                        Tên file sẽ tự động điền vào ô dưới nếu nó có lỗi hog tự điền mọi người copy và điền vào ngen.
+                    </p>
+                </div>
+            </div>
 
-                                <a href="/" class="link_404 text-decoration-none">
-                                    Tạm thời mọi người bấm vào đây để sài đỡ nha
-                                </a>
-                            </div>
-                        </div>
+            <!-- Step 2 -->
+            <div class="row my-5">
+                <div class="col-md-6 order-md-2">
+                    <img src="/images/step2.1.png" alt="Step 2 Image" class="img-fluid" />
+                    <img src="/images/step2.2.png" alt="Step 2 Image" class="img-fluid" />
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <h2>Bước 2: Bấm nút tạo danh sách đơn thôiii</h2>
+                    <p>Gần xong rồi.</p>
+
+                    <p>Bấm nút tạo danh đơn nếu tạo thành công thì sẽ có thông báo hiện lên và nhận được kết quả.</p>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="row my-5">
+                <div class="col-md-6 order-md-2">
+                    <h2>Bonus: Hướng dẫn copy vào file excel noà</h2>
+                    <p>Mọi người cứ làm theo hình hướng dẫn bên cạnh hen.</p>
+                    <p>
+                        Mọi người cứ copy hết xong dán vào file excel. Nhớ tắt "wrap text" và bật "autofit column
+                        height" và "autofit column width" là oke la nè.
+                    </p>
+                </div>
+                <div class="col-md-6 order-md-1">
+                    <img src="/images/step3.1.png" alt="Step 2 Image" class="img-fluid" />
+                    <img src="/images/step3.2.png" alt="Step 2 Image" class="img-fluid" />
+                    <img src="/images/step3.3.png" alt="Step 2 Image" class="img-fluid" />
+                    <img src="/images/step3.5.png" alt="Step 2 Image" class="img-fluid" />
+                    <img src="/images/step3.6.png" alt="Step 2 Image" class="img-fluid" />
+                    <img src="/images/step3.7.png" alt="Step 2 Image" class="img-fluid" />
+                    <img src="/images/step3.8.png" alt="Step 2 Image" class="img-fluid" />
+                </div>
+            </div>
+
+            <!-- Video Section -->
+            <div class="row my-5">
+                <div class="col-12">
+                    <h2>Video hướng dẫn noà mọi người</h2>
+                    <div class="text-center">
+                        <iframe
+                            width="600"
+                            height="350"
+                            src="https://www.youtube.com/embed/qmbh0fKi9oA?si=NA6zOvuCWhc5O6HQ"
+                            title="YouTube video player"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen
+                        ></iframe>
                     </div>
                 </div>
             </div>
-        </section>
+        </div>
 
         <!-- footer -->
         <%- include('./partials/footer'); -%>
