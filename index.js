@@ -257,6 +257,14 @@ app.post('/', (req, res) => {
     }
 });
 
+app.get('/huong-dan-su-dung', (req, res) => {
+    res.render('tutorial');
+});
+
+app.get('/about', (req, res) => {
+    res.render('about');
+});
+
 app.use(function (req, res) {
     res.status(404).render('404');
 });
