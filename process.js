@@ -46,12 +46,16 @@ function createArrayOfObjects(sheet) {
 };
 
 function xoaCacDonNhuMienTaVaCapBangDiem(data, removeTypes) {
-    // data.forEach(obj => {
-    //     if (removeTypes.includes(obj['Loại đơn (Tên đơn)']))
-    //         console.log('MSSV', obj['MSSV'], removeTypes.includes(obj['Loại đơn (Tên đơn)']), (obj['MSSV'].charAt(3) === 'H' || obj['MSSV'].charAt(3) === '0'), obj['Loại đơn (Tên đơn)'],
-    //         );
-    // });
-    return data.filter(obj => !(removeTypes.includes(obj['Loại đơn (Tên đơn)']) && (obj['MSSV'].charAt(3) === 'H' || obj['MSSV'].charAt(3) === '0')));
+    const result = data.filter(obj => {
+        const co_nam_trong_ds_don_bi_xoa_hay_khong = removeTypes.includes(obj['Loại đơn (Tên đơn)']);
+        let keep = !co_nam_trong_ds_don_bi_xoa_hay_khong;
+        if (obj['Loại đơn (Tên đơn)'] === removeTypes[0]) {
+            keep = obj['Người giải quyết đơn'].includes('Phạm Thị Phương Trinh');
+        }
+        return keep;
+    });
+    return result;
+    // return data.filter(obj => !(removeTypes.includes(obj['Loại đơn (Tên đơn)']) && (obj['MSSV'].charAt(3) === 'H' || obj['MSSV'].charAt(3) === '0')));
 };
 
 exports.taoDanhSach = function taoDanhSach(filename = 'DS_NopDon.xlsx') {
@@ -63,6 +67,8 @@ exports.taoDanhSach = function taoDanhSach(filename = 'DS_NopDon.xlsx') {
     let processedData = createArrayOfObjects(sheet);
 
     processedData.forEach(obj => locRaCacCotCanThiet(obj));
+
+    processedData = xoaCacDonNhuMienTaVaCapBangDiem(processedData, cacLoaiDonSeBiXoa);
 
     processedData.forEach(obj => thayDoiNguoiXuLyDonThanh1Nguoi(obj));
 
@@ -76,8 +82,6 @@ exports.taoDanhSach = function taoDanhSach(filename = 'DS_NopDon.xlsx') {
         }
         return 0;
     });
-
-    processedData = xoaCacDonNhuMienTaVaCapBangDiem(processedData, cacLoaiDonSeBiXoa);
 
     // Tao ra dong trong de tao khoang cach giua cac nguoi giai quyet don
     const emptyObj = Object.fromEntries(Object.keys(processedData[0]).map(key => [key, '']));

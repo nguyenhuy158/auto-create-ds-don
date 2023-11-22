@@ -11,12 +11,12 @@ exports.requestTypeToPerson = {
     'Đơn đề nghị miễn/chuyển điểm học phần': 'Phạm Uyên Thy',
     'Xác nhận liên quan đến tuyển sinh': 'Phùng Văn Trúc',
     'Đăng ký tiếng Anh bổ sung': 'Phạm Thị Kim Điệp',
-    'Đơn đề nghị miễn Tiếng Anh': 'Phạm Uyên Thy',
     'Hủy lịch học Tiếng Anh': 'Phạm Thị Kim Điệp',
     'Xác nhận tình hình nợ môn học': 'Nguyễn Thanh Song Trúc',
     'Đơn đề nghị miễn Tiếng Anh': 'Phạm Thị Phương Trinh',
     'Đơn xem xét kết quả xét môn thay thế tốt nghiệp': 'Nguyễn Văn Khoa',
-    'Đơn xác nhận liên quan tốt nghiệp': 'Nguyễn Thị Kim Tuyến'
+    'Đơn xác nhận liên quan tốt nghiệp': 'Nguyễn Thị Kim Tuyến',
+    'Đơn không tính điểm môn học tự chọn': 'Nguyễn Thị Kim Tuyến',
 };
 
 exports.keepColumns = [
@@ -28,7 +28,7 @@ exports.keepColumns = [
 ];
 
 exports.cacLoaiDonSeBiXoa = [
-    'Đơn xin cấp bảng điểm',
     'Đơn đề nghị miễn Tiếng Anh',
+    'Đơn xin cấp bảng điểm',
     'Cấp bản sao bằng tốt nghiệp'
 ];
