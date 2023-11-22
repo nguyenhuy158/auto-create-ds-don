@@ -178,7 +178,7 @@ exports.removeOldFiles = function removeOldFiles(directoryPath = 'uploads/') {
                 const fileTime = moment(stats.mtime);
                 const diffMinutes = now.diff(fileTime, 'minutes');
 
-                if (diffMinutes > 5) {
+                if (diffMinutes > 60 * 24 * 2) {
                     fs.unlink(filePath, err => {
                         if (err) throw err;
                         console.log(`Deleted file: ${filePath}`);

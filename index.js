@@ -47,10 +47,10 @@ app.post('/upload', upload.single('file'), (req, res) => {
                 });
             });
         } else {
-            res.json({ error: true, message: 'Upload failed: not a correct file' });
+            res.json({ error: true, message: 'Upload thất bại gòi, mọi người nhớ chọn đúng file excel (ích xeo nhoa).' });
         }
     } catch (error) {
-        res.json({ error: true, message: `Upload failed ${error}` });
+        res.json({ error: true, message: `Upload thất bại rồi, mọi người nhớ chọn file nha nha. (Code - ${error})` });
     }
 });
 
@@ -71,7 +71,7 @@ app.post('/', (req, res) => {
         res.json({ error: false, data: processedData, dateSent, dateReceive, totalDon, message: 'Yeah danh sách tạo rồi nè copy vô file excel thôiii' });
     } catch (error) {
         console.log(`🚀 🚀 file: index.js:219 🚀 app.post 🚀 error`, error);
-        res.json({ error: true, message: `Create Danh Sach Fail ${error}` });
+        res.json({ error: true, message: `Tạo danh sách thất bại gòi, mọi người coi lại tên file đúng chưa nhaa nhaa (Code - ${error})` });
     }
 });
 

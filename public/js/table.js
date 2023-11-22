@@ -88,6 +88,12 @@ $(() => {
             <tr>
                 <td></td>
                 <td></td>
+                <td colspan="3" class="text-center pt-5"></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td></td>
+                <td></td>
                 <td colspan="3" class="text-center">Nguyễn Duy Khánh</td>
                 <td></td>
             </tr>
@@ -134,6 +140,7 @@ $(() => {
                     toastr.success(data.message);
 
                     $('#createDS input').val(data.filename);
+                    $('#uploadForm').trigger('reset');
                 }
             },
             error: function (error) {

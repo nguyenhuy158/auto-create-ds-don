@@ -15,7 +15,8 @@ exports.requestTypeToPerson = {
     'Hủy lịch học Tiếng Anh': 'Phạm Thị Kim Điệp',
     'Xác nhận tình hình nợ môn học': 'Nguyễn Thanh Song Trúc',
     'Đơn đề nghị miễn Tiếng Anh': 'Phạm Thị Phương Trinh',
-    'Đơn xem xét kết quả xét môn thay thế tốt nghiệp': 'Nguyễn Văn Khoa'
+    'Đơn xem xét kết quả xét môn thay thế tốt nghiệp': 'Nguyễn Văn Khoa',
+    'Đơn xác nhận liên quan tốt nghiệp': 'Nguyễn Thị Kim Tuyến'
 };
 
 exports.keepColumns = [
@@ -26,4 +27,8 @@ exports.keepColumns = [
     'Họ và tên'
 ];
 
-exports.cacLoaiDonSeBiXoa = ['Đơn xin cấp bảng điểm', 'Đơn đề nghị miễn Tiếng Anh'];
+exports.cacLoaiDonSeBiXoa = [
+    'Đơn xin cấp bảng điểm',
+    'Đơn đề nghị miễn Tiếng Anh',
+    'Cấp bản sao bằng tốt nghiệp'
+];

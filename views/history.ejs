@@ -26,8 +26,14 @@
                 <div class="card mb-3">
                     <div class="card-body">
                         <h5 class="card-title"><%= entry.name %></h5>
-                        <p class="card-text">Tên file để tái sử dụng noà: <%= entry.filename %></p>
-                        <p class="card-text">Ngày tải file lên noà: <%= entry.date %></p>
+                        <p class="card-text">
+                            Tên file để tái sử dụng noà:
+                            <span class="py-1 px-2 bg-light rounded"><%= entry.filename %></span>
+                        </p>
+                        <p class="card-text">
+                            Ngày tải file lên noà:
+                            <span class="py-1 px-2 bg-light rounded"><%= entry.date %></span>
+                        </p>
                     </div>
                 </div>
                 <% }); %> <% if (history.length === 0) { %>
