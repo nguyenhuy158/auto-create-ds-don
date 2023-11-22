@@ -3,7 +3,10 @@ const xlsx = require('xlsx');
 const path = require('path');
 const moment = require('moment');
 const fs = require('fs');
+const { readArrayFromFile, writeArrayToFile } = require('./utils');
 const multer = require('multer');
+const names = ['ai đó', 'một người ẩn danh', 'ai đó hong biết luôn', 'một người lạ', 'một người nào đó', 'người dùng ẩn danh', 'một người dễ thương nào đó'];
+
 const upload = multer({ dest: 'uploads/' });
 
 
@@ -30,13 +33,18 @@ app.post('/upload', upload.single('file'), (req, res) => {
             let newPath = path.join(path.dirname(oldPath), 'DS_NopDon_' + new Date().toISOString().replace(/[-:]/g, '').slice(0, 15) + '.xlsx');
             let filename = path.basename(newPath);
 
-            fs.rename(oldPath, newPath, (err) => {
+            fs.rename(oldPath, newPath, async (err) => {
                 if (err) {
                     res.json({ error: true, message: `File rename failed: ${err}` });
                 } else {
                     console.log(req.file);
                     res.json({ error: false, message: `File uploaded and renamed successfully ${filename}`, filename });
                 }
+                await writeArrayToFile({
+                    filename,
+                    date: moment().format('DD/MM/YYYY HH:mm'),
+                    name: names[Math.floor(Math.random() * names.length)]
+                });
             });
         } else {
             res.json({ error: true, message: 'Upload failed: not a correct file' });
@@ -73,6 +81,11 @@ app.get('/huong-dan-su-dung', (req, res) => {
 
 app.get('/about', (req, res) => {
     res.render('about');
+});
+
+app.get('/lich-su', async (req, res) => {
+    let history = await readArrayFromFile();
+    res.render('history', { history });
 });
 
 app.use(function (req, res) {
