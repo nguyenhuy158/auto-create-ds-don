@@ -16,7 +16,7 @@ exports.requestTypeToPerson = {
     'Đơn đề nghị miễn Tiếng Anh': 'Phạm Thị Phương Trinh',
     'Đơn xem xét kết quả xét môn thay thế tốt nghiệp': 'Nguyễn Văn Khoa',
     'Đơn xác nhận liên quan tốt nghiệp': 'Nguyễn Thị Kim Tuyến',
-    'Đơn không tính điểm môn học tự chọn': 'Nguyễn Thị Kim Tuyến',
+    'Đơn không tính điểm môn học tự chọn': 'Nguyễn Thanh Song Trúc',
 };
 
 exports.keepColumns = [
