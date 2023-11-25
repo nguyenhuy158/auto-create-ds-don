@@ -2,6 +2,7 @@ exports.requestTypeToPerson = {
     'Đơn hoãn thi': 'Ca Phú Phát',
     'Đơn đề nghị thôi học': 'Đặng Phương Du',
     'Nhập học lại (sau khi nghỉ học tạm thời)': 'Đặng Phương Du',
+    'Đơn chuyển trường': 'Đặng Phương Du',
     'Đơn nghỉ học tạm thời': 'Đặng Phương Du',
     'Đơn Đăng ký thi KNTHCM': 'Nguyễn Thị Kim Tuyến',
     'Đơn xin cấp giấy chứng nhận tốt nghiệp tạm thời': 'Nguyễn Thị Kim Tuyến',
