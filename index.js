@@ -68,7 +68,7 @@ app.post('/', (req, res) => {
     try {
         const { filename } = req.body;
         let processedData, dateSent, dateReceive, totalDon;
-        ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaMotNgay(path.join('uploads', filename)));
+        ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaMotNgay(path.join('uploads', filename), true));
 
         // kiem tra xem co undefined hay khong
         let isHaveUndefinedData = processedData.some(item => {
@@ -76,7 +76,7 @@ app.post('/', (req, res) => {
         });
 
         if (isHaveUndefinedData) {
-            ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaNhieuNgay(path.join('uploads', filename)));
+            ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaNhieuNgay(path.join('uploads', filename), true));
         }
 
         res.json({ error: false, data: processedData, dateSent, dateReceive, totalDon, message: 'Yeah danh sách tạo rồi nè copy vô file excel thôiii' });

@@ -9,9 +9,10 @@ $(() => {
         $('#spinner').hide();
     }
 
-    function createTable(data, dateSent, dateReceive, totalDon) {
+    function createTable(data, dateSent, dateReceive, totalDon, nguoinhan = false) {
         var table = $('<table>').addClass('text-center');
 
+        var colspan = nguoinhan ? 7 : 6;
         // Add thead
         var thead = $('<thead>');
         var theadContent = `
@@ -37,6 +38,7 @@ $(() => {
                 <th class="text-center">Họ và tên</th>
                 <th class="text-center">Người giải quyết đơn</th>
                 <th class="text-center">Ghi chú</th>
+                ${nguoinhan ? '<th class="text-center">Người nhận đơn</th>' : ''}
             </tr>
         `;
         thead.html(theadContent);
@@ -54,6 +56,7 @@ $(() => {
                     <td class="text-center fw-bold" colspan="4">${row['Loại đơn (Tên đơn)']}</td>
                     <td class="text-center fw-bold">${row['Người giải quyết đơn']}</td>
                     <td class="text-center"></td>
+                    ${nguoinhan ? `<td></td>` : ''}
                 `);
             } else {
                 tr.html(`
@@ -63,7 +66,8 @@ $(() => {
                     <td class="text-center">${row['Họ và tên']}</td>
                     <td class="text-center">${row['Người giải quyết đơn']}</td>
                     <td class="text-center">${row['Ghi chú'] || ''}</td>
-                `);
+                    // ${nguoinhan ? `<td class="text-center">${row['Người tiếp nhận'] || ''}</td>` : ''}
+                    `);
             }
 
             tbody.append(tr);
@@ -190,21 +194,53 @@ $(() => {
                     // remove disable button download excel file
                     $('#downloadExcel').removeAttr('disabled');
 
-                    $('#downloadExcel').on('click', function (e) {
-                        // $("#DS").table2excel({
-                        //     name: "Sheet01",
-                        //     filename: "DS_NopDon.xlsx",
-                        //     preserveColors: false
-                        // });
+                    // create excel file and download
+                    $('#downloadExcel').off('click').on('click', function (e) {
                         var tableHtml = document.querySelector('#DS').outerHTML;
-
                         var style = '<style>td, th { font-family: "Calibri", sans-serif; line-height: normal; }</style>';
-
                         var fullHtml = '<html><head>' + style + '</head><body>' + tableHtml + '</body></html>';
                         var uri = 'data:text/csv;base64,' + btoa(unescape(encodeURIComponent(fullHtml)));
-                        // var uri = 'data:application/vnd.ms-excel;base64,' + btoa(unescape(encodeURIComponent(fullHtml)));
 
-                        // Create a link element and trigger a click to download the Excel file
+                        var link = document.createElement('a');
+                        link.href = uri;
+                        link.download = 'table.xlsx';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    });
+                }
+            },
+            error: function (error) {
+                toastr.error(error.responseJSON?.message);
+            },
+        }).always(function () {
+            hideSpinner();
+        });
+    });
+    $('#taoDSCoNguoiNhapDon').on('click', function (e) {
+        showSpinner();
+
+        $.ajax({
+            url: '/',
+            type: 'POST',
+            data: { filename: $('#filename').val() },
+            success: function (data) {
+                if (data.error) {
+                    toastr.error(data.message);
+                } else {
+                    toastr.success(data.message);
+                    createTable(data.data, data.dateSent, data.dateReceive, data.totalDon, true);
+
+                    // remove disable button download excel file
+                    $('#downloadExcel').removeAttr('disabled');
+
+                    // create excel file and download
+                    $('#downloadExcel').off('click').on('click', function (e) {
+                        var tableHtml = document.querySelector('#DS').outerHTML;
+                        var style = '<style>td, th { font-family: "Calibri", sans-serif; line-height: normal; }</style>';
+                        var fullHtml = '<html><head>' + style + '</head><body>' + tableHtml + '</body></html>';
+                        var uri = 'data:text/csv;base64,' + btoa(unescape(encodeURIComponent(fullHtml)));
+
                         var link = document.createElement('a');
                         link.href = uri;
                         link.download = 'table.xlsx';

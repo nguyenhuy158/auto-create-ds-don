@@ -52,6 +52,20 @@ exports.keepColumns = [
     'Họ tên'
 ];
 
+exports.keepColumnsV1 = [
+    'Người giải quyết đơn',
+    'Số BN',
+    'Loại đơn (Tên đơn)',
+    'MSSV',
+    'Họ và tên',
+    'Người tiếp nhận',
+    // cho danh sach don nhieu ngay
+    'Mã số đơn',
+    'Loại đơn',
+    'Mã số sinh viên',
+    'Họ tên',
+];
+
 exports.cacLoaiDonSeBiXoa = [
     'Đơn đề nghị miễn Tiếng Anh',
     'Đơn xin cấp bảng điểm',

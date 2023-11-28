@@ -7,12 +7,13 @@ const moment = require('moment');
 const {
     requestTypeToPerson,
     keepColumns,
-    cacLoaiDonSeBiXoa
+    keepColumnsV1,
+    cacLoaiDonSeBiXoa,
 } = require('./constants');
 
-function locRaCacCotCanThiet(obj) {
+function locRaCacCotCanThiet(obj, nguoinhan = false) {
     Object.keys(obj)
-        .filter(key => !keepColumns.includes(key))
+        .filter(key => !keepColumnsV1.includes(key))
         .forEach(key => delete obj[key]);
     return obj;
 };
@@ -83,7 +84,7 @@ function themNguoiXuLyDon(data, requestTypeToPerson) {
     return result;
 }
 
-exports.taoDanhSachCuaMotNgay = function taoDanhSachCuaMotNgay(filename = 'DS_NopDon_mot_ngay.xlsx') {
+exports.taoDanhSachCuaMotNgay = function taoDanhSachCuaMotNgay(filename = 'DS_NopDon_mot_ngay.xlsx', nguoinhan = false) {
     // Read the Excel file
     const workbook = xlsx.readFile(filename);
     const sheetName = workbook.SheetNames[0];
@@ -91,7 +92,7 @@ exports.taoDanhSachCuaMotNgay = function taoDanhSachCuaMotNgay(filename = 'DS_No
 
     let processedData = createArrayOfObjects(sheet);
 
-    processedData.forEach(obj => locRaCacCotCanThiet(obj));
+    processedData.forEach(obj => locRaCacCotCanThiet(obj, nguoinhan));
 
     processedData = xoaCacDonNhuMienTaVaCapBangDiem(processedData, cacLoaiDonSeBiXoa);
 
@@ -136,10 +137,11 @@ exports.taoDanhSachCuaMotNgay = function taoDanhSachCuaMotNgay(filename = 'DS_No
 
     // Xoa nguoi giai quyet don o cac dong binh thuong
     for (let i = 0; i < processedData.length; i++) {
-        if (Object.keys(processedData[i]).length === 5) {
+        if (Object.keys(processedData[i]).length >= 5) {
             processedData[i]['Người giải quyết đơn'] = '';
         }
     }
+
 
     // Danh so thu tu lai 
     let stt = 1;
@@ -187,7 +189,7 @@ exports.taoDanhSachCuaMotNgay = function taoDanhSachCuaMotNgay(filename = 'DS_No
     return { processedData, dateSent, dateReceive, totalDon };
 };
 
-exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'DS_NopDon_nhieu_ngay.xlsx') {
+exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'DS_NopDon_nhieu_ngay.xlsx', nguoinhan = false) {
     // Read the Excel file
     const workbook = xlsx.readFile(filename);
     const sheetName = workbook.SheetNames[0];
@@ -195,7 +197,7 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
 
     let processedData = createArrayOfObjects(sheet);
 
-    processedData.forEach(obj => locRaCacCotCanThiet(obj));
+    processedData.forEach(obj => locRaCacCotCanThiet(obj, nguoinhan));
 
     processedData = themNguoiXuLyDon(processedData, requestTypeToPerson);
 
@@ -220,8 +222,6 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
         if (prevPerson !== null && processedData[i]['Người giải quyết đơn'] !== prevPerson) {
             processedData.splice(i, 0, { ...emptyObj });
             i++;
-
-            console.log('i', i);
         }
         prevPerson = processedData[i]['Người giải quyết đơn'];
     }
@@ -241,7 +241,7 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
 
     // Xoa nguoi giai quyet don o cac dong binh thuong
     for (let i = 0; i < processedData.length; i++) {
-        if (Object.keys(processedData[i]).length === 5) {
+        if (Object.keys(processedData[i]).length >= 5) {
             processedData[i]['Người giải quyết đơn'] = '';
         }
     }
@@ -277,7 +277,7 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
     //     prevType = processedData[i]['Loại đơn (Tên đơn)'] || processedData[i]['Loại đơn'];
     // }
 
-    console.log('processedData', processedData);
+    // console.log('processedData', processedData);
 
     // doi ten cot
     processedData = processedData.map(obj => {
@@ -290,7 +290,8 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
             'MSSV': obj['Mã số sinh viên'],
             'Họ và tên': obj['Họ tên'],
             'Người giải quyết đơn': obj['Người giải quyết đơn'],
-            'STT': obj['STT']
+            'STT': obj['STT'],
+            'Người tiếp nhận': obj['Người tiếp nhận'],
         };
     });
 
@@ -299,7 +300,7 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
     // demo
 
     // Tinh tong so don
-    let totalDon = processedData.filter(obj => Object.keys(obj).length === 6).length;
+    let totalDon = processedData.filter(obj => Object.keys(obj).length >= 6).length;
     // Ngay giai don
     let dateSent = moment().add(1, 'days').format('DD/MM/YYYY');
     // Ngay nhan don
