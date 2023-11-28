@@ -178,7 +178,7 @@ exports.taoDanhSachCuaMotNgay = function taoDanhSachCuaMotNgay(filename = 'DS_No
     // console.log(`🚀 🚀 file: index.js:79 🚀 app.get 🚀 processedData`, processedData);
 
     // Tinh tong so don
-    let totalDon = processedData.filter(obj => Object.keys(obj).length === 6).length;
+    let totalDon = processedData.filter(obj => Object.keys(obj).length >= 6).length;
     // Ngay giai don
     let dateSent = moment().add(1, 'days').format('DD/MM/YYYY');
     // Ngay nhan don
