@@ -12,7 +12,8 @@ const upload = multer({ dest: 'uploads/' });
 
 const {
     removeOldFiles,
-    taoDanhSach,
+    taoDanhSachCuaMotNgay,
+    taoDanhSachCuaNhieuNgay
 } = require('./process');
 
 const app = express();
@@ -26,7 +27,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     try {
         removeOldFiles();
 
-        if (req.file.mimetype === 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet') {
+        if (req.file.originalname.endsWith('.xlsx') || req.file.originalname.endsWith('.xls')) {
             console.log(req.file);
 
             let oldPath = req.file.path;
@@ -66,7 +67,17 @@ app.get('/', (req, res) => {
 app.post('/', (req, res) => {
     try {
         const { filename } = req.body;
-        const { processedData, dateSent, dateReceive, totalDon } = taoDanhSach(path.join('uploads', filename));
+        let processedData, dateSent, dateReceive, totalDon;
+        ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaMotNgay(path.join('uploads', filename)));
+
+        // kiem tra xem co undefined hay khong
+        let isHaveUndefinedData = processedData.some(item => {
+            return Object.values(item).some(value => value === undefined);
+        });
+
+        if (isHaveUndefinedData) {
+            ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaNhieuNgay(path.join('uploads', filename)));
+        }
 
         res.json({ error: false, data: processedData, dateSent, dateReceive, totalDon, message: 'Yeah danh sách tạo rồi nè copy vô file excel thôiii' });
     } catch (error) {

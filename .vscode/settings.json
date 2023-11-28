@@ -240,7 +240,7 @@
     "window.titleSeparator": "👻",
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.activityBar.location": "top",
-    "workbench.colorTheme": "GitHub Light Colorblind (Beta)",
+    "workbench.colorTheme": "Default Light+",
     "workbench.editor.enablePreview": false,
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.restoreViewState": false,

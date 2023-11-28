@@ -1,4 +1,6 @@
 .cache/*
 node_modules/*
 *.xlsx
+!uploads/DS_NopDon_mot_ngay.xlsx
+!uploads/DS_NopDon_nhieu_ngay.xlsx
 data.json

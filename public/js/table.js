@@ -162,6 +162,17 @@ $(() => {
                 } else {
                     toastr.success(data.message);
                     createTable(data.data, data.dateSent, data.dateReceive, data.totalDon);
+
+                    // remove disable button download excel file
+                    $('#downloadExcel').removeAttr('disabled');
+
+                    $('#downloadExcel').on('click', function (e) {
+                        $("#DS").table2excel({
+                            name: "Sheet01",
+                            filename: "DS_NopDon.xlsx",
+                            preserveColors: false
+                        });
+                    });
                 }
             },
             error: function (error) {
