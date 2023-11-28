@@ -99,6 +99,10 @@ app.get('/lich-su', async (req, res) => {
     res.render('history', { history });
 });
 
+app.get('/version', async (req, res) => {
+    res.render('version');
+});
+
 app.use(function (req, res) {
     res.status(404).render('404');
 });
