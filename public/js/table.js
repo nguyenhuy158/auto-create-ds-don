@@ -75,6 +75,14 @@ $(() => {
         var tfoot = $('<tfoot>');
         var tfootContent = `
             <tr>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td class="text-center pt-5"></td>
+                <td></td>
+            </tr>
+            <tr>
                 <td colspan="6" class="text-start">Tổng đơn: ${totalDon}</td>
             </tr>
             <tr>
@@ -183,11 +191,26 @@ $(() => {
                     $('#downloadExcel').removeAttr('disabled');
 
                     $('#downloadExcel').on('click', function (e) {
-                        $("#DS").table2excel({
-                            name: "Sheet01",
-                            filename: "DS_NopDon.xlsx",
-                            preserveColors: false
-                        });
+                        // $("#DS").table2excel({
+                        //     name: "Sheet01",
+                        //     filename: "DS_NopDon.xlsx",
+                        //     preserveColors: false
+                        // });
+                        var tableHtml = document.querySelector('#DS').outerHTML;
+
+                        var style = '<style>td, th { font-family: "Calibri", sans-serif; line-height: normal; }</style>';
+
+                        var fullHtml = '<html><head>' + style + '</head><body>' + tableHtml + '</body></html>';
+                        var uri = 'data:text/csv;base64,' + btoa(unescape(encodeURIComponent(fullHtml)));
+                        // var uri = 'data:application/vnd.ms-excel;base64,' + btoa(unescape(encodeURIComponent(fullHtml)));
+
+                        // Create a link element and trigger a click to download the Excel file
+                        var link = document.createElement('a');
+                        link.href = uri;
+                        link.download = 'table.xlsx';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
                     });
                 }
             },
