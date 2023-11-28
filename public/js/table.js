@@ -1,4 +1,14 @@
 $(() => {
+    // Function to show the spinner
+    function showSpinner() {
+        $('#spinner').show();
+    }
+
+    // Function to hide the spinner
+    function hideSpinner() {
+        $('#spinner').hide();
+    }
+
     function createTable(data, dateSent, dateReceive, totalDon) {
         var table = $('<table>').addClass('text-center');
 
@@ -123,6 +133,8 @@ $(() => {
     };
 
     $('#uploadForm').on('submit', function (e) {
+        showSpinner();
+
         e.preventDefault();
 
         var formData = new FormData(this);
@@ -146,10 +158,14 @@ $(() => {
             error: function (error) {
                 toastr.error(error.responseJSON?.message);
             },
+        }).always(function () {
+            hideSpinner();
         });
     });
 
     $('#createDS').on('submit', function (e) {
+        showSpinner();
+
         e.preventDefault();
 
         $.ajax({
@@ -178,6 +194,8 @@ $(() => {
             error: function (error) {
                 toastr.error(error.responseJSON?.message);
             },
+        }).always(function () {
+            hideSpinner();
         });
     });
 });

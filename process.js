@@ -295,13 +295,7 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
     });
 
     // demo
-    const jsonData = JSON.stringify(processedData, null, 2);
-
-    // Specify the file path
-    const filePath = 'processedData.json';
-
-    // Write the JSON data to the file
-    fs.writeFileSync(filePath, jsonData);
+    // writeToFile(processedData, 'processedData.json')
     // demo
 
     // Tinh tong so don
@@ -315,6 +309,12 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
     // Gui du lieu ve cho client
     return { processedData, dateSent, dateReceive, totalDon };
 };
+
+function writeToFile(processedData, filePath = 'processedData.json') {
+    const jsonData = JSON.stringify(processedData, null, 2);
+    fs.writeFileSync(filePath, jsonData);
+}
+
 
 exports.removeOldFiles = function removeOldFiles(directoryPath = 'uploads/') {
     fs.readdir(directoryPath, (err, files) => {

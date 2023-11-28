@@ -4,3 +4,8 @@ node_modules/*
 !uploads/DS_NopDon_mot_ngay.xlsx
 !uploads/DS_NopDon_nhieu_ngay.xlsx
 data.json
+package-lock.json
+processedData.json
+yarn.lock
+views/partials/head.ejs
+
