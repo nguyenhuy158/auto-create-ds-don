@@ -203,7 +203,7 @@ $(() => {
 
                         var link = document.createElement('a');
                         link.href = uri;
-                        link.download = 'table.xlsx';
+                        link.download = 'table.xls';
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
@@ -243,7 +243,7 @@ $(() => {
 
                         var link = document.createElement('a');
                         link.href = uri;
-                        link.download = 'table.xlsx';
+                        link.download = 'table.xls';
                         document.body.appendChild(link);
                         link.click();
                         document.body.removeChild(link);
