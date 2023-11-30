@@ -1,8 +1,12 @@
 $(() => {
-    const isFirst = localStorage.getItem("first-access");
-    console.log(`🚀 🚀 file: table-warning.js:3 🚀 isFirst`, isFirst);
-    if (!isFirst) {
-        localStorage.setItem("first-access", false);
+    const storedTime = localStorage.getItem("access-time");
+    const currentTime = moment();
+    const MAX_ACCESS_TIME = 10;
+
+    if (!storedTime ||
+        (storedTime && currentTime.diff(moment(storedTime), 'minutes') > MAX_ACCESS_TIME)) {
+        localStorage.setItem("access-time", currentTime);
+
         Swal.fire({
             icon: "info",
             title: "Nhớ nhe mọi người!",
