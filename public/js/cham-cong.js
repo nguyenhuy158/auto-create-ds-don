@@ -1,8 +1,32 @@
+
+let calendar;
+
 $(() => {
+    // Initialize FullCalendar
     const calendarEl = document.getElementById("calendar");
-    const calendar = new FullCalendar.Calendar(calendarEl, {
+    calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
+        titleFormat: 'DD/MM/YY',
+        themeSystem: 'bootstrap5',
+        navLinks: true,
+        navLinkDayClick: function (date, jsEvent) {
+            console.log('day', moment(date).format('YYYY-MM-DD'));
+            console.log('coords', jsEvent.pageX, jsEvent.pageY);
+        },
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        eventSources: [
+            {
+                url: '/cham-cong/events',
+                color: 'yellow',
+                textColor: 'black'
+            },
+        ]
     });
+    calendar.setOption('locale', 'vi');
     calendar.render();
 
     $("input[name='daterange']").daterangepicker(

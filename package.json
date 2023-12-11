@@ -9,6 +9,13 @@
     "dev": "nodemon index.js",
     "debug": "nodemon --inspect index.js"
   },
+  "nodemonConfig": {
+    "verbose": false,
+    "ext": "js, json",
+    "ignore": [
+      "**/js/**"
+    ]
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

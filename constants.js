@@ -68,6 +68,6 @@ exports.keepColumnsV1 = [
 
 exports.cacLoaiDonSeBiXoa = ["Đơn đề nghị miễn Tiếng Anh", "Đơn xin cấp bảng điểm", "Cấp bản sao bằng tốt nghiệp"];
 
-exports.mongoURI = "mongodb+srv://github:mMWIrT4GWZ7gaPJv@github.ozgezwg.mongodb.net/";
+exports.mongoURI = "mongodb+srv://github:mMWIrT4GWZ7gaPJv@github.ozgezwg.mongodb.net/e001";
 
-exports.MOMENT_FORMAT = "DD/MM/YYYY";
+exports.MOMENT_FORMAT = "YYYY-MM-DD";

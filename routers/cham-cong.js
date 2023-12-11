@@ -30,7 +30,9 @@ router.post("", async (req, res) => {
         let { nguoiLam } = req.body;
 
         // nguoiLam = await User.findById(nguoiLam);
-        ngayLam = moment(ngayLam, MOMENT_FORMAT).toDate();
+        ngayLam = moment(ngayLam);
+        console.log(`ngayLam: `, ngayLam);
+        console.log(`ngayLam: `, ngayLam.day());
 
         if (ngayLam.day() == 0) {
             return res.status(400).json({
@@ -44,7 +46,7 @@ router.post("", async (req, res) => {
             });
         }
 
-        const existNgayLamModel = await NgayLam.findOne({ ngayLam, nguoiLam });
+        const existNgayLamModel = await NgayLam.findOne({ ngayLam: ngayLam.toDate(), nguoiLam });
         console.log("existNgayLamModel: ", existNgayLamModel);
         if (existNgayLamModel) {
             return res.status(400).json({
@@ -70,6 +72,25 @@ router.post("", async (req, res) => {
         return res.status(500).json({
             message: `Lỗi từ hệ thống. Vui lòng thử lại sau. [code: ${error}]`,
         });
+    }
+});
+
+router.get('/events', async (req, res) => {
+    try {
+        // TODO: fix find in current month
+        const events = await NgayLam.find().populate('nguoiLam');
+
+        const formattedEvents = events.map(event => ({
+            id: event._id,
+            title: `${event.nguoiLam.fullName || event.nguoiLam.username}`,
+            start: moment(event.ngayLam).format(MOMENT_FORMAT),
+            end: moment(event.ngayLam).format(MOMENT_FORMAT),
+        }));
+
+        res.status(200).json(formattedEvents);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
     }
 });
 
