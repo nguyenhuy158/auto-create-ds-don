@@ -1,6 +1,6 @@
 
-const express = require('express');
-const router = express.Router();
+const router = require('express').Router();
+const chamCongRouter = require('./cham-cong');
 
 // Define a route for the homepage
 router.get('/', (req, res) => {
