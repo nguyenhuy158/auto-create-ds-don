@@ -7,6 +7,7 @@ const multer = require("multer");
 const session = require("express-session");
 
 const chamCongRouter = require("./routers/cham-cong");
+const internshipRouter = require("./routers/internship");
 const authRouter = require("./routers/auth");
 const mongoose = require("./database");
 
@@ -151,6 +152,8 @@ app.use((req, res, next) => {
     return res.redirect("/");
 });
 app.use("/cham-cong", chamCongRouter);
+
+app.use("/internship", internshipRouter);
 
 app.use(function (req, res) {
     res.status(404).render("404");

@@ -1,0 +1,51 @@
+<!-- views/index.ejs -->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tạo danh sách đơn</title>
+
+        <%- include('./partials/head'); -%>
+
+        <link rel="stylesheet" href="/css/table.css" />
+    </head>
+
+    <body>
+        <!-- nav -->
+        <%- include('./partials/nav'); -%>
+        <!-- Bootstrap Spinner -->
+        <div class="box-spinner">
+            <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none"></div>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <h1 class="text-center">Internship</h1>
+            </div>
+
+            <div class="row">
+                <div class="col-8">
+                    <table id="internship-table">
+                        <thead>
+                            <td>No.</td>
+                            <td>Tài khoản</td>
+                            <td>Họ và tên</td>
+                            <td>Tổng số buổi</td>
+                            <td>Cập nhật</td>
+                            <td>Thao tác</td>
+                        </thead>
+                    </table>
+                </div>
+
+                <div class="col-4"></div>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <%- include('./partials/footer'); -%>
+
+        <script src="/js/internship.js"></script>
+    </body>
+</html>

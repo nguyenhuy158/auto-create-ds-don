@@ -5,7 +5,6 @@
     "arrowParens": "always",
     "htmlWhitespaceSensitivity": "ignore",
     "vueIndentScriptAndStyle": true,
-    "wrapAttributes": "force-aligned",
     "trailingComma": "all",
     "singleQuote": false,
     "printWidth": 120,
@@ -23,5 +22,6 @@
                 "singleQuote": true
             }
         }
-    ]
+    ],
+    "plugins": ["prettier-plugin-ejs"]
 }

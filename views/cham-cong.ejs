@@ -1,6 +1,6 @@
 <!-- views/index.ejs -->
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
     <head>
         <meta charset="UTF-8" />
@@ -17,8 +17,7 @@
         <%- include('./partials/nav'); -%>
         <!-- Bootstrap Spinner -->
         <div class="box-spinner">
-            <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none">
-            </div>
+            <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none"></div>
         </div>
 
         <div class="container">
@@ -27,66 +26,69 @@
             </div>
 
             <div class="row">
-              <div class="col-4">
-                <div class="row">
-                  <div class="col">
-                    <input class="form-control mb-3 ngay-lam-input" type="text" name="daterange" value="01/01/2018 - 01/15/2018" />
-                  </div>
+                <div class="col-4">
+                    <div class="row">
+                        <div class="col">
+                            <input
+                                class="form-control mb-3 ngay-lam-input"
+                                type="text"
+                                name="daterange"
+                                value="01/01/2018 - 01/15/2018"
+                            />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Người làm</label>
+                            <select class="form-select nguoi-lam-input" name="">
+                                <option value="<%= user._id %>" selected><%= user.username %></option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Buổi sáng</label>
+                            <select class="form-select gio-buoi-sang-input" name="">
+                                <option value="0" selected>Không làm</option>
+                                <option value="2">Ca 1</option>
+                                <option value="2">Ca 2</option>
+                                <option value="4">Ca 1 & Ca 2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Buổi chiều</label>
+                            <select class="form-select gio-buoi-chieu-input" name="">
+                                <option value="0" selected>Không làm</option>
+                                <option value="2">Ca 1</option>
+                                <option value="2">Ca 2</option>
+                                <option value="4">Ca 1 & Ca 2</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <label>Thêm giờ</label>
+                            <input class="form-control gio-lam-them-input" value="0" />
+                        </div>
+                    </div>
+
+                    <div class="row mb-3">
+                        <div class="col">
+                            <button class="btn btn-sm btn-outline-primary them-du-lieu-btn">Thêm dữ liệu</button>
+                        </div>
+                    </div>
                 </div>
 
-                <div class="row mb-3">
-                  <div class="col">
-                    <label>Người làm</label>
-                    <select class="form-select nguoi-lam-input" name="">
-                      <option value="<%= user._id %>" selected><%= user.username %></option>
-                    </select>
-                  </div>
+                <div class="col-8">
+                    <div id="calendar"></div>
                 </div>
-
-                <div class="row mb-3">
-                  <div class="col">
-                    <label>Buổi sáng</label>
-                    <select class="form-select gio-buoi-sang-input" name="">
-                      <option value="0" selected>Không làm</option>
-                      <option value="2">Ca 1</option>
-                      <option value="2">Ca 2</option>
-                      <option value="4">Ca 1 & Ca 2</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <div class="col">
-                    <label>Buổi chiều</label>
-                    <select class="form-select gio-buoi-chieu-input" name="">
-                      <option value="0" selected>Không làm</option>
-                      <option value="2">Ca 1</option>
-                      <option value="2">Ca 2</option>
-                      <option value="4">Ca 1 & Ca 2</option>
-                    </select>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <div class="col">
-                    <label>Thêm giờ</label>
-                    <input class="form-control gio-lam-them-input" value="0"/>
-                  </div>
-                </div>
-
-                <div class="row mb-3">
-                  <div class="col">
-                    <button class="btn btn-sm btn-outline-primary them-du-lieu-btn">Thêm dữ liệu</button>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-8">
-                <div id="calendar"></div>
-              </div>
-
             </div>
-
         </div>
 
         <!-- footer -->
