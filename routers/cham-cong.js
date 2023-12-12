@@ -77,9 +77,22 @@ router.post("", async (req, res) => {
 
 router.get('/events', async (req, res) => {
     try {
-        // TODO: fix find in current month
-        const events = await NgayLam.find().populate('nguoiLam');
-        console.log(`🚀 🚀 file: cham-cong.js:82 🚀 router.get 🚀 events`, events);
+        const { start, end } = req.query;
+
+        if (!start || !end) {
+            const currentMonthStart = moment().startOf('month');
+            const currentMonthEnd = moment().endOf('month');
+            start = start || currentMonthStart;
+            end = end || currentMonthEnd;
+        }
+
+
+        const events = await NgayLam.find({
+            ngayLam: {
+                $gte: start,
+                $lte: end,
+            }
+        }).populate('nguoiLam');
 
         const formattedEvents = events.map(event => ({
             id: event._id,
