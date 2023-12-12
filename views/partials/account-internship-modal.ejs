@@ -1,0 +1,78 @@
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="tao-tai-khoang-internship-modal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tạo tài khoản</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="register-form" method="post">
+                    <div class="form-group mb-3">
+                        <label for="username">Tài khoản:</label>
+                        <input type="text" class="form-control" id="username" name="username" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Tên:</label>
+                        <input type="text" class="form-control" id="fullName" name="fullName" required />
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="password">Mật khẩu:</label>
+                        <input type="password" class="form-control" id="password" name="password" required />
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-outline-primary submit-register-form-btn">Tạo</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(() => {
+        $('.submit-register-form-btn').on('click', () => {
+            $('#register-form').trigger('submit')
+        })
+        $('#register-form').on('submit', (e) => {
+            e.preventDefault()
+
+            const username = $('#username').val()
+            const password = $('#password').val()
+            const fullName = $('#fullName').val()
+
+            if (!username) {
+                Swal.fire('Vui lòng nhập tài khoản')
+                return
+            }
+
+            $.ajax({
+                url: '/dang-ky-internship',
+                type: 'POST',
+                data: {
+                    username,
+                    password,
+                    fullName,
+                },
+                success: (response) => {
+                    Swal.fire(response.message)
+                    $('#tao-tai-khoang-internship-modal').modal('hide')
+                    $('#register-form').trigger('reset')
+
+                },
+                error: (response) => {
+                    Swal.fire(response.responseJSON?.message)
+                },
+            })
+        })
+    })
+</script>

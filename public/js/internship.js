@@ -31,8 +31,11 @@ $(() => {
             },
             {
                 data: null,
-                render: function (data) {
-                    return `<button class="btn btn-outline-primary btn-sm">
+                render: function (data, type, row) {
+                    return `<button class="btn btn-outline-primary btn-sm cap-nhat-tai-khoang-btn" 
+                                    data-user-id="${row._id}"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#cap-nhat-tai-khoang-internship-modal">
                           <i class="bi bi-pencil-square"></i>
                       </button>`;
                 },

@@ -70,7 +70,7 @@ $(() => {
         const nguoiLam = $(".nguoi-lam-input").val();
 
         const data = {
-            ngayLam,
+            ngayLam: moment(ngayLam, "MM/DD/YYYY").format("DD/MM/YYYY"),
             gioBuoiSang,
             gioBuoiChieu,
             gioLamThem,

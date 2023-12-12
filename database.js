@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 // Replace 'your_connection_string' with your actual MongoDB connection string
 const { mongoURI } = require("./constants");
 
-mongoose.connect(mongoURI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect(mongoURI);
 
 const db = mongoose.connection;
 

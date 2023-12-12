@@ -133,7 +133,7 @@
     "editor.mouseWheelZoom": true,
     "editor.multiCursorModifier": "alt",
     "editor.multiDocumentOccurrencesHighlight": true,
-    "editor.occurrencesHighlight": false,
+    "editor.occurrencesHighlight": "off",
     "editor.parameterHints.enabled": false,
     "editor.quickSuggestionsDelay": 10,
     "editor.roundedSelection": true,

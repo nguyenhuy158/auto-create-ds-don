@@ -24,7 +24,7 @@ router.post("/login", async (req, res) => {
     if (isValid) {
 
         req.session.user = user;
-  
+
         return res.status(200).json({
             message: "Đăng nhập thành công :)",
         });
@@ -69,6 +69,50 @@ router.post("/register", async (req, res) => {
             message: "Có lỗi xảy ra khi tạo tài khoản.",
         });
     }
+});
+
+router.post('/dang-ky-internship', async (req, res) => {
+    try {
+        const { username, password, fullName } = req.body;
+
+        if (!username) {
+            return res.status(400).json({
+                message: "Vui lòng điền tài khoảng.",
+            });
+        }
+
+        // Check if the username already exists
+        const existingUser = await User.findOne({ username });
+
+        if (existingUser) {
+            return res.status(400).json({
+                message: "Tài khoản đã tồn tại rồi :((",
+            });
+        }
+
+        const newUser = new User({
+            username,
+            password: password || username,
+            fullName,
+            role: 'internship'
+        });
+        await newUser.save();
+
+        return res.status(200).json({
+            message: "Tạo tài khoản thành công :))",
+        });
+    } catch (error) {
+        console.error(error);
+        return res.status(500).json({
+            message: "Có lỗi xảy ra khi tạo tài khoản.",
+        });
+    }
+});
+
+router.get("/dang-xuat", async (req, res) => {
+    req.session.destroy();
+    req.app.locals.user = undefined;
+    return res.redirect("/");
 });
 
 module.exports = router;

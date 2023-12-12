@@ -30,7 +30,7 @@ router.post("", async (req, res) => {
         let { nguoiLam } = req.body;
 
         // nguoiLam = await User.findById(nguoiLam);
-        ngayLam = moment(ngayLam);
+        ngayLam = moment(ngayLam, 'DD/MM/YYYY');
         console.log(`ngayLam: `, ngayLam);
         console.log(`ngayLam: `, ngayLam.day());
 
@@ -79,10 +79,11 @@ router.get('/events', async (req, res) => {
     try {
         // TODO: fix find in current month
         const events = await NgayLam.find().populate('nguoiLam');
+        console.log(`🚀 🚀 file: cham-cong.js:82 🚀 router.get 🚀 events`, events);
 
         const formattedEvents = events.map(event => ({
             id: event._id,
-            title: `${event.nguoiLam.fullName || event.nguoiLam.username}`,
+            title: `${event.nguoiLam?.fullName || event.nguoiLam.username}`,
             start: moment(event.ngayLam).format(MOMENT_FORMAT),
             end: moment(event.ngayLam).format(MOMENT_FORMAT),
         }));

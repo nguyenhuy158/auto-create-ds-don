@@ -9,6 +9,7 @@ const session = require("express-session");
 const chamCongRouter = require("./routers/cham-cong");
 const internshipRouter = require("./routers/internship");
 const authRouter = require("./routers/auth");
+const adminRouter = require("./routers/admin");
 const mongoose = require("./database");
 
 const { readArrayFromFile, writeArrayToFile } = require("./utils");
@@ -154,6 +155,8 @@ app.use((req, res, next) => {
 app.use("/cham-cong", chamCongRouter);
 
 app.use("/internship", internshipRouter);
+
+app.use(adminRouter);
 
 app.use(function (req, res) {
     res.status(404).render("404");

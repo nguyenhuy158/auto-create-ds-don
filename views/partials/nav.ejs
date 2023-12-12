@@ -21,21 +21,31 @@
                         <a class="nav-link active" aria-current="page" href="/">Tạo danh sách đơn</a>
                     </li>
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Chấm công</a>
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Tính lương</a>
                         <ul class="dropdown-menu">
-                            <li>
-                                <a class="dropdown-item" href="/cham-cong" data-bs-toggle="dropdown">Tự chấm công</a>
-                            </li>
+                            <!-- <%= typeof user === 'undefined' %> -->
+                            <!-- <%= typeof user %> -->
+                            <% if (typeof user === 'undefined') { %>
                             <li>
                                 <a class="dropdown-item" href="/login">Đăng nhập</a>
+                            </li>
+                            <% } %>
+
+                            <% if (typeof user !== 'undefined') { %>
+                            <li>
+                                <a class="dropdown-item" href="/cham-cong">Chấm công</a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#tao-tai-khoang-internship-modal">Tạo tài khoản internship</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="/internship">Internship</a>
                             </li>
                             <li><hr class="dropdown-divider" /></li>
                             <li>
-                                <a class="dropdown-item" href="#">Đăng xuất</a>
+                                <a class="dropdown-item" href="/dang-xuat">Đăng xuất</a>
                             </li>
+                            <% } %>
                         </ul>
                     </li>
                     <li class="nav-item">
