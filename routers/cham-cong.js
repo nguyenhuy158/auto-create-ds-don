@@ -1,6 +1,7 @@
 // create router file in nodejs
 
 const moment = require("moment");
+const XLSX = require("xlsx");
 
 const router = require("express").Router();
 const User = require("../models/user");
@@ -77,7 +78,7 @@ router.post("", async (req, res) => {
 
 router.get('/events', async (req, res) => {
     try {
-        const { start, end } = req.query;
+        let { start, end } = req.query;
 
         if (!start || !end) {
             const currentMonthStart = moment().startOf('month');
@@ -105,6 +106,83 @@ router.get('/events', async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send('Internal Server Error');
+    }
+});
+
+router.get('/events/excel', async (req, res) => {
+    try {
+        let { start, end } = req.query;
+
+        if (!start || !end) {
+            const currentMonthStart = moment().startOf('month');
+            const currentMonthEnd = moment().endOf('month');
+            start = start || currentMonthStart;
+            end = end || currentMonthEnd;
+        }
+
+        let events = await NgayLam.find({
+            ngayLam: {
+                $gte: start,
+                $lte: end,
+            }
+        }).populate('nguoiLam');
+
+        let formattedEvents = events.map(event => {
+            // Destructure the event object and exclude _id and __v properties
+            const {
+                _id,
+                __v,
+                nguoiLam,
+                ...rest
+            } = event.toObject();
+
+            // Format the event and exclude _id and __v properties
+            return {
+                start: moment(event.ngayLam).format(MOMENT_FORMAT),
+                end: moment(event.ngayLam).format(MOMENT_FORMAT),
+                nguoiLam: event.nguoiLam?.fullName || event.nguoiLam.username,
+                ...rest,
+            };
+        });
+
+        // all day in month
+        // Get the current month
+        const daysInMonth = moment().daysInMonth();
+        // Create an array of objects for each day in the current month
+        const arrayOfObjects = Array.from({ length: daysInMonth }, (_, index) => {
+            const currentDay = index + 1;
+            const date = moment().clone().date(currentDay);
+
+            return {
+                date: date.format('YYYY-MM-DD'),
+                text: date.format('DD'),
+            };
+        });
+
+        console.log(arrayOfObjects);
+        console.log(`🚀 🚀 file: cham-cong.js:139 🚀 router.get 🚀 formattedEvents`, formattedEvents);
+
+        var ws = XLSX.utils.json_to_sheet(formattedEvents);
+        var wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Data");
+        var buf = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
+        res.attachment("SheetJSExpress.xlsx");
+        res.status(200).end(buf);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    }
+});
+
+router.get('/bang-cham-cong', async (req, res) => {
+    try {
+        const ngayLam = await NgayLam.find();
+
+        return res.status(200).render('bang-cham-cong', {
+            ngayLam
+        });
+    } catch (error) {
+        console.log('error:115 ', error);
+        return res.redirect('/');
     }
 });
 

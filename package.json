@@ -32,7 +32,7 @@
         "node-fetch": "^3.2.6",
         "nodemon": "^3.0.1",
         "w3m": "^1.0.20",
-        "xlsx": "^0.18.5"
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.1/xlsx-0.20.1.tgz"
     },
     "devDependencies": {
         "prettier": "^3.1.1",
