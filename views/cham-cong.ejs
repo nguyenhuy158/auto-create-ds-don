@@ -42,7 +42,13 @@
                         <div class="col">
                             <label>Người làm</label>
                             <select class="form-select nguoi-lam-input" name="">
+                                <% if (user.role === 'admin') { %>
+                                <% users.forEach(function(u) { %>
+                                <option value="<%= u._id %>"><%= u.fullName || u.username %></option>
+                                <% }); %>
+                                <% }else { %>
                                 <option value="<%= user._id %>" selected><%= user.username %></option>
+                                <% } %>
                             </select>
                         </div>
                     </div>
@@ -90,8 +96,10 @@
                     <!-- tong gio -->
                     <div class="row mb-3">
                         <div class="col">
-                            <label>Tổng giờ làm thêm</label>
-                            <p class="form-control gio-lam-them-input" value="0" disabled />
+                            <p class="form-control gio-lam-them-input" disabled>
+                                Tổng giờ làm thêm:
+                                <strong id="">0</strong>
+                            </p>
                         </div>
                     </div>
                 </div>

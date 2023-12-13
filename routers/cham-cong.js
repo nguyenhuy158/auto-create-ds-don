@@ -16,7 +16,11 @@ router.use(async (req, res, next) => {
 });
 
 router.get("", async (req, res) => {
-    const users = await User.find();
+    let users;
+    if (req.session.user.role === "admin") {
+        users = await User.find({ role: "internship" });
+        // console.log("users: ", users);
+    }
     return res.status(200).render("cham-cong", {
         users,
     });
@@ -31,7 +35,7 @@ router.post("", async (req, res) => {
         let { nguoiLam } = req.body;
 
         // nguoiLam = await User.findById(nguoiLam);
-        ngayLam = moment(ngayLam, 'DD/MM/YYYY');
+        ngayLam = moment(ngayLam, "DD/MM/YYYY");
         console.log(`ngayLam: `, ngayLam);
         console.log(`ngayLam: `, ngayLam.day());
 
@@ -76,26 +80,25 @@ router.post("", async (req, res) => {
     }
 });
 
-router.get('/events', async (req, res) => {
+router.get("/events", async (req, res) => {
     try {
         let { start, end } = req.query;
 
         if (!start || !end) {
-            const currentMonthStart = moment().startOf('month');
-            const currentMonthEnd = moment().endOf('month');
+            const currentMonthStart = moment().startOf("month");
+            const currentMonthEnd = moment().endOf("month");
             start = start || currentMonthStart;
             end = end || currentMonthEnd;
         }
-
 
         const events = await NgayLam.find({
             ngayLam: {
                 $gte: start,
                 $lte: end,
-            }
-        }).populate('nguoiLam');
+            },
+        }).populate("nguoiLam");
 
-        const formattedEvents = events.map(event => ({
+        const formattedEvents = events.map((event) => ({
             id: event._id,
             title: `${event.nguoiLam?.fullName || event.nguoiLam.username}`,
             start: moment(event.ngayLam).format(MOMENT_FORMAT),
@@ -105,17 +108,17 @@ router.get('/events', async (req, res) => {
         res.status(200).json(formattedEvents);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send("Internal Server Error");
     }
 });
 
-router.get('/events/excel', async (req, res) => {
+router.get("/events/excel", async (req, res) => {
     try {
         let { start, end } = req.query;
 
         if (!start || !end) {
-            const currentMonthStart = moment().startOf('month');
-            const currentMonthEnd = moment().endOf('month');
+            const currentMonthStart = moment().startOf("month");
+            const currentMonthEnd = moment().endOf("month");
             start = start || currentMonthStart;
             end = end || currentMonthEnd;
         }
@@ -124,17 +127,12 @@ router.get('/events/excel', async (req, res) => {
             ngayLam: {
                 $gte: start,
                 $lte: end,
-            }
-        }).populate('nguoiLam');
+            },
+        }).populate("nguoiLam");
 
-        let formattedEvents = events.map(event => {
+        let formattedEvents = events.map((event) => {
             // Destructure the event object and exclude _id and __v properties
-            const {
-                _id,
-                __v,
-                nguoiLam,
-                ...rest
-            } = event.toObject();
+            const { _id, __v, nguoiLam, ...rest } = event.toObject();
 
             // Format the event and exclude _id and __v properties
             return {
@@ -154,8 +152,8 @@ router.get('/events/excel', async (req, res) => {
             const date = moment().clone().date(currentDay);
 
             return {
-                date: date.format('YYYY-MM-DD'),
-                text: date.format('DD'),
+                date: date.format("YYYY-MM-DD"),
+                text: date.format("DD"),
             };
         });
 
@@ -163,26 +161,27 @@ router.get('/events/excel', async (req, res) => {
         console.log(`🚀 🚀 file: cham-cong.js:139 🚀 router.get 🚀 formattedEvents`, formattedEvents);
 
         var ws = XLSX.utils.json_to_sheet(formattedEvents);
-        var wb = XLSX.utils.book_new(); XLSX.utils.book_append_sheet(wb, ws, "Data");
+        var wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Data");
         var buf = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
         res.attachment("SheetJSExpress.xlsx");
         res.status(200).end(buf);
     } catch (error) {
         console.error(error);
-        res.status(500).send('Internal Server Error');
+        res.status(500).send("Internal Server Error");
     }
 });
 
-router.get('/bang-cham-cong', async (req, res) => {
+router.get("/bang-cham-cong", async (req, res) => {
     try {
         const ngayLam = await NgayLam.find();
 
-        return res.status(200).render('bang-cham-cong', {
-            ngayLam
+        return res.status(200).render("bang-cham-cong", {
+            ngayLam,
         });
     } catch (error) {
-        console.log('error:115 ', error);
-        return res.redirect('/');
+        console.log("error:115 ", error);
+        return res.redirect("/");
     }
 });
 
