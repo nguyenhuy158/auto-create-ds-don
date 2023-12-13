@@ -22,7 +22,18 @@
 
         <div class="container">
             <div class="row">
-                <h1 class="text-center">Internship</h1>
+                <h1 class="text-center">Quản lý Internship</h1>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <button class="btn btn-sm btn-outline-primary them-internship-btn">
+                        <i class="bi bi-plus"></i>
+                    </button>
+                    <button class="btn btn-sm btn-outline-success reload-internship-table-btn">
+                        <i class="bi bi-arrow-clockwise"></i>
+                    </button>
+                </div>
             </div>
 
             <div class="row">
@@ -45,7 +56,10 @@
 
         <!-- footer -->
         <%- include('./partials/footer'); -%>
+        <%- include('./partials/account-internship-modal'); -%>
+
         <%- include('./partials/update-internship-modal'); -%>
+        <%- include('./partials/delete-internship-modal'); -%>
 
         <script src="/js/internship.js"></script>
     </body>

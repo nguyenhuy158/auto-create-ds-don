@@ -1,0 +1,66 @@
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="xoa-tai-khoang-internship-modal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Xóa tài khoản</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="xoa-tai-khoang-internship-form" method="post">
+                    <input type="hidden" class="form-control" id="xoa-tai-khoang-internship-form-user-id" required />
+                    <strong id="xoa-tai-khoang-internship-form-user-name"></strong>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-outline-danger submit-xoa-tai-khoang-internship-form-btn">
+                    Xóa
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(() => {
+        $(document).on('click', '.xoa-tai-khoang-btn', function () {
+            const userId = $(this).data('user-id')
+            const name = $(this).data('user-name')
+
+            console.log('name: ', name)
+
+            $('#xoa-tai-khoang-internship-form-user-id').val(userId)
+            $('#xoa-tai-khoang-internship-form-user-name').text(name)
+        })
+        $('.submit-xoa-tai-khoang-internship-form-btn').on('click', () => {
+            $('#xoa-tai-khoang-internship-form').trigger('submit')
+        })
+        $('#xoa-tai-khoang-internship-form').on('submit', (e) => {
+            e.preventDefault()
+
+            $.ajax({
+                url: '/xoa-thong-tin',
+                type: 'POST',
+                data: {
+                    userId: $('#xoa-tai-khoang-internship-form-user-id').val(),
+                },
+                success: (response) => {
+                    Swal.fire(response.message)
+                    $('#xoa-tai-khoang-internship-modal').modal('hide')
+                },
+                error: (response) => {
+                    Swal.fire(response.responseJSON?.message)
+                },
+            })
+        })
+    })
+</script>

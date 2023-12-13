@@ -32,12 +32,21 @@ $(() => {
             {
                 data: null,
                 render: function (data, type, row) {
-                    return `<button class="btn btn-outline-primary btn-sm cap-nhat-tai-khoang-btn" 
+                    let editBtn = `<button class="btn btn-outline-primary btn-sm cap-nhat-tai-khoang-btn" 
                                     data-user-id="${row._id}"
                                     data-bs-toggle="modal" 
                                     data-bs-target="#cap-nhat-tai-khoang-internship-modal">
                           <i class="bi bi-pencil-square"></i>
                       </button>`;
+
+                    let deleteBtn = `<button class="btn btn-outline-danger btn-sm xoa-tai-khoang-btn" 
+                                    data-user-id="${row._id}"
+                                    data-user-name="${row.username}"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#xoa-tai-khoang-internship-modal">
+                          <i class="bi bi-trash"></i>
+                      </button>`;
+                    return `${editBtn} ${deleteBtn}`;
                 },
             },
         ],
