@@ -1,0 +1,51 @@
+<!-- views/index.ejs -->
+
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Tạo danh sách đơn</title>
+
+        <%- include('./partials/head'); -%>
+
+        <style>
+            .x-spreadsheet-sheet,
+            .x-spreadsheet-toolbar {
+                width: 100% !important;
+            }
+        </style>
+    </head>
+
+    <body>
+        <!-- nav -->
+        <%- include('./partials/nav'); -%>
+        <!-- Bootstrap Spinner -->
+        <div class="box-spinner">
+            <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none"></div>
+        </div>
+
+        <div class="container mb-3">
+            <div class="row">
+                <h1 class="text-center">Bảng chấm công</h1>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col">
+                    <button id="luu-bang-cham-cong-btn" class="btn btn-outline-primary btn-sm">Lưu</button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <div id="gridctr"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- footer -->
+        <%- include('./partials/footer'); -%>
+
+        <script defer src="/js/bang-cham-cong.js"></script>
+    </body>
+</html>

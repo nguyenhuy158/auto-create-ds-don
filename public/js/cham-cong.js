@@ -24,7 +24,12 @@ $(() => {
                 color: 'yellow',
                 textColor: 'black'
             },
-        ]
+        ],
+        eventClick: function (info) {
+            const ngayCongId = info.event.id;
+
+            $('#chinh-sua-ngay-cong-modal').modal('show');
+        }
     });
     calendar.setOption('locale', 'vi');
     calendar.render();

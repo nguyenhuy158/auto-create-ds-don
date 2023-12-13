@@ -1,0 +1,86 @@
+<!-- Modal -->
+<div
+    class="modal fade"
+    id="chinh-sua-ngay-cong-modal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tạo tài khoản</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="cap-nhat-tai-khoang-internship-form" method="post">
+                    <input
+                        type="hidden"
+                        id="cap-nhat-ngay-lam-form-id"
+                    />
+                    <input
+                        type="hidden"
+                        name="daterange"
+                        id="cap-nhat-ngay-lam-form-ngay-lam"
+                    />
+                    <div class="col">
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label>Người làm</label>
+                                <select disabled class="form-select nguoi-lam-input" name="">
+                                    <option value="<%= user._id %>" selected><%= user.username %></option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label>Buổi sáng</label>
+                                <select class="form-select gio-buoi-sang-input" name="">
+                                    <option value="0" selected>Không làm</option>
+                                    <option value="2">Ca 1</option>
+                                    <option value="2">Ca 2</option>
+                                    <option value="4">Ca 1 & Ca 2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label>Buổi chiều</label>
+                                <select class="form-select gio-buoi-chieu-input" name="">
+                                    <option value="0" selected>Không làm</option>
+                                    <option value="2">Ca 1</option>
+                                    <option value="2">Ca 2</option>
+                                    <option value="4">Ca 1 & Ca 2</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <div class="col">
+                                <label>Thêm giờ</label>
+                                <input class="form-control gio-lam-them-input" value="0" />
+                            </div>
+                        </div>
+
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
+                <button type="button" class="btn btn-outline-primary submit-cap-nhat-tai-khoang-internship-form-btn">
+                    Cập nhật
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(() => {
+        
+    })
+</script>
