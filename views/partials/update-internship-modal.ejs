@@ -11,7 +11,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h1 class="modal-title fs-5" id="staticBackdropLabel">Tạo tài khoản</h1>
+                <h1 class="modal-title fs-5" id="staticBackdropLabel">Cập nhật thông tin</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -24,14 +24,20 @@
                     />
                     <div class="form-group mb-3">
                         <label for="password">Tên:</label>
-                        <input type="text" class="form-control" id="fullName" name="fullName" required />
+                        <input
+                            type="text"
+                            class="form-control"
+                            id="cap-nhat-tai-khoang-internship-form-user-name"
+                            name="fullName"
+                            required
+                        />
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
                 <button type="button" class="btn btn-outline-primary submit-cap-nhat-tai-khoang-internship-form-btn">
-                    Tạo
+                    Cập nhật
                 </button>
             </div>
         </div>
@@ -51,7 +57,7 @@
         $('#cap-nhat-tai-khoang-internship-form').on('submit', (e) => {
             e.preventDefault()
 
-            const fullName = $('#fullName').val()
+            const fullName = $('#cap-nhat-tai-khoang-internship-form-user-name').val()
 
             if (!fullName || !fullName.trim()) {
                 Swal.fire('Vui lòng nhập đầy đủ thông tin.')
@@ -67,8 +73,9 @@
                 },
                 success: (response) => {
                     Swal.fire(response.message)
-                    $('#tao-tai-khoang-internship-modal').modal('hide')
-                    $('#register-form').trigger('reset')
+                    $('#cap-nhat-tai-khoang-internship-modal').modal('hide')
+                    $('#cap-nhat-tai-khoang-internship-form').trigger('reset')
+                    internshipTable.ajax.reload()
                 },
                 error: (response) => {
                     Swal.fire(response.responseJSON?.message)

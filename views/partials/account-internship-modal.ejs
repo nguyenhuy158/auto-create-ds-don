@@ -40,6 +40,9 @@
 
 <script>
     $(() => {
+        $(document).on('click', '.them-internship-btn', () => {
+            $('#tao-tai-khoang-internship-modal').modal('show')
+        })
         $('.submit-register-form-btn').on('click', () => {
             $('#register-form').trigger('submit')
         })
@@ -67,6 +70,7 @@
                     Swal.fire(response.message)
                     $('#tao-tai-khoang-internship-modal').modal('hide')
                     $('#register-form').trigger('reset')
+                    internshipTable.ajax.reload()
                 },
                 error: (response) => {
                     Swal.fire(response.responseJSON?.message)

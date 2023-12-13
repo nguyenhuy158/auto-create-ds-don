@@ -1,8 +1,50 @@
+let internshipTable;
 $(() => {
-    $("#internship-table").DataTable({
+    internshipTable = $("#internship-table").DataTable({
         ajax: "/internship/list",
         rowId: "_id",
-
+        buttons: [
+            {
+                text: `<i class="bi bi-plus"></i>`,
+                className: "them-internship-btn btn-outline-primary",
+                action: function (e, dt, node, config) {},
+            },
+            {
+                text: `<i class="bi bi-arrow-clockwise"></i>`,
+                className: "reload-internship-table-btn",
+                action: function (e, dt, node, config) {
+                    dt.ajax.reload();
+                },
+            },
+            "spacer",
+            {
+                text: `<i class="bi bi-three-dots"></i>`,
+                extend: "collection",
+                className: "options-btn",
+                buttons: [
+                    "<h3>Export</h3>",
+                    "copy",
+                    "pdf",
+                    "excel",
+                    "print",
+                    '<h3 class="not-top-heading">Hide/Unhide</h3>',
+                    "columnsToggle",
+                ],
+            },
+        ],
+        dom:
+            "B<'row'<'col-sm-12 col-md-6'l><'col-sm-12 col-md-6'f>>" +
+            "<'row'<'col-sm-12'tr>>" +
+            "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
+        processing: true,
+        language: {
+            emptyTable: "Không có dữ liệu",
+            info: "Hiển thị (_START_ - _END_) tổng _TOTAL_ người",
+            infoEmpty: "Hiển thị (0 - 0) tổng 0 người",
+            infoFiltered: "(filtered from _MAX_ total entries)",
+            lengthMenu: "Hiển thị _MENU_ người",
+            search: "Tìm kiếm",
+        },
         columns: [
             {
                 data: null,
@@ -51,4 +93,11 @@ $(() => {
             },
         ],
     });
+
+    $(".dt-buttons")
+        .addClass("mb-3")
+        .find("button")
+        .each(function () {
+            $(this).removeClass("btn-secondary").addClass("btn-outline-primary");
+        });
 });

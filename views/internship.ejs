@@ -10,6 +10,44 @@
         <%- include('./partials/head'); -%>
 
         <link rel="stylesheet" href="/css/table.css" />
+        <style>
+            html div.dt-button-collection,
+            body div.dt-button-collection {
+                width: 400px;
+            }
+
+            html div.dt-button-collection .dt-button,
+            body div.dt-button-collection .dt-button {
+                display: inline-block;
+                width: 32%;
+            }
+
+            html div.dt-button-collection .buttons-colvis,
+            body div.dt-button-collection .buttons-colvis {
+                display: inline-block;
+                width: 49%;
+            }
+
+            html div.dt-button-collection h3,
+            body div.dt-button-collection h3 {
+                margin-top: 5px;
+                margin-bottom: 5px;
+                font-weight: 100;
+                border-bottom: 1px solid rgba(150, 150, 150, 0.5);
+                font-size: 1em;
+                padding: 0 1em;
+            }
+
+            html div.dt-button-collection h3.not-top-heading,
+            body div.dt-button-collection h3.not-top-heading {
+                margin-top: 10px;
+            }
+
+            html .pointer,
+            body .pointer {
+                cursor: pointer;
+            }
+        </style>
     </head>
 
     <body>
@@ -25,19 +63,8 @@
                 <h1 class="text-center">Quản lý Internship</h1>
             </div>
 
-            <div class="row mb-3">
-                <div class="col">
-                    <button class="btn btn-sm btn-outline-primary them-internship-btn">
-                        <i class="bi bi-plus"></i>
-                    </button>
-                    <button class="btn btn-sm btn-outline-success reload-internship-table-btn">
-                        <i class="bi bi-arrow-clockwise"></i>
-                    </button>
-                </div>
-            </div>
-
             <div class="row">
-                <div class="col-8">
+                <div class="col">
                     <table id="internship-table">
                         <thead>
                             <td>No.</td>
@@ -50,7 +77,7 @@
                     </table>
                 </div>
 
-                <div class="col-4"></div>
+                <!-- <div class="col-4"></div> -->
             </div>
         </div>
 
