@@ -1,5 +1,7 @@
 // create router file in nodejs
 
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 const moment = require("moment");
 const XLSX = require("xlsx");
 
@@ -100,7 +102,7 @@ router.get("/events", async (req, res) => {
 
         const formattedEvents = events.map((event) => ({
             id: event._id,
-            title: `${event.nguoiLam?.fullName || event.nguoiLam.username}`,
+            title: `${event.nguoiLam?.fullName || event.nguoiLam?.username}`,
             start: moment(event.ngayLam).format(MOMENT_FORMAT),
             end: moment(event.ngayLam).format(MOMENT_FORMAT),
         }));
@@ -109,6 +111,23 @@ router.get("/events", async (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal Server Error");
+    }
+});
+
+router.get("/events/:id", async (req, res, next) => {
+    const id = req.params.id;
+    if (!ObjectId.isValid(id)) {
+        return next();
+    }
+    try {
+        const event = await NgayLam.findById(id).populate("nguoiLam");
+
+        res.status(200).json({
+            data: event,
+            message: "Thêm dữ liệu thành công",
+        });
+    } catch (error) {
+        res.status(500).send(`Đã có lỗi xảy ra [code: ${error}]`);
     }
 });
 

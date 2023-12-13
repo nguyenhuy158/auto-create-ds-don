@@ -23,7 +23,7 @@
                             <div class="col">
                                 <label>Người làm</label>
                                 <select disabled class="form-select nguoi-lam-input" name="">
-                                    <option value="<%= user._id %>" selected><%= user.username %></option>
+                                    <option value="" selected id="nguoi-lam-option-modal"></option>
                                 </select>
                             </div>
                         </div>
@@ -31,7 +31,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Buổi sáng</label>
-                                <select class="form-select gio-buoi-sang-input" name="">
+                                <select class="form-select gio-buoi-sang-input-modal" name="">
                                     <option value="0" selected>Không làm</option>
                                     <option value="2">Ca 1</option>
                                     <option value="2">Ca 2</option>
@@ -43,7 +43,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Buổi chiều</label>
-                                <select class="form-select gio-buoi-chieu-input" name="">
+                                <select class="form-select gio-buoi-chieu-input-modal" name="">
                                     <option value="0" selected>Không làm</option>
                                     <option value="2">Ca 1</option>
                                     <option value="2">Ca 2</option>
@@ -55,7 +55,7 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Thêm giờ</label>
-                                <input class="form-control gio-lam-them-input" value="0" />
+                                <input class="form-control gio-lam-them-input-modal" value="0" />
                             </div>
                         </div>
                     </div>
