@@ -16,21 +16,14 @@
             </div>
             <div class="modal-body">
                 <form id="cap-nhat-tai-khoang-internship-form" method="post">
-                    <input
-                        type="hidden"
-                        id="cap-nhat-ngay-lam-form-id"
-                    />
-                    <input
-                        type="hidden"
-                        name="daterange"
-                        id="cap-nhat-ngay-lam-form-ngay-lam"
-                    />
+                    <input type="hidden" id="cap-nhat-ngay-lam-form-id" />
+                    <input type="hidden" name="daterange" id="cap-nhat-ngay-lam-form-ngay-lam" />
                     <div class="col">
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Người làm</label>
                                 <select disabled class="form-select nguoi-lam-input" name="">
-                                    <option value="<%= user._id %>" selected><%= user.username %></option>
+                                    <option value="" selected id="nguoi-lam-option-modal"></option>
                                 </select>
                             </div>
                         </div>
@@ -38,11 +31,10 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Buổi sáng</label>
-                                <select class="form-select gio-buoi-sang-input" name="">
+                                <select class="form-select gio-buoi-sang-input gio-buoi-sang-input-modal" name="">
                                     <option value="0" selected>Không làm</option>
-                                    <option value="2">Ca 1</option>
-                                    <option value="2">Ca 2</option>
-                                    <option value="4">Ca 1 & Ca 2</option>
+                                    <option value="+60">Ca 1 và Ca 2</option>
+                                    <option value="-60">Ca 1 hoặc Ca 2</option>
                                 </select>
                             </div>
                         </div>
@@ -50,11 +42,10 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Buổi chiều</label>
-                                <select class="form-select gio-buoi-chieu-input" name="">
+                                <select class="form-select gio-buoi-chieu-input gio-buoi-chieu-input-modal" name="">
                                     <option value="0" selected>Không làm</option>
-                                    <option value="2">Ca 1</option>
-                                    <option value="2">Ca 2</option>
-                                    <option value="4">Ca 1 & Ca 2</option>
+                                    <option value="+60">Ca 3 và Ca 4</option>
+                                    <option value="-60">Ca 3 hoặc Ca 4</option>
                                 </select>
                             </div>
                         </div>
@@ -62,16 +53,25 @@
                         <div class="row mb-3">
                             <div class="col">
                                 <label>Thêm giờ</label>
-                                <input class="form-control gio-lam-them-input" value="0" />
+                                <input class="form-control gio-lam-them-input gio-lam-them-input-modal" value="0" />
                             </div>
                         </div>
 
+                        <!-- tong gio -->
+                        <div class="row mb-3">
+                            <div class="col">
+                                <p class="form-control" disabled>
+                                    Tổng giờ làm thêm:
+                                    <strong class="tong-gio-lam-them tong-gio-lam-them-modal">0</strong>
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Thoát</button>
-                <button type="button" class="btn btn-outline-primary submit-cap-nhat-tai-khoang-internship-form-btn">
+                <button type="button" class="btn btn-outline-primary chinh-sua-ngay-cong-btn">
                     Cập nhật
                 </button>
             </div>
@@ -80,7 +80,5 @@
 </div>
 
 <script>
-    $(() => {
-        
-    })
+    $(() => {})
 </script>
