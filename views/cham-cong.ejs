@@ -58,9 +58,8 @@
                             <label>Buổi sáng</label>
                             <select class="form-select gio-buoi-sang-input" name="">
                                 <option value="0" selected>Không làm</option>
-                                <option value="2">Ca 1</option>
-                                <option value="2">Ca 2</option>
-                                <option value="4">Ca 1 & Ca 2</option>
+                                <option value="+60">Ca 1 và Ca 2</option>
+                                <option value="-60">Ca 1 hoặc Ca 2</option>
                             </select>
                         </div>
                     </div>
@@ -70,9 +69,8 @@
                             <label>Buổi chiều</label>
                             <select class="form-select gio-buoi-chieu-input" name="">
                                 <option value="0" selected>Không làm</option>
-                                <option value="2">Ca 1</option>
-                                <option value="2">Ca 2</option>
-                                <option value="4">Ca 1 & Ca 2</option>
+                                <option value="+60">Ca 3 và Ca 4</option>
+                                <option value="-60">Ca 3 hoặc Ca 4</option>
                             </select>
                         </div>
                     </div>
@@ -98,7 +96,7 @@
                         <div class="col">
                             <p class="form-control gio-lam-them-input" disabled>
                                 Tổng giờ làm thêm:
-                                <strong id="">0</strong>
+                                <strong class="tong-gio-lam-them">0</strong>
                             </p>
                         </div>
                     </div>

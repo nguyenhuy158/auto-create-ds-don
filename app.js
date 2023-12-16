@@ -5,12 +5,16 @@ const moment = require("moment");
 const fs = require("fs");
 const multer = require("multer");
 const session = require("express-session");
+const XLSX = require("xlsx");
 
 const chamCongRouter = require("./routers/cham-cong");
 const internshipRouter = require("./routers/internship");
 const authRouter = require("./routers/auth");
 const adminRouter = require("./routers/admin");
 const mongoose = require("./database");
+
+const User = require("./models/user");
+const NgayLam = require("./models/ngay-lam");
 
 const { readArrayFromFile, writeArrayToFile } = require("./utils");
 const names = [
@@ -152,6 +156,7 @@ app.use((req, res, next) => {
     }
     return res.redirect("/");
 });
+
 app.use("/cham-cong", chamCongRouter);
 
 app.use("/internship", internshipRouter);

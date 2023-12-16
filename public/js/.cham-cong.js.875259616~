@@ -113,7 +113,8 @@ $(() => {
             ngayLam: moment(ngayLam, "DD/MM/YYYY").format("DD/MM/YYYY"),
             gioBuoiSang: gioBuoiSang,
             gioBuoiChieu: gioBuoiChieu,
-            gioLamThem: gioLamThem,
+            gioLamThem: +gioLamThem + +gioBuoiSang + +gioBuoiChieu,
+          
             nguoiLam,
         };
         console.log("Data: ", data);

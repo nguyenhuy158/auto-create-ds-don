@@ -10,6 +10,7 @@ const ngayLamSchema = new mongoose.Schema(
         gioBuoiSang: { type: Number, default: 0 },
         gioBuoiChieu: { type: Number, default: 0 },
         gioLamThem: { type: Number, default: 0 },
+        tongGio: {type: Number, default: 0 }
     },
     {
         timestamps: true,

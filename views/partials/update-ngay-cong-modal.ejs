@@ -33,9 +33,8 @@
                                 <label>Buổi sáng</label>
                                 <select class="form-select gio-buoi-sang-input-modal" name="">
                                     <option value="0" selected>Không làm</option>
-                                    <option value="2">Ca 1</option>
-                                    <option value="2">Ca 2</option>
-                                    <option value="4">Ca 1 & Ca 2</option>
+                                    <option value="+60">Ca 1 và Ca 2</option>
+                                    <option value="-60">Ca 1 hoặc Ca 2</option>
                                 </select>
                             </div>
                         </div>
@@ -45,9 +44,8 @@
                                 <label>Buổi chiều</label>
                                 <select class="form-select gio-buoi-chieu-input-modal" name="">
                                     <option value="0" selected>Không làm</option>
-                                    <option value="2">Ca 1</option>
-                                    <option value="2">Ca 2</option>
-                                    <option value="4">Ca 1 & Ca 2</option>
+                                    <option value="+60">Ca 3 và Ca 4</option>
+                                    <option value="-60">Ca 3 hoặc Ca 4</option>
                                 </select>
                             </div>
                         </div>
@@ -56,6 +54,16 @@
                             <div class="col">
                                 <label>Thêm giờ</label>
                                 <input class="form-control gio-lam-them-input-modal" value="0" />
+                            </div>
+                        </div>
+
+                        <!-- tong gio -->
+                        <div class="row mb-3">
+                            <div class="col">
+                                <p class="form-control gio-lam-them-input" disabled>
+                                    Tổng giờ làm thêm:
+                                    <strong class="tong-gio-lam-them">0</strong>
+                                </p>
                             </div>
                         </div>
                     </div>
