@@ -115,77 +115,34 @@ router.get("/events", async (req, res) => {
     }
 });
 
-router.get("/events/:id", async (req, res, next) => {
-    const id = req.params.id;
-    if (!ObjectId.isValid(id)) {
-        return next();
-    }
+router.get('/events/excel', async (req, res) => {
     try {
-        const event = await NgayLam.findById(id).populate("nguoiLam");
+        let { start, end } = req.query;
 
-        res.status(200).json({
-            data: event,
-            message: "Lấy dữ liệu thành công",
-        });
-    } catch (error) {
-        res.status(500).send(`Đã có lỗi xảy ra [code: ${error}]`);
-    }
-});
+        if (!start || !end) {
+            const currentMonthStart = moment().startOf('month');
+            const currentMonthEnd = moment().endOf('month');
+            start = start || currentMonthStart;
+            end = end || currentMonthEnd;
+        }
 
-router.get("/events/excel", async (req, res) => {
-    try {
-        const result = await NgayLam.aggregate([
-            {
-                $group: {
-                    _id: {
-                        $dateToString: {
-                            format: "%d",
-                            date: "$ngayLam",
-                        },
-                    },
-                    count: { $sum: 1 },
-                    nguoiLam: { $push: "$$ROOT" },
-                },
-            },
-            {
-                $unwind: "$nguoiLam",
-            },
-            {
-                $lookup: {
-                    from: "users",
-                    localField: "nguoiLam.nguoiLam",
-                    foreignField: "_id",
-                    as: "ChiTietNguoiLam",
-                },
-            },
-            {
-                $unwind: "$ChiTietNguoiLam",
-            },
-            {
-                $group: {
-                    _id: "$_id",
-                    count: { $first: "$count" },
-                    nguoiLam: {
-                        $push: {
-                            gioBuoiSang: "$nguoiLam.gioBuoiSang",
-                            gioBuoiChieu: "$nguoiLam.gioBuoiChieu",
-                            gioLamThem: "$nguoiLam.gioLamThem",
-                            fullName: "$ChiTietNguoiLam.fullName",
-                        },
-                    },
-                },
-            },
-        ]).exec();
+        let events = await NgayLam.find({
+            ngayLam: {
+                $gte: start,
+                $lte: end,
+            }
+        }).populate('nguoiLam');
 
-        console.log(result);
-        // Data transformation
-        const transformedData = result.map((item) => {
-            const nguoiLam = item.nguoiLam.map((person) => ({
-                fullName: person.fullName,
-                morning: person.gioBuoiSang,
-                afternoon: person.gioBuoiChieu,
-                bonus: person.gioLamThem,
-            }));
+        let formattedEvents = events.map(event => {
+            // Destructure the event object and exclude _id and __v properties
+            const {
+                _id,
+                __v,
+                nguoiLam,
+                ...rest
+            } = event.toObject();
+
+            // Format the event and exclude _id and __v properties
             return {
                 _id: item._id,
                 count: item.count,

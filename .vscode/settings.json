@@ -23,11 +23,10 @@
     "editor.renderWhitespace": "all",
     "files.exclude": {
         ".idea/": true,
-        ".vscode/": true,
+        ".vscode/": false,
         "node_modules/": true,
         "*.log": true,
         "*.lock": true,
-        "setting.json": true
     },
     "search.exclude": {
         ".idea/": true,
@@ -35,7 +34,6 @@
         "node_modules/": true,
         "*.log": true,
         "*.lock": true,
-        "setting.json": true
     },
     "auto-rename-tag.activationOnLanguage": [
         "*"
@@ -104,7 +102,7 @@
     "editor.foldingImportsByDefault": true,
     "editor.foldingStrategy": "indentation",
     "editor.fontFamily": "JetBrains Mono, Cascadia Code, Fira Code, Hasklig, VictorMono, Monoid, Consolas, 'Courier New', monospace",
-    "editor.fontLigatures": true,
+    "editor.fontLigatures": true, 
     "editor.fontSize": 16,
     "editor.fontVariations": true,
     "editor.fontWeight": "500",
@@ -216,7 +214,6 @@
     "scm.experimental.showSyncView": true,
     "scm.inputFontFamily": "Cascadia Code, Fira Code, Hasklig, VictorMono, Monoid, Consolas, 'Courier New', monospace",
     "screencastMode.fontSize": 56,
-    "terminal.integrated.defaultProfile.windows": "Git Bash",
     "terminal.integrated.enableImages": true,
     "terminal.integrated.fontFamily": "Cascadia Code, Fira Code, Hasklig, VictorMono, Monoid, Consolas, 'Courier New', monospace",
     "terminal.integrated.fontSize": 12,
@@ -240,7 +237,7 @@
     "window.titleSeparator": "👻",
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.activityBar.location": "top",
-    "workbench.colorTheme": "Default Light+",
+    "workbench.colorTheme": "Default Dark Modern",
     "workbench.editor.enablePreview": false,
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.restoreViewState": false,

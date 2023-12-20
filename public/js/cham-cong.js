@@ -33,13 +33,22 @@ $(() => {
                 success: function (response) {
                     const ngayCong = response.data;
                     console.log("ngayCong: ", ngayCong);
+                    $(".chinh-sua-ngay-cong-btn").data("ngay-lam-id", ngayCong._id);
+
                     $("#nguoi-lam-option-modal")
                         .text(ngayCong.nguoiLam.fullName || ngayCong.nguoiLam.username)
                         .val(ngayCong.nguoiLam._id);
 
-                    $(".gio-buoi-sang-input-modal").val(`+${ngayCong.gioBuoiSang}`);
-                    $(".gio-buoi-chieu-input-modal").val(`+${ngayCong.gioBuoiChieu}`);
+                    const gioBuoiSang = ngayCong.gioBuoiSang > 0 ? `+${ngayCong.gioBuoiSang}` : ngayCong.gioBuoiSang;
+                    const gioBuoiChieu =
+                        ngayCong.gioBuoiChieu > 0 ? `+${ngayCong.gioBuoiChieu}` : ngayCong.gioBuoiChieu;
+
+                    $(".gio-buoi-sang-input-modal").val(`${gioBuoiSang}`);
+                    $(".gio-buoi-chieu-input-modal").val(`${gioBuoiChieu}`);
                     $(".gio-lam-them-input-modal").val(ngayCong.gioLamThem);
+
+                    const total = +ngayCong.gioBuoiSang + +ngayCong.gioBuoiChieu + +ngayCong.gioLamThem;
+                    $(".tong-gio-lam-them-modal").text(`${total} phút ~ ${(total / 180).toFixed(2)} buổi`);
 
                     $("#chinh-sua-ngay-cong-modal").modal("show");
                 },
@@ -85,18 +94,6 @@ $(() => {
         },
     );
 
-    $(".gio-buoi-sang-input, .gio-buoi-chieu-input, .gio-lam-them-input").on("change input", () => {
-        console.log("parent:", $(this).parent().find(".gio-buoi-sang-input"));
-        console.log("parents:", $(this).parents().find(".gio-buoi-sang-input"));
-
-        const gioBuoiSang = $(".gio-buoi-sang-input").val();
-        const gioBuoiChieu = $(".gio-buoi-chieu-input").val();
-        const gioLamThem = $(".gio-lam-them-input").val();
-
-        const total = +gioBuoiSang + +gioBuoiChieu + +gioLamThem;
-        $(".tong-gio-lam-them").text(`${total} phút ~ ${(total / 180).toFixed(2)} buổi`);
-    });
-
     $(".them-du-lieu-btn").on("click", function () {
         const ngayLam = $(".ngay-lam-input").val();
         const gioBuoiSang = $(".gio-buoi-sang-input").val();
@@ -124,7 +121,6 @@ $(() => {
             data: data,
             success: (response) => {
                 Swal.fire(response.message);
-                calendar.refetchEvents();
             },
             error: (response) => {
                 Swal.fire(response.responseJSON?.message);

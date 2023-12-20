@@ -20,6 +20,7 @@ exports.requestTypeToPerson = {
     "Chuyển nhóm môn học": "Nguyễn Thủy Kim Tuyền",
     "Hủy môn học trong KHHT": "Nguyễn Thủy Kim Tuyền",
     "Xem xét kết quả ĐKMH": "Nguyễn Thủy Kim Tuyền",
+    "Đăng ký môn học trùng thời khóa biểu": "Nguyễn Thủy Kim Tuyền",
     "Đơn xin đăng ký môn học trễ hạn": "Nguyễn Thủy Kim Tuyền",
     "Hủy môn học (một số trường hợp vì lý do khách quan)": "Nguyễn Thủy Kim Tuyền",
     "Đơn xin xem xét kết quả đăng ký KHHT": "Nguyễn Thủy Kim Tuyền",
