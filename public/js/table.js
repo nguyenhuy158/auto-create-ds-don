@@ -12,6 +12,20 @@ $(() => {
     function createTable(data, dateSent, dateReceive, totalDon, nguoinhan = false) {
         var table = $('<table>').addClass('text-center');
 
+        // check dateSent is friday saturday or sunday convert to monday closest
+        // using momentjs
+        var dateSent = moment(dateSent, 'DD/MM/YYYY');
+        var day = dateSent.day();
+        if (day === 5) {
+            dateSent = dateSent.add(3, 'days').format('DD/MM/YYYY');
+        }
+        if (day === 6) {
+            dateSent = dateSent.add(2, 'days').format('DD/MM/YYYY');
+        }
+        if (day === 0) {
+            dateSent = dateSent.add(1, 'days').format('DD/MM/YYYY');
+        }
+
         var colspan = nguoinhan ? 7 : 6;
         // Add thead
         var thead = $('<thead>');
