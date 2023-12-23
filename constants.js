@@ -17,6 +17,7 @@ exports.requestTypeToPerson = {
     "Đơn xin cấp giấy chứng nhận tốt nghiệp tạm thời": "Nguyễn Thị Kim Tuyến",
     "Đơn đăng ký môn thay thế tốt nghiệp": "Nguyễn Văn Khoa",
     "Đơn xem xét kết quả xét môn thay thế tốt nghiệp": "Nguyễn Văn Khoa",
+    "Đơn xem xét kết quả xét luận văn": "Nguyễn Văn Khoa",
     "Chuyển nhóm môn học": "Nguyễn Thủy Kim Tuyền",
     "Hủy môn học trong KHHT": "Nguyễn Thủy Kim Tuyền",
     "Xem xét kết quả ĐKMH": "Nguyễn Thủy Kim Tuyền",
@@ -67,7 +68,12 @@ exports.keepColumnsV1 = [
     "Họ tên",
 ];
 
-exports.cacLoaiDonSeBiXoa = ["Đơn đề nghị miễn Tiếng Anh", "Đơn xin cấp bảng điểm", "Cấp bản sao bằng tốt nghiệp"];
+exports.cacLoaiDonSeBiXoa = [
+    "Đơn đề nghị miễn Tiếng Anh",
+    "Đơn xin cấp bảng điểm",
+    "Gia hạn đóng học phí",
+    "Cấp bản sao bằng tốt nghiệp"
+];
 
 exports.mongoURI = "mongodb+srv://github:mMWIrT4GWZ7gaPJv@github.ozgezwg.mongodb.net/e001";
 
