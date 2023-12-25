@@ -94,6 +94,19 @@ $(() => {
         },
     );
 
+
+    $(".gio-buoi-sang-input, .gio-buoi-chieu-input, .gio-lam-them-input").on("input", function () {
+        const isModal = $(this).attr("class").includes("modal");
+        const modal = isModal ? "-modal" : "";
+
+        const gioBuoiSang = $(`.gio-buoi-sang-input${modal}`).val();
+        const gioBuoiChieu = $(`.gio-buoi-chieu-input${modal}`).val();
+        const gioLamThem = $(`.gio-lam-them-input${modal}`).val();
+
+        const total = +gioBuoiSang + +gioBuoiChieu + +gioLamThem;
+        $(`.tong-gio-lam-them${modal}`).text(`${total} phút ~ ${(total / 180).toFixed(2)} buổi`);
+    });
+
     $(".them-du-lieu-btn").on("click", function () {
         const ngayLam = $(".ngay-lam-input").val();
         const gioBuoiSang = $(".gio-buoi-sang-input").val();
@@ -121,6 +134,7 @@ $(() => {
             data: data,
             success: (response) => {
                 Swal.fire(response.message);
+                calendar.refetchEvents();
             },
             error: (response) => {
                 Swal.fire(response.responseJSON?.message);

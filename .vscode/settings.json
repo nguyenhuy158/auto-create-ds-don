@@ -74,7 +74,6 @@
     "debug.console.wordWrap": false,
     "debug.toolBarLocation": "commandCenter",
     "diffEditor.codeLens": false,
-    "diffEditor.diffAlgorithm": "advanced",
     "diffEditor.experimental.showEmptyDecorations": false,
     "diffEditor.experimental.showMoves": true,
     "diffEditor.hideUnchangedRegions.enabled": true,
@@ -238,7 +237,7 @@
     "workbench.activityBar.iconClickBehavior": "toggle",
     "workbench.activityBar.location": "top",
     "workbench.colorTheme": "Default Dark Modern",
-    "workbench.editor.enablePreview": false,
+    "workbench.editor.enablePreview": true,
     "workbench.editor.pinnedTabsOnSeparateRow": true,
     "workbench.editor.restoreViewState": false,
     "workbench.hover.delay": 10,
@@ -267,6 +266,7 @@
     "[css]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
+    "diffEditor.diffAlgorithm": "legacy",
     // "editor.defaultFormatter": "GitHub.copilot",
     // "editor.defaultFoldingRangeProvider": "GitHub.copilot",
     // "editor.cursorBlinking": "smooth",
