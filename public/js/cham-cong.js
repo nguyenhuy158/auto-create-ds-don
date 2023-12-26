@@ -107,6 +107,8 @@ $(() => {
         $(`.tong-gio-lam-them${modal}`).text(`${total} phút ~ ${(total / 180).toFixed(2)} buổi`);
     });
 
+
+    // Them ngay cong 
     $(".them-du-lieu-btn").on("click", function () {
         const ngayLam = $(".ngay-lam-input").val();
         const gioBuoiSang = $(".gio-buoi-sang-input").val();
@@ -135,6 +137,40 @@ $(() => {
             success: (response) => {
                 Swal.fire(response.message);
                 calendar.refetchEvents();
+            },
+            error: (response) => {
+                Swal.fire(response.responseJSON?.message);
+            },
+        });
+    });
+
+    // Chinh sua ngay cong
+    $(".chinh-sua-ngay-cong-btn").on("click", function () {
+        const gioBuoiSang = $(".gio-buoi-sang-input-modal").val();
+        const gioBuoiChieu = $(".gio-buoi-chieu-input-modal").val();
+        const gioLamThem = $(".gio-lam-them-input-modal").val();
+
+        if (gioBuoiSang == 0 && gioBuoiChieu == 0 && gioLamThem == 0) {
+            Swal.fire("Vui lòng chọn chọn ít nhất một buổi");
+            return;
+        }
+
+        const data = {
+            id: $(this).data("ngay-lam-id"),
+            gioBuoiSang: gioBuoiSang,
+            gioBuoiChieu: gioBuoiChieu,
+            gioLamThem: gioLamThem,
+        };
+        console.log("Data: ", data);
+
+        $.ajax({
+            url: "/cham-cong",
+            type: "PUT",
+            data: data,
+            success: (response) => {
+                Swal.fire(response.message);
+                calendar.refetchEvents();
+                $("#chinh-sua-ngay-cong-modal").modal("hide");
             },
             error: (response) => {
                 Swal.fire(response.responseJSON?.message);

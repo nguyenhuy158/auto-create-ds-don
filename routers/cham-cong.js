@@ -28,6 +28,7 @@ router.get("", async (req, res) => {
     });
 });
 
+// tạo mới ngày làm
 router.post("", async (req, res) => {
     try {
         let { ngayLam } = req.body;
@@ -82,6 +83,36 @@ router.post("", async (req, res) => {
     }
 });
 
+// cập nhật ngày làm
+router.put("", async (req, res) => {
+    const id = req.body.id;
+    if (!ObjectId.isValid(id)) {
+        return next();
+    }
+    try {
+        let { gioBuoiSang } = req.body;
+        let { gioBuoiChieu } = req.body;
+        let { gioLamThem } = req.body;
+        let tongGio = +gioBuoiSang + +gioBuoiChieu + +gioLamThem;
+
+        const event = await NgayLam.findById(id);
+        event.gioBuoiSang = gioBuoiSang;
+        event.gioBuoiChieu = gioBuoiChieu;
+        event.gioLamThem = gioLamThem;
+        event.tongGio = tongGio;
+
+        await event.save();
+
+        res.status(200).json({
+            data: event,
+            message: "Cập nhật dữ liệu thành công",
+        });
+    } catch (error) {
+        res.status(500).send(`Đã có lỗi xảy ra [code: ${error}]`);
+    }
+});
+
+// lấy ngày theo id
 router.get("/events/:id", async (req, res, next) => {
     const id = req.params.id;
     if (!ObjectId.isValid(id)) {
