@@ -19,6 +19,37 @@ function locRaCacCotCanThiet(obj, nguoinhan = false) {
 };
 
 function thayDoiNguoiXuLyDonThanh1Nguoi(obj) {
+    // C,D,G,I,S
+    // CLC: mã lớp có chữ H hoặc lớp từ 10 trở lên (số cuối)
+    // ĐH Tiếng Anh: Mã lớp có chữ V, K
+    // Liên kết: C,D,G,I,S
+    // Tiêu chuẩn: 0
+    if (
+        (obj['Lớp'][2] == 'F' && obj['Lớp'][3] == 'S') ||
+        obj['Lớp'][2] == 'C' ||
+        obj['Lớp'][2] == 'D' ||
+        obj['Lớp'][2] == 'G' ||
+        obj['Lớp'][2] == 'I' ||
+        obj['Lớp'][2] == 'S'
+    ) {
+        let lengthBoPhanXuLy = obj['Người giải quyết đơn'].split('\n').length;
+        console.log(`🚀 🚀 file: process.js:36 🚀 thayDoiNguoiXuLyDonThanh1Nguoi 🚀 lengthBoPhanXuLy`, lengthBoPhanXuLy);
+        console.log(`🚀 🚀 file: process.js:36 🚀 thayDoiNguoiXuLyDonThanh1Nguoi 🚀 obj['Người giải quyết đơn']`, obj['Người giải quyết đơn']);
+        if (lengthBoPhanXuLy > 1) {
+            // return {
+            //     ...obj, // sao chep thuoc tinh hien tai
+            //     'Người giải quyết đơn': requestTypeToPerson[obj['Loại đơn (Tên đơn)']]
+            // };
+            obj['Người giải quyết đơn'] = requestTypeToPerson[obj['Loại đơn (Tên đơn)']];
+            return obj;
+        }
+        obj['Người giải quyết đơn'] = obj['Người giải quyết đơn'];
+        return obj;
+        // return {
+        //     ...obj, // sao chep thuoc tinh hien tai
+        //     'Người giải quyết đơn': obj['Người giải quyết đơn']
+        // };
+    }
     if (obj['Loại đơn (Tên đơn)'] in requestTypeToPerson) {
         obj['Người giải quyết đơn'] = requestTypeToPerson[obj['Loại đơn (Tên đơn)']];
     }
@@ -76,6 +107,32 @@ function xoaCacDonNhuMienTaVaCapBangDiemV2(data, cacLoaiDonSeBiXoa) {
 
 function themNguoiXuLyDon(data, requestTypeToPerson) {
     const result = data.map(obj => {
+        // C,D,G,I,S
+        // CLC: mã lớp có chữ H hoặc lớp từ 10 trở lên (số cuối)
+        // ĐH Tiếng Anh: Mã lớp có chữ V, K
+        // Liên kết: C,D,G,I,S
+        // Tiêu chuẩn: 0
+
+        if (
+            (obj['Lớp'][2] == 'F' && obj['Lớp'][3] == 'S') ||
+            obj['Lớp'][2] == 'C' ||
+            obj['Lớp'][2] == 'D' ||
+            obj['Lớp'][2] == 'G' ||
+            obj['Lớp'][2] == 'I' ||
+            obj['Lớp'][2] == 'S'
+        ) {
+            let lengthBoPhanXuLy = obj['Bộ phận xử lý'].split('\n').length;
+            if (lengthBoPhanXuLy > 1) {
+                return {
+                    ...obj, // sao chep thuoc tinh hien tai
+                    'Người giải quyết đơn': requestTypeToPerson[obj['Loại đơn']] // them nguoi xu ly don
+                };
+            }
+            return {
+                ...obj, // sao chep thuoc tinh hien tai
+                'Người giải quyết đơn': obj['Bộ phận xử lý'] // them nguoi xu ly don
+            };
+        }
         return {
             ...obj, // sao chep thuoc tinh hien tai
             'Người giải quyết đơn': requestTypeToPerson[obj['Loại đơn']] // them nguoi xu ly don
@@ -287,26 +344,6 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
         }
         prevType = processedData[i]['Loại đơn'];
     }
-
-    // Them thong loai don va nguoi giai quyet
-    // let prevType = null;
-    // for (let i = 0; i < processedData.length; i++) {
-    //     if (Object.keys(processedData[i]).length === 2) {
-    //         prevType = processedData[i]['Loại đơn (Tên đơn)'] || processedData[i]['Loại đơn'];
-    //         continue;
-    //     }
-    //     if (processedData[i]['Loại đơn (Tên đơn)'] !== prevType && processedData[i]['Loại đơn'] !== prevType) {
-    //         const newObj = {
-    //             'Người giải quyết đơn': processedData[i]['Người giải quyết đơn'],
-    //             'Loại đơn (Tên đơn)': processedData[i]['Loại đơn (Tên đơn)'] || processedData[i]['Loại đơn'],
-    //         };
-    //         processedData.splice(i, 0, newObj);
-    //         i++;
-    //     }
-    //     prevType = processedData[i]['Loại đơn (Tên đơn)'] || processedData[i]['Loại đơn'];
-    // }
-
-    // console.log('processedData', processedData);
 
     // doi ten cot
     processedData = processedData.map(obj => {

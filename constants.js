@@ -68,6 +68,8 @@ exports.keepColumnsV1 = [
     "Loại đơn",
     "Mã số sinh viên",
     "Họ tên",
+    "Bộ phận xử lý",
+    "Lớp"
 ];
 
 exports.cacLoaiDonSeBiXoa = [
