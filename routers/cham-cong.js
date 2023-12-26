@@ -352,7 +352,7 @@ router.get("/events/excel", async (req, res) => {
                 // console.log(`🚀 🚀 file: cham-cong.js:303 🚀 aoa.forEach 🚀 rowDoubleAbove`, rowDoubleAbove);
 
 
-                let buoiThem = Math.floor(totalBonus / 180);
+                let buoiThem = Math.ceil(totalBonus / 180);
                 totalBonus = totalBonus % 180;
 
                 for (let i = 0; i < buoiThem; i++) {

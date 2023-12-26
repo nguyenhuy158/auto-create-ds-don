@@ -1,38 +1,43 @@
 $(() => {
+    // Tooltip
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]');
+    const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
+
+  ;
     // Function to show the spinner
     function showSpinner() {
-        $('#spinner').show();
+        $("#spinner").show();
     }
 
     // Function to hide the spinner
     function hideSpinner() {
-        $('#spinner').hide();
+        $("#spinner").hide();
     }
 
     function createTable(data, dateSent, dateReceive, totalDon, nguoinhan = false) {
-        var table = $('<table>').addClass('text-center');
+        var table = $("<table>").addClass("text-center");
 
         // check dateSent is friday saturday or sunday convert to monday closest
         // using momentjs
-        var dateSent = moment(dateSent, 'DD/MM/YYYY');
+        var dateSent = moment(dateSent, "DD/MM/YYYY");
         var day = dateSent.day();
         if (day === 5) {
-            dateSent = dateSent.add(3, 'days').format('DD/MM/YYYY');
+            dateSent = dateSent.add(3, "days").format("DD/MM/YYYY");
         }
         if (day === 6) {
-            dateSent = dateSent.add(2, 'days').format('DD/MM/YYYY');
+            dateSent = dateSent.add(2, "days").format("DD/MM/YYYY");
         }
         if (day === 0) {
-            dateSent = dateSent.add(1, 'days').format('DD/MM/YYYY');
+            dateSent = dateSent.add(1, "days").format("DD/MM/YYYY");
         }
 
-        if (typeof dateSent !== 'string') {
-            dateSent = dateSent.format('DD/MM/YYYY');
+        if (typeof dateSent !== "string") {
+            dateSent = dateSent.format("DD/MM/YYYY");
         }
 
         var colspan = nguoinhan ? 7 : 6;
         // Add thead
-        var thead = $('<thead>');
+        var thead = $("<thead>");
         var theadContent = `
             <tr>
                 <td colspan="6" class="text-start fw-bold">Trường Đại học Tôn Đức Thắng</td>
@@ -56,35 +61,35 @@ $(() => {
                 <th class="text-center">Họ và tên</th>
                 <th class="text-center">Người giải quyết đơn</th>
                 <th class="text-center">Ghi chú</th>
-                ${nguoinhan ? '<th class="text-center">Người nhận đơn</th>' : ''}
+                ${nguoinhan ? '<th class="text-center">Người nhận đơn</th>' : ""}
             </tr>
         `;
         thead.html(theadContent);
         table.append(thead);
 
         // Add tbody
-        var tbody = $('<tbody>');
+        var tbody = $("<tbody>");
 
         // Add data rows
         $.each(data, function (index, row) {
-            var tr = $('<tr>');
+            var tr = $("<tr>");
 
             if (Object.keys(row).length === 2) {
                 tr.html(`
-                    <td class="text-center fw-bold" colspan="4">${row['Loại đơn (Tên đơn)'] || row['Loại đơn']}</td>
-                    <td class="text-center fw-bold">${row['Người giải quyết đơn']}</td>
+                    <td class="text-center fw-bold" colspan="4">${row["Loại đơn (Tên đơn)"] || row["Loại đơn"]}</td>
+                    <td class="text-center fw-bold">${row["Người giải quyết đơn"]}</td>
                     <td class="text-center"></td>
-                    ${nguoinhan ? `<td></td>` : ''}
+                    ${nguoinhan ? `<td></td>` : ""}
                 `);
             } else {
                 tr.html(`
-                    <td class="text-center">${row['STT']}</td>
-                    <td class="text-center">${row['Số BN']}</td>
-                    <td class="text-center">${row['MSSV']}</td>
-                    <td class="text-center">${row['Họ và tên']}</td>
-                    <td class="text-center">${row['Người giải quyết đơn']}</td>
-                    <td class="text-center">${row['Ghi chú'] || ''}</td>
-                    // ${nguoinhan ? `<td class="text-center">${row['Người tiếp nhận'] || ''}</td>` : ''}
+                    <td class="text-center">${row["STT"]}</td>
+                    <td class="text-center">${row["Số BN"]}</td>
+                    <td class="text-center">${row["MSSV"]}</td>
+                    <td class="text-center">${row["Họ và tên"]}</td>
+                    <td class="text-center">${row["Người giải quyết đơn"]}</td>
+                    <td class="text-center">${row["Ghi chú"] || ""}</td>
+                    // ${nguoinhan ? `<td class="text-center">${row["Người tiếp nhận"] || ""}</td>` : ""}
                     `);
             }
 
@@ -94,7 +99,7 @@ $(() => {
         table.append(tbody);
 
         // Add tfoot
-        var tfoot = $('<tfoot>');
+        var tfoot = $("<tfoot>");
         var tfootContent = `
             <tr>
                 <td></td>
@@ -141,7 +146,7 @@ $(() => {
         tfoot.html(tfootContent);
         table.append(tfoot);
 
-        $('#DS').html(table);
+        $("#DS").html(table);
     }
 
     toastr.options = {
@@ -149,20 +154,20 @@ $(() => {
         debug: false,
         newestOnTop: false,
         progressBar: true,
-        positionClass: 'toast-top-right',
+        positionClass: "toast-top-right",
         preventDuplicates: false,
         onclick: null,
-        showDuration: '1000',
-        hideDuration: '10000',
-        timeOut: '5000',
-        extendedTimeOut: '1000',
-        showEasing: 'swing',
-        hideEasing: 'linear',
-        showMethod: 'fadeIn',
-        hideMethod: 'fadeOut',
+        showDuration: "1000",
+        hideDuration: "10000",
+        timeOut: "5000",
+        extendedTimeOut: "1000",
+        showEasing: "swing",
+        hideEasing: "linear",
+        showMethod: "fadeIn",
+        hideMethod: "fadeOut",
     };
 
-    $('#uploadForm').on('submit', function (e) {
+    $("#uploadForm").on("submit", function (e) {
         showSpinner();
 
         e.preventDefault();
@@ -170,8 +175,8 @@ $(() => {
         var formData = new FormData(this);
 
         $.ajax({
-            url: '/upload',
-            type: 'POST',
+            url: "/upload",
+            type: "POST",
             data: formData,
             processData: false,
             contentType: false,
@@ -181,8 +186,8 @@ $(() => {
                 } else {
                     toastr.success(data.message);
 
-                    $('#createDS input').val(data.filename);
-                    $('#uploadForm').trigger('reset');
+                    $("#createDS input").val(data.filename);
+                    $("#uploadForm").trigger("reset");
                 }
             },
             error: function (error) {
@@ -193,15 +198,15 @@ $(() => {
         });
     });
 
-    $('#createDS').on('submit', function (e) {
+    $("#createDS").on("submit", function (e) {
         showSpinner();
 
         e.preventDefault();
 
         $.ajax({
-            url: '/',
-            type: 'POST',
-            data: { filename: $('#filename').val() },
+            url: "/",
+            type: "POST",
+            data: { filename: $("#filename").val() },
             success: function (data) {
                 if (data.error) {
                     toastr.error(data.message);
@@ -210,66 +215,73 @@ $(() => {
                     createTable(data.data, data.dateSent, data.dateReceive, data.totalDon);
 
                     // remove disable button download excel file
-                    $('#downloadExcel').removeAttr('disabled');
-                    $('#downloadExcelV2').removeAttr('disabled');
+                    $("#downloadExcel").removeAttr("disabled");
+                    $("#downloadExcelV2").removeAttr("disabled");
 
                     // create excel file and download
-                    $('#downloadExcel').off('click').on('click', function (e) {
-                        var tableHtml = document.querySelector('#DS').outerHTML;
-                        var style = '<style>td, th { font-family: "Calibri", sans-serif; line-height: normal; }</style>';
-                        var fullHtml = '<html><head>' + style + '</head><body>' + tableHtml + '</body></html>';
-                        var uri = 'data:text/csv;base64,' + btoa(unescape(encodeURIComponent(fullHtml)));
+                    $("#downloadExcel")
+                        .off("click")
+                        .on("click", function (e) {
+                            var tableHtml = document.querySelector("#DS").outerHTML;
+                            var style =
+                                '<style>td, th { font-family: "Calibri", sans-serif; line-height: normal; }</style>';
+                            var fullHtml = "<html><head>" + style + "</head><body>" + tableHtml + "</body></html>";
+                            var uri = "data:text/csv;base64," + btoa(unescape(encodeURIComponent(fullHtml)));
 
-                        var link = document.createElement('a');
-                        link.href = uri;
-                        link.download = 'table.xls';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    });
-                    $('#downloadExcelV2').off('click').on('click', function (e) {
-                        // Get table data
-                        var tableHtml = document.querySelector('#DS').outerHTML;
+                            var link = document.createElement("a");
+                            link.href = uri;
+                            link.download = "table.xls";
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        });
+                    $("#downloadExcelV2")
+                        .off("click")
+                        .on("click", function (e) {
+                            // Get table data
+                            var tableHtml = document.querySelector("#DS").outerHTML;
 
-                        // Convert table HTML to Excel workbook
-                        var aoa = tableToAoA(tableHtml);
+                            // Convert table HTML to Excel workbook
+                            var aoa = tableToAoA(tableHtml);
 
-                        $.ajax({
-                            url: '/download',
-                            type: 'POST',
-                            data: { aoa: JSON.stringify(aoa) },
-                            xhrFields: {
-                                responseType: 'blob' // Set the response type to 'blob'
-                            },
-                            success: function (data) {
-                                // Create a blob from the response
-                                var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                            $.ajax({
+                                url: "/download",
+                                type: "POST",
+                                data: { aoa: JSON.stringify(aoa) },
+                                xhrFields: {
+                                    responseType: "blob", // Set the response type to 'blob'
+                                },
+                                success: function (data) {
+                                    // Create a blob from the response
+                                    var blob = new Blob([data], {
+                                        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    });
 
-                                // Create a download link and trigger the download
-                                var link = document.createElement('a');
-                                link.href = URL.createObjectURL(blob);
-                                link.download = 'SheetJSExpress.xlsx';
-                                document.body.appendChild(link);
-                                link.click();
-                                document.body.removeChild(link);
-                            },
-                            error: function (error) {
-                                toastr.error(error.responseJSON?.message);
-                            },
-                        })
-                    });
+                                    // Create a download link and trigger the download
+                                    var link = document.createElement("a");
+                                    link.href = URL.createObjectURL(blob);
+                                    link.download = "SheetJSExpress.xlsx";
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
+                                },
+                                error: function (error) {
+                                    toastr.error(error.responseJSON?.message);
+                                },
+                            });
+                        });
                     function tableToAoA(tableHtml) {
                         var parser = new DOMParser();
-                        var doc = parser.parseFromString(tableHtml, 'text/html');
-                        var rows = doc.querySelectorAll('table tr');
+                        var doc = parser.parseFromString(tableHtml, "text/html");
+                        var rows = doc.querySelectorAll("table tr");
                         var aoa = [];
 
                         rows.forEach(function (row) {
                             var rowData = [];
-                            var cells = row.querySelectorAll('td, th');
+                            var cells = row.querySelectorAll("td, th");
 
                             cells.forEach(function (cell) {
-                                var colspan = cell.getAttribute('colspan');
+                                var colspan = cell.getAttribute("colspan");
                                 var cellText = cell.textContent.trim();
 
                                 if (colspan) {
@@ -298,13 +310,13 @@ $(() => {
             hideSpinner();
         });
     });
-    $('#taoDSCoNguoiNhapDon').on('click', function (e) {
+    $("#taoDSCoNguoiNhapDon").on("click", function (e) {
         showSpinner();
 
         $.ajax({
-            url: '/',
-            type: 'POST',
-            data: { filename: $('#filename').val() },
+            url: "/",
+            type: "POST",
+            data: { filename: $("#filename").val() },
             success: function (data) {
                 if (data.error) {
                     toastr.error(data.message);
@@ -313,58 +325,63 @@ $(() => {
                     createTable(data.data, data.dateSent, data.dateReceive, data.totalDon, true);
 
                     // remove disable button download excel file
-                    $('#downloadExcel').removeAttr('disabled');
-                    $('#downloadExcelV2').removeAttr('disabled');
+                    $("#downloadExcel").removeAttr("disabled");
+                    $("#downloadExcelV2").removeAttr("disabled");
 
                     // create excel file and download
-                    $('#downloadExcel').off('click').on('click', function (e) {
-                        var tableHtml = document.querySelector('#DS').outerHTML;
-                        var style = '<style>td, th { font-family: "Calibri", sans-serif; line-height: normal; }</style>';
-                        var fullHtml = '<html><head>' + style + '</head><body>' + tableHtml + '</body></html>';
-                        var uri = 'data:text/csv;base64,' + btoa(unescape(encodeURIComponent(fullHtml)));
+                    $("#downloadExcel")
+                        .off("click")
+                        .on("click", function (e) {
+                            var tableHtml = document.querySelector("#DS").outerHTML;
+                            var style =
+                                '<style>td, th { font-family: "Calibri", sans-serif; line-height: normal; }</style>';
+                            var fullHtml = "<html><head>" + style + "</head><body>" + tableHtml + "</body></html>";
+                            var uri = "data:text/csv;base64," + btoa(unescape(encodeURIComponent(fullHtml)));
 
-                        var link = document.createElement('a');
-                        link.href = uri;
-                        link.download = 'table.xls';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
-                    });
-                    $('#downloadExcelV2').off('click').on('click', function (e) {
-                        // Get table data
-                        var tableHtml = document.querySelector('#DS').outerHTML;
+                            var link = document.createElement("a");
+                            link.href = uri;
+                            link.download = "table.xls";
+                            document.body.appendChild(link);
+                            link.click();
+                            document.body.removeChild(link);
+                        });
+                    $("#downloadExcelV2")
+                        .off("click")
+                        .on("click", function (e) {
+                            // Get table data
+                            var tableHtml = document.querySelector("#DS").outerHTML;
 
-                        // Convert table HTML to Excel workbook
-                        var aoa = tableToAoA(tableHtml);
+                            // Convert table HTML to Excel workbook
+                            var aoa = tableToAoA(tableHtml);
 
-                        $.ajax({
-                            url: '/download',
-                            type: 'POST',
-                            data: { aoa: JSON.stringify(aoa) },
-                            success: function (data) {
-                                if (data.error) {
-                                    toastr.error(data.message);
-                                } else {
-                                    toastr.success(data.message);
-                                }
-                            },
-                            error: function (error) {
-                                toastr.error(error.responseJSON?.message);
-                            },
-                        })
-                    });
+                            $.ajax({
+                                url: "/download",
+                                type: "POST",
+                                data: { aoa: JSON.stringify(aoa) },
+                                success: function (data) {
+                                    if (data.error) {
+                                        toastr.error(data.message);
+                                    } else {
+                                        toastr.success(data.message);
+                                    }
+                                },
+                                error: function (error) {
+                                    toastr.error(error.responseJSON?.message);
+                                },
+                            });
+                        });
                     function tableToAoA(tableHtml) {
                         var parser = new DOMParser();
-                        var doc = parser.parseFromString(tableHtml, 'text/html');
-                        var rows = doc.querySelectorAll('table tr');
+                        var doc = parser.parseFromString(tableHtml, "text/html");
+                        var rows = doc.querySelectorAll("table tr");
                         var aoa = [];
 
                         rows.forEach(function (row) {
                             var rowData = [];
-                            var cells = row.querySelectorAll('td, th');
+                            var cells = row.querySelectorAll("td, th");
 
                             cells.forEach(function (cell) {
-                                var colspan = cell.getAttribute('colspan');
+                                var colspan = cell.getAttribute("colspan");
                                 var cellText = cell.textContent.trim();
 
                                 if (colspan) {

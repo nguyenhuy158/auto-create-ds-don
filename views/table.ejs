@@ -21,16 +21,25 @@
         </div>
 
         <div class="container">
-            <div class="row">
-                <h1 class="text-center">Tạo nhanh danh sách đơn noà</h1>
+
+          <!-- Tiêu đề -->
+            <div class="row mt-3">
+                <h1 class="text-center">Tạo danh sách đơn noà</h1>
             </div>
 
-            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="mb-3">
-                <div class="mb-3 custom-file-button">
+          <!-- Form upload file excel -->
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data" class="mb-3" >
+              <!-- Input tải file excel -->
+                <div class="mb-3 custom-file-button" data-bs-toggle="tooltip" data-bs-title="Chỉ chọn được file excel thôiii">
                     <label for="file" class="form-label">Bấm vào ô phía dưới để upload file noà!!</label>
                     <input type="file" class="form-control" id="file" name="file" />
                 </div>
-                <button type="submit" class="btn btn-primary">Tải file lên nè</button>
+
+              <!-- Button submit file excel -->
+                <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-title="Tải file excel lên">
+                  <i class='bx bx-upload' ></i>
+                  Tải file lên nè
+                </button>
             </form>
 
             <form id="createDS" action="/" method="post" enctype="multipart/form-data" class="mb-3">
@@ -38,15 +47,25 @@
                     <label for="filename" class="form-label">Nhập file name vô ô ở dưới nhoa</label>
                     <input type="text" class="form-control" id="filename" name="filename" />
                 </div>
-                <button type="submit" class="btn btn-primary">Tạo danh sách noà</button>
+                <button type="submit" class="btn btn-primary" data-bs-toggle="tooltip" data-bs-title="Tạo danh sách đơn">
+                  <i class='bx bx-rocket'></i>
+                  Tạo DS
+                </button>
                 <!-- tai ds co nguoi nhap don -->
-                <button id="taoDSCoNguoiNhapDon" type="button" class="btn btn-info text-white">
-                    Tạo danh sách (người nhập đơn)
+                <button id="taoDSCoNguoiNhapDon" type="button" class="btn btn-info text-white" data-bs-toggle="tooltip" data-bs-title="Tạo danh sách đơn có thông tin người nhập đơn">
+                  <i class='bx bx-rocket'></i>
+                  Tạo DS (v2)
+                </button>
+                <!-- tai file excel v2--> 
+                <button id="downloadExcelV2" type="button" class="btn btn-success" disabled data-bs-toggle="tooltip" data-bs-title="Tải file Excel (.xlxs)">
+                  <i class='bx bxs-download'></i>
+                  (.xlxs)
                 </button>
                 <!-- tai file excel -->
-                <button id="downloadExcel" type="button" class="btn btn-success" disabled>Tải file excel (.xls)</button>
-                <!-- tai file excel v2--> 
-                <button id="downloadExcelV2" type="button" class="btn btn-success" disabled>Tải file excel (Update .xlxs)</button>
+                <button id="downloadExcel" type="button" class="btn btn-success" disabled data-bs-toggle="tooltip" data-bs-title="Tải file Excel (.xls)">
+                  <i class='bx bxs-download'></i>
+                  (.xls)
+                </button>
             </form>
         </div>
         <div id="DS" class="container">
