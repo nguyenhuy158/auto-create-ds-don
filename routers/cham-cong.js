@@ -119,7 +119,7 @@ router.get("/events", async (req, res) => {
 
         const formattedEvents = events.map((event) => ({
             id: event._id,
-            title: `${event.nguoiLam?.fullName || event.nguoiLam?.username}`,
+            title: `${event.nguoiLam?.fullName || event.nguoiLam?.username} [${event.tongGio}]`,
             start: moment(event.ngayLam).format(MOMENT_FORMAT),
             end: moment(event.ngayLam).format(MOMENT_FORMAT),
         }));
