@@ -233,20 +233,30 @@ $(() => {
 
                         // Convert table HTML to Excel workbook
                         var aoa = tableToAoA(tableHtml);
-                        var ws = XLSX.utils.aoa_to_sheet(aoa);
-                        var wb = XLSX.utils.book_new();
-                        XLSX.utils.book_append_sheet(wb, ws, "Table");
 
-                        // Create a blob from the Excel workbook
-                        var blob = XLSX.write(wb, { bookType: 'xlsx', type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+                        $.ajax({
+                            url: '/download',
+                            type: 'POST',
+                            data: { aoa: JSON.stringify(aoa) },
+                            xhrFields: {
+                                responseType: 'blob' // Set the response type to 'blob'
+                            },
+                            success: function (data) {
+                                // Create a blob from the response
+                                var blob = new Blob([data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
 
-                        // Create a download link and trigger the download
-                        var link = document.createElement('a');
-                        link.href = URL.createObjectURL(blob);
-                        link.download = 'table.xlsx';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                                // Create a download link and trigger the download
+                                var link = document.createElement('a');
+                                link.href = URL.createObjectURL(blob);
+                                link.download = 'SheetJSExpress.xlsx';
+                                document.body.appendChild(link);
+                                link.click();
+                                document.body.removeChild(link);
+                            },
+                            error: function (error) {
+                                toastr.error(error.responseJSON?.message);
+                            },
+                        })
                     });
                     function tableToAoA(tableHtml) {
                         var parser = new DOMParser();
@@ -257,9 +267,23 @@ $(() => {
                         rows.forEach(function (row) {
                             var rowData = [];
                             var cells = row.querySelectorAll('td, th');
+
                             cells.forEach(function (cell) {
-                                rowData.push(cell.textContent.trim());
+                                var colspan = cell.getAttribute('colspan');
+                                var cellText = cell.textContent.trim();
+
+                                if (colspan) {
+                                    colspan = parseInt(colspan, 10);
+
+                                    rowData.push(cellText);
+                                    for (var i = 1; i < colspan; i++) {
+                                        rowData.push(undefined);
+                                    }
+                                } else {
+                                    rowData.push(cellText);
+                                }
                             });
+
                             aoa.push(rowData);
                         });
 
@@ -312,20 +336,22 @@ $(() => {
 
                         // Convert table HTML to Excel workbook
                         var aoa = tableToAoA(tableHtml);
-                        var ws = XLSX.utils.aoa_to_sheet(aoa);
-                        var wb = XLSX.utils.book_new();
-                        XLSX.utils.book_append_sheet(wb, ws, "Table");
 
-                        // Create a blob from the Excel workbook
-                        var blob = XLSX.write(wb, { bookType: 'xlsx', type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
-
-                        // Create a download link and trigger the download
-                        var link = document.createElement('a');
-                        link.href = URL.createObjectURL(blob);
-                        link.download = 'table.xlsx';
-                        document.body.appendChild(link);
-                        link.click();
-                        document.body.removeChild(link);
+                        $.ajax({
+                            url: '/download',
+                            type: 'POST',
+                            data: { aoa: JSON.stringify(aoa) },
+                            success: function (data) {
+                                if (data.error) {
+                                    toastr.error(data.message);
+                                } else {
+                                    toastr.success(data.message);
+                                }
+                            },
+                            error: function (error) {
+                                toastr.error(error.responseJSON?.message);
+                            },
+                        })
                     });
                     function tableToAoA(tableHtml) {
                         var parser = new DOMParser();
@@ -336,9 +362,23 @@ $(() => {
                         rows.forEach(function (row) {
                             var rowData = [];
                             var cells = row.querySelectorAll('td, th');
+
                             cells.forEach(function (cell) {
-                                rowData.push(cell.textContent.trim());
+                                var colspan = cell.getAttribute('colspan');
+                                var cellText = cell.textContent.trim();
+
+                                if (colspan) {
+                                    colspan = parseInt(colspan, 10);
+
+                                    rowData.push(cellText);
+                                    for (var i = 1; i < colspan; i++) {
+                                        rowData.push(undefined);
+                                    }
+                                } else {
+                                    rowData.push(cellText);
+                                }
                             });
+
                             aoa.push(rowData);
                         });
 

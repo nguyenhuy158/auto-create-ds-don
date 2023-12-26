@@ -33,8 +33,8 @@ function thayDoiNguoiXuLyDonThanh1Nguoi(obj) {
         obj['Lớp'][2] == 'S'
     ) {
         let lengthBoPhanXuLy = obj['Người giải quyết đơn'].split('\n').length;
-        console.log(`🚀 🚀 file: process.js:36 🚀 thayDoiNguoiXuLyDonThanh1Nguoi 🚀 lengthBoPhanXuLy`, lengthBoPhanXuLy);
-        console.log(`🚀 🚀 file: process.js:36 🚀 thayDoiNguoiXuLyDonThanh1Nguoi 🚀 obj['Người giải quyết đơn']`, obj['Người giải quyết đơn']);
+        // console.log(`🚀 🚀 file: process.js:36 🚀 thayDoiNguoiXuLyDonThanh1Nguoi 🚀 lengthBoPhanXuLy`, lengthBoPhanXuLy);
+        // console.log(`🚀 🚀 file: process.js:36 🚀 thayDoiNguoiXuLyDonThanh1Nguoi 🚀 obj['Người giải quyết đơn']`, obj['Người giải quyết đơn']);
         if (lengthBoPhanXuLy > 1) {
             // return {
             //     ...obj, // sao chep thuoc tinh hien tai
