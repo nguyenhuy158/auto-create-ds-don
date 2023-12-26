@@ -185,7 +185,7 @@ router.get("/events/excel", async (req, res) => {
             },
         ]).exec();
 
-        console.log('result:', result);
+        // console.log('result:', result);
         // Data transformation
         const transformedData = result.map((item) => {
             const nguoiLam = item.nguoiLam.map((person) => ({
@@ -201,7 +201,7 @@ router.get("/events/excel", async (req, res) => {
             };
         });
 
-        console.log('transformedData:', transformedData);
+        // console.log('transformedData:', transformedData);
         // Create table structure
         const table = {};
         transformedData.forEach((item) => {
@@ -235,17 +235,45 @@ router.get("/events/excel", async (req, res) => {
 
 
 
+        // them dong o hang cuoi sao cho bang tong cac gia tri o cot hien tai tru dong dau tien
+        let rowLast = aoa[aoa.length - 1];
+        let rowTotal = Array(rowLast.length).fill(0);
+        rowTotal[0] = 'Tổng';
+        rowTotal[1] = 'Tổng';
+        for (let i = 2; i < rowLast.length; i++) {
+            let total = 0;
+            for (let j = 1; j < aoa.length; j++) {
+                const row = aoa[j];
 
+                // chi cong if row la so nguoc lai continue
+                if (isNaN(row[i])) {
+                    continue;
+                }
 
+                if (row[1] == 'bonus') {
+                    continue;
+                }
 
+                total += +row[i];
+            }
+            const date = moment().date(aoa[0][i]);
+            if (date.day() == 0) {
+                // CN
+                total = 99;
+            }
+            if (date.day() == 6) {
+                // T7
+                total = 99;
+            }
 
-
-
-
+            rowTotal[i] = total;
+        }
+        aoa.push(rowTotal);
 
         // aoa
 
-        console.log('aoa:', aoa);
+        // console.log('aoa:', aoa);
+        // console.log('rowTotal:', rowTotal);
 
         // 
         // remove T7 & CN
@@ -291,12 +319,32 @@ router.get("/events/excel", async (req, res) => {
             });
             return totalBonus;
         }
+        function updateTotalRow() {
+            for (let i = 2; i < aoa[0].length - 1; i++) {
+                let total = 0;
+                for (let j = 1; j < aoa.length - 1; j++) {
+                    const cellValue = aoa[j][i];
+                    const row = aoa[j];
+
+                    if (isNaN(row[i])) {
+                        continue;
+                    }
+
+                    if (row[1] == 'bonus') {
+                        continue;
+                    }
+
+                    total += +cellValue;
+                }
+                aoa[aoa.length - 1][i] = total;
+            }
+        }
         aoa.forEach((person, index) => {
             // Calculate the total bonus for the person
             let totalBonus = calculateTotalBonus(person);
 
             // nếu giờ dư lớn hơn 0 thì thêm vào
-            console.log(`🚀 🚀 file: cham-cong.js:300 🚀 aoa.forEach 🚀 totalBonus > 0`, totalBonus, totalBonus > 0);
+            // console.log(`🚀 🚀 file: cham-cong.js:300 🚀 aoa.forEach 🚀 totalBonus > 0`, totalBonus, totalBonus > 0);
             if (totalBonus > 0) {
                 let rowAbove = aoa[index - 1];
                 // console.log(`🚀 🚀 file: cham-cong.js:301 🚀 aoa.forEach 🚀 rowAbove`, rowAbove);
@@ -308,18 +356,31 @@ router.get("/events/excel", async (req, res) => {
                 totalBonus = totalBonus % 180;
 
                 for (let i = 0; i < buoiThem; i++) {
+                    let columnTotals = aoa[aoa.length - 1];
+                    columnTotals = columnTotals.map((item, column) =>
+                        isNaN(item) ||
+                            moment().date(aoa[0][column]).day() == 6 ||
+                            moment().date(aoa[0][column]).day() == 0 ||
+                            (rowAbove[column] == 1 &&
+                                rowDoubleAbove[column] == 1) ?
+                            99 : item);
+                    console.log(`🚀 🚀 file: cham-cong.js:358 🚀 aoa.forEach 🚀 columnTotals`, columnTotals);
                     let used = false;
+                    let minColumnIndex = columnTotals.indexOf(Math.min(...columnTotals.slice(2)));
+                    console.log(`🚀 🚀 file: cham-cong.js:363 🚀 aoa.forEach 🚀 minColumnIndex`, minColumnIndex);
+
+
                     for (let j = 2; j < rowAbove.length; j++) {
-                        if (rowAbove[j] == 0 && rowAbove[j] != 180) {
+                        if (rowAbove[j] == 0 && rowAbove[j] != 180 && j === minColumnIndex) {
                             rowAbove[j] = 1;
-                            console.log('rowAbove', j, rowAbove);
+                            // console.log('rowAbove', j, rowAbove);
                             used = true;
                             break;
                         }
 
-                        if (rowDoubleAbove[j] == 0 && rowDoubleAbove[j] != 180) {
+                        if (rowDoubleAbove[j] == 0 && rowDoubleAbove[j] != 180 && j === minColumnIndex) {
                             rowDoubleAbove[j] = 1;
-                            console.log('rowDoubleAbove', j, rowDoubleAbove);
+                            // console.log('rowDoubleAbove', j, rowDoubleAbove);
                             used = true;
                             break;
                         }
@@ -328,6 +389,8 @@ router.get("/events/excel", async (req, res) => {
                     if (!used) {
                         totalBonus = totalBonus + 180;
                     }
+
+                    updateTotalRow();
                 }
 
             }
@@ -347,13 +410,13 @@ router.get("/events/excel", async (req, res) => {
         }
 
         // xoa dong bonus
-        for (let i = 0; i < aoa.length; i++) {
-            const row = aoa[i];
-            if (row[1] == 'bonus') {
-                aoa.splice(i, 1);
-                i--;
-            }
-        }
+        // for (let i = 0; i < aoa.length; i++) {
+        //     const row = aoa[i];
+        //     if (row[1] == 'bonus') {
+        //         aoa.splice(i, 1);
+        //         i--;
+        //     }
+        // }
 
         // them cot tong o cuoi
         aoa[0].push('Tổng');
@@ -362,12 +425,19 @@ router.get("/events/excel", async (req, res) => {
             let total = 0;
             for (let j = 2; j < row.length; j++) {
                 const cell = row[j];
+                // if (isNaN(cell)) {
+                //     continue;
+                // }
+                // if (cell == 'x') {
+                //     continue;
+                // }
                 total += +cell;
             }
             aoa[i].push(total);
         }
 
 
+        // update tong dong cuoi
 
         // Create Excel workbook and sheet
         const ws = XLSX.utils.aoa_to_sheet(aoa);
