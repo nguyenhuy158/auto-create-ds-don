@@ -137,19 +137,29 @@ app.post("/download", (req, res) => {
 
         // Create Excel workbook and sheet
         const ws = XLSX.utils.aoa_to_sheet(JSON.parse(aoa));
-        ws['!merges'] = [{ s: { r: 2, c: 0 }, e: { r: 2, c: 5 } }];
-
         aoa = JSON.parse(aoa);
+
+        ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }];
+        ws['!merges'].push({ s: { r: 1, c: 0 }, e: { r: 1, c: 5 } });
+        ws['!merges'].push({ s: { r: 2, c: 0 }, e: { r: 2, c: 5 } });
+        ws['!merges'].push({ s: { r: 3, c: 0 }, e: { r: 3, c: 5 } });
+        ws['!merges'].push({ s: { r: aoa.length - 1, c: 2 }, e: { r: aoa.length - 1, c: 5 } });
+        ws['!merges'].push({ s: { r: aoa.length - 2, c: 2 }, e: { r: aoa.length - 2, c: 5 } });
+        ws['!merges'].push({ s: { r: aoa.length - 3, c: 2 }, e: { r: aoa.length - 3, c: 5 } });
+        ws['!merges'].push({ s: { r: aoa.length - 4, c: 2 }, e: { r: aoa.length - 4, c: 5 } });
+        ws['!merges'].push({ s: { r: aoa.length - 5, c: 2 }, e: { r: aoa.length - 5, c: 5 } });
+        ws['!merges'].push({ s: { r: aoa.length - 6, c: 0 }, e: { r: aoa.length - 6, c: 2 } });
+
+
         for (let index = 5; index < aoa.length - 7; index++) {
             let item = aoa[index];
             // console.log(`🚀 item`, item);
             if (item[1] == undefined && item[2] == undefined && item[3] == undefined) {
-                console.log(`🚀 🚀 file: app.js:148 🚀 app.post 🚀 item[1] == '' && item[2] == '' && item[3] == ''`, item[1] == '' && item[2] == '' && item[3] == '');
-                console.log(`🚀 🚀 file: app.js:149 🚀 app.post 🚀 { s: { r: index, c: 0 }, e: { r: index, c: 3 } }`, { s: { r: index, c: 0 }, e: { r: index, c: 3 } });
+                // console.log(`🚀 🚀 file: app.js:148 🚀 app.post 🚀 item[1] == '' && item[2] == '' && item[3] == ''`, item[1] == '' && item[2] == '' && item[3] == '');
+                // console.log(`🚀 🚀 file: app.js:149 🚀 app.post 🚀 { s: { r: index, c: 0 }, e: { r: index, c: 3 } }`, { s: { r: index, c: 0 }, e: { r: index, c: 3 } });
                 ws['!merges'].push({ s: { r: index, c: 0 }, e: { r: index, c: 3 } });
             }
         }
-
 
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Table');
