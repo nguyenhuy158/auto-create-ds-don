@@ -26,6 +26,10 @@ $(() => {
             dateSent = dateSent.add(1, 'days').format('DD/MM/YYYY');
         }
 
+        if (typeof dateSent !== 'string') {
+            dateSent = dateSent.format('DD/MM/YYYY');
+        }
+
         var colspan = nguoinhan ? 7 : 6;
         // Add thead
         var thead = $('<thead>');
@@ -67,7 +71,7 @@ $(() => {
 
             if (Object.keys(row).length === 2) {
                 tr.html(`
-                    <td class="text-center fw-bold" colspan="4">${row['Loại đơn (Tên đơn)']}</td>
+                    <td class="text-center fw-bold" colspan="4">${row['Loại đơn (Tên đơn)'] || row['Loại đơn']}</td>
                     <td class="text-center fw-bold">${row['Người giải quyết đơn']}</td>
                     <td class="text-center"></td>
                     ${nguoinhan ? `<td></td>` : ''}

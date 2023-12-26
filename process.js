@@ -204,12 +204,23 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
     processedData = xoaCacDonNhuMienTaVaCapBangDiemV2(processedData, cacLoaiDonSeBiXoa);
 
     processedData.sort((a, b) => {
+        // First, sort by 'Người giải quyết đơn'
         if (a['Người giải quyết đơn'] < b['Người giải quyết đơn']) {
             return -1;
         }
         if (a['Người giải quyết đơn'] > b['Người giải quyết đơn']) {
             return 1;
         }
+
+        // If 'Người giải quyết đơn' is the same, sort by 'Loại đơn'
+        if (a['Loại đơn'] < b['Loại đơn']) {
+            return -1;
+        }
+        if (a['Loại đơn'] > b['Loại đơn']) {
+            return 1;
+        }
+
+        // If both keys are the same, return 0
         return 0;
     });
 
@@ -234,7 +245,7 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
         if (JSON.stringify(processedData[i]) === JSON.stringify(emptyObj)) {
             processedData[i] = {
                 'Người giải quyết đơn': processedData[i + 1]['Người giải quyết đơn'],
-                'Loại đơn (Tên đơn)': processedData[i + 1]['Loại đơn (Tên đơn)'] || processedData[i + 1]['Loại đơn'],
+                'Loại đơn': processedData[i + 1]['Loại đơn'] || processedData[i + 1]['Loại đơn'],
             };
         }
     }
@@ -257,6 +268,24 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(filename = 'D
             processedData[i]['STT'] = stt++;
         }
         prevPerson = processedData[i]['Người giải quyết đơn'];
+    }
+
+    // Them thong loai don va nguoi giai quyet
+    let prevType = null;
+    for (let i = 0; i < processedData.length; i++) {
+        if (Object.keys(processedData[i]).length === 2) {
+            prevType = processedData[i]['Loại đơn'];
+            continue;
+        }
+        if (processedData[i]['Loại đơn'] !== prevType) {
+            const newObj = {
+                'Người giải quyết đơn': processedData[i]['Người giải quyết đơn'],
+                'Loại đơn': processedData[i]['Loại đơn'],
+            };
+            processedData.splice(i, 0, newObj);
+            i++;
+        }
+        prevType = processedData[i]['Loại đơn'];
     }
 
     // Them thong loai don va nguoi giai quyet
