@@ -207,6 +207,7 @@ $(() => {
 
                     // remove disable button download excel file
                     $('#downloadExcel').removeAttr('disabled');
+                    $('#downloadExcelV2').removeAttr('disabled');
 
                     // create excel file and download
                     $('#downloadExcel').off('click').on('click', function (e) {
@@ -222,6 +223,44 @@ $(() => {
                         link.click();
                         document.body.removeChild(link);
                     });
+                    $('#downloadExcelV2').off('click').on('click', function (e) {
+                        // Get table data
+                        var tableHtml = document.querySelector('#DS').outerHTML;
+
+                        // Convert table HTML to Excel workbook
+                        var aoa = tableToAoA(tableHtml);
+                        var ws = XLSX.utils.aoa_to_sheet(aoa);
+                        var wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, "Table");
+
+                        // Create a blob from the Excel workbook
+                        var blob = XLSX.write(wb, { bookType: 'xlsx', type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                        // Create a download link and trigger the download
+                        var link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = 'table.xlsx';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    });
+                    function tableToAoA(tableHtml) {
+                        var parser = new DOMParser();
+                        var doc = parser.parseFromString(tableHtml, 'text/html');
+                        var rows = doc.querySelectorAll('table tr');
+                        var aoa = [];
+
+                        rows.forEach(function (row) {
+                            var rowData = [];
+                            var cells = row.querySelectorAll('td, th');
+                            cells.forEach(function (cell) {
+                                rowData.push(cell.textContent.trim());
+                            });
+                            aoa.push(rowData);
+                        });
+
+                        return aoa;
+                    }
                 }
             },
             error: function (error) {
@@ -247,6 +286,7 @@ $(() => {
 
                     // remove disable button download excel file
                     $('#downloadExcel').removeAttr('disabled');
+                    $('#downloadExcelV2').removeAttr('disabled');
 
                     // create excel file and download
                     $('#downloadExcel').off('click').on('click', function (e) {
@@ -262,6 +302,44 @@ $(() => {
                         link.click();
                         document.body.removeChild(link);
                     });
+                    $('#downloadExcelV2').off('click').on('click', function (e) {
+                        // Get table data
+                        var tableHtml = document.querySelector('#DS').outerHTML;
+
+                        // Convert table HTML to Excel workbook
+                        var aoa = tableToAoA(tableHtml);
+                        var ws = XLSX.utils.aoa_to_sheet(aoa);
+                        var wb = XLSX.utils.book_new();
+                        XLSX.utils.book_append_sheet(wb, ws, "Table");
+
+                        // Create a blob from the Excel workbook
+                        var blob = XLSX.write(wb, { bookType: 'xlsx', type: 'blob', mimeType: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' });
+
+                        // Create a download link and trigger the download
+                        var link = document.createElement('a');
+                        link.href = URL.createObjectURL(blob);
+                        link.download = 'table.xlsx';
+                        document.body.appendChild(link);
+                        link.click();
+                        document.body.removeChild(link);
+                    });
+                    function tableToAoA(tableHtml) {
+                        var parser = new DOMParser();
+                        var doc = parser.parseFromString(tableHtml, 'text/html');
+                        var rows = doc.querySelectorAll('table tr');
+                        var aoa = [];
+
+                        rows.forEach(function (row) {
+                            var rowData = [];
+                            var cells = row.querySelectorAll('td, th');
+                            cells.forEach(function (cell) {
+                                rowData.push(cell.textContent.trim());
+                            });
+                            aoa.push(rowData);
+                        });
+
+                        return aoa;
+                    }
                 }
             },
             error: function (error) {

@@ -364,10 +364,10 @@ router.get("/events/excel", async (req, res) => {
                             (rowAbove[column] == 1 &&
                                 rowDoubleAbove[column] == 1) ?
                             99 : item);
-                    console.log(`🚀 🚀 file: cham-cong.js:358 🚀 aoa.forEach 🚀 columnTotals`, columnTotals);
+                    // console.log(`🚀 🚀 file: cham-cong.js:358 🚀 aoa.forEach 🚀 columnTotals`, columnTotals);
                     let used = false;
                     let minColumnIndex = columnTotals.indexOf(Math.min(...columnTotals.slice(2)));
-                    console.log(`🚀 🚀 file: cham-cong.js:363 🚀 aoa.forEach 🚀 minColumnIndex`, minColumnIndex);
+                    // console.log(`🚀 🚀 file: cham-cong.js:363 🚀 aoa.forEach 🚀 minColumnIndex`, minColumnIndex);
 
 
                     for (let j = 2; j < rowAbove.length; j++) {
