@@ -95,6 +95,9 @@ $(() => {
     );
 
 
+    /**
+     * 
+     */
     $(".gio-buoi-sang-input, .gio-buoi-chieu-input, .gio-lam-them-input").on("input", function () {
         const isModal = $(this).attr("class").includes("modal");
         const modal = isModal ? "-modal" : "";
@@ -107,8 +110,9 @@ $(() => {
         $(`.tong-gio-lam-them${modal}`).text(`${total} phút ~ ${(total / 180).toFixed(2)} buổi`);
     });
 
-
-    // Them ngay cong 
+    /**
+     * Them nguoi lam
+     */
     $(".them-du-lieu-btn").on("click", function () {
         const ngayLam = $(".ngay-lam-input").val();
         const gioBuoiSang = $(".gio-buoi-sang-input").val();
@@ -144,7 +148,9 @@ $(() => {
         });
     });
 
-    // Chinh sua ngay cong
+    /**
+     * Chinh sua ngay cong
+     */
     $(".chinh-sua-ngay-cong-btn").on("click", function () {
         const gioBuoiSang = $(".gio-buoi-sang-input-modal").val();
         const gioBuoiChieu = $(".gio-buoi-chieu-input-modal").val();

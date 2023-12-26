@@ -17,6 +17,10 @@ router.use(async (req, res, next) => {
     next();
 });
 
+/**
+ * lấy danh sách người làm
+ * @returns {array} - danh sách người làm
+ */
 router.get("", async (req, res) => {
     let users;
     if (req.session.user.role === "admin") {
@@ -28,7 +32,16 @@ router.get("", async (req, res) => {
     });
 });
 
-// tạo mới ngày làm
+/**
+ * tạo mới ngày làm
+ * @param {string} ngayLam - ngày làm
+ * @param {string} gioBuoiSang - giờ buổi sáng
+ * @param {string} gioBuoiChieu - giờ buổi chiều
+ * @param {string} gioLamThem - giờ làm thêm
+ * @param {string} nguoiLam - người làm
+ * @returns {object} - thông tin ngày làm
+ * 
+ */
 router.post("", async (req, res) => {
     try {
         let { ngayLam } = req.body;
@@ -83,7 +96,15 @@ router.post("", async (req, res) => {
     }
 });
 
-// cập nhật ngày làm
+/**
+ * cập nhật thông tin ngày làm theo id
+ * @param {string} id - id của ngày làm
+ * @param {string} gioBuoiSang - giờ buổi sáng
+ * @param {string} gioBuoiChieu - giờ buổi chiều
+ * @param {string} gioLamThem - giờ làm thêm
+ * @returns {object} - thông tin ngày làm
+ * 
+ */
 router.put("", async (req, res) => {
     const id = req.body.id;
     if (!ObjectId.isValid(id)) {
@@ -112,7 +133,18 @@ router.put("", async (req, res) => {
     }
 });
 
-// lấy ngày theo id
+/**
+ * lấy thông tin ngày làm theo id
+ * @param {string} id - id của ngày làm
+ * @returns {object} - thông tin ngày làm
+ * @example
+ * http://localhost:3000/cham-cong/events/5f9b1b9b9b9b9b9b9b9b9b9
+ * @description
+ * Nếu không có id thì trả về 404
+ * Nếu id không hợp lệ thì trả về 404
+ * Nếu không tìm thấy ngày làm thì trả về 404
+ * Nếu tìm thấy ngày làm thì trả về thông tin ngày làm
+ */
 router.get("/events/:id", async (req, res, next) => {
     const id = req.params.id;
     if (!ObjectId.isValid(id)) {
@@ -130,6 +162,22 @@ router.get("/events/:id", async (req, res, next) => {
     }
 });
 
+/**
+ * lấy danh sách tất cả ngày làm
+ * @param {string} start - ngày bắt đầu
+ * @param {string} end - ngày kết thúc
+ * @returns {array} - danh sách ngày làm
+ * @example
+ * http://localhost:3000/cham-cong/events?start=2021-01-01&end=2021-01-31
+ * http://localhost:3000/cham-cong/events?start=2021-01-01
+ * http://localhost:3000/cham-cong/events?end=2021-01-31
+ * http://localhost:3000/cham-cong/events
+ * @description
+ * Nếu không có tham số start và end thì lấy danh sách ngày làm trong tháng hiện tại
+ * Nếu chỉ có tham số start thì lấy danh sách ngày làm từ ngày start đến hết tháng
+ * Nếu chỉ có tham số end thì lấy danh sách ngày làm từ đầu tháng đến ngày end
+ * Nếu có cả start và end thì lấy danh sách ngày làm từ ngày start đến ngày end
+ */
 router.get("/events", async (req, res) => {
     try {
         let { start, end } = req.query;
@@ -162,6 +210,21 @@ router.get("/events", async (req, res) => {
     }
 });
 
+
+// BẢNG CHẤM CÔNG //
+
+/**
+ * Tải file excel danh sách ngày làm
+ * @param {string} start - ngày bắt đầu
+ * @param {string} end - ngày kết thúc
+ * @returns {file} - file excel danh sách ngày làm
+ * @example
+ * http://localhost:3000/cham-cong/events/excel?start=2021-01-01&end=2021-01-31
+ * http://localhost:3000/cham-cong/events/excel?start=2021-01-01
+ * http://localhost:3000/cham-cong/events/excel?end=2021-01-31
+ * http://localhost:3000/cham-cong/events/excel
+ * 
+ */
 router.get("/events/excel", async (req, res) => {
     try {
         let { start, end } = req.query;
@@ -487,6 +550,10 @@ router.get("/events/excel", async (req, res) => {
     }
 });
 
+/**
+ * lấy trang bảng chấm công
+ * @returns {object} - trang bảng chấm công
+*/
 router.get("/bang-cham-cong", async (req, res) => {
     try {
         const ngayLam = await NgayLam.find();
@@ -499,5 +566,6 @@ router.get("/bang-cham-cong", async (req, res) => {
         return res.redirect("/");
     }
 });
+
 
 module.exports = router;
