@@ -14,22 +14,38 @@
 
     <body>
         <div class="container mt-5">
-            <h2 class="mb-4">Đăng nhập</h2>
+            <!--  -->
+            <h2 class="mb-3 text-center">Đăng nhập</h2>
+
             <form id="login-form" method="post">
+                <!-- Username -->
                 <div class="form-group mb-4">
                     <label for="username">Tài khoản:</label>
                     <input type="text" class="form-control" id="username" name="username" required />
                 </div>
+
+                <!-- Password -->
                 <div class="form-group mb-4">
                     <label for="password">Mật khẩu:</label>
                     <input type="password" class="form-control" id="password" name="password" required />
                 </div>
 
+                <!-- Button login -->
                 <div class="form-group mb-4">
-                    <button type="submit" class="btn btn-sm btn-outline-primary">Đăng nhập</button>
-                    <!-- <a href="/register" class="btn btn-sm btn-outline-primary">
-                  Đăng ký
-                </a> -->
+
+                    <!-- Đăng nhập -->
+                    <button type="submit" class="btn btn-sm btn-outline-primary">
+                        <i class="bx bx-log-in-circle"></i>
+                        Đăng nhập
+                    </button>
+
+                    <!-- Quay lại trang chủ -->
+                    <a href="/" class="btn btn-sm btn-outline-secondary">
+                        <!-- <i class="bx bx-arrow-back"></i> -->
+                        Quay lại
+                    </a>
+
+                    <!-- <a href="/register" class="btn btn-sm btn-outline-primary">Đăng ký</a> -->
                 </div>
             </form>
         </div>

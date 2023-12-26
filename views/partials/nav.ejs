@@ -1,12 +1,9 @@
 <div class="container">
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light rounded-4 rounded-top-0">
         <div class="container-fluid">
             <a class="navbar-brand" href="/">
-              <!-- <h2><i class='bx bx-color bx-spin' ></i></h2> -->
-              <img
-                width=50
-                height=50
-                src="https://cdn-icons-png.flaticon.com/512/13371/13371293.png"/>
+                <!-- <h2><i class='bx bx-color bx-spin' ></i></h2> -->
+                <img width="50" height="50" src="https://cdn-icons-png.flaticon.com/512/13371/13371293.png" />
             </a>
 
             <button
@@ -28,7 +25,14 @@
                     </li>
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Tính lương</a>
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            <% if (typeof user !== 'undefined') { %>
+                            Người dùng:
+                            <%= user.username %>
+                            <% } else { %>
+                            Tính lương
+                            <% } %>
+                        </a>
                         <ul class="dropdown-menu">
                             <!-- <%= typeof user === 'undefined' %> -->
                             <!-- <%= typeof user %> -->
@@ -53,26 +57,34 @@
 
                             <li><hr class="dropdown-divider" /></li>
                             <li>
-                                <a class="dropdown-item" href="/dang-xuat">Đăng xuất</a>
+                                <a class="dropdown-item" href="/dang-xuat">
+                                    <i class="bx bx-log-out-circle"></i>
+                                    Đăng xuất
+                                </a>
                             </li>
                             <% } %>
                         </ul>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/lich-su">Lịch sử</a>
-                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Khác</a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a class="dropdown-item" href="/huong-dan-su-dung">Hướng dẫn sử dụng</a>
+                            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/huong-dan-su-dung">Hướng dẫn sử dụng</a>
-                    </li>
+                            <li>
+                                <a class="dropdown-item" href="/lich-su">Lịch sử</a>
+                            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/version">Phiên bản</a>
-                    </li>
+                            <li>
+                                <a class="dropdown-item" href="/version">Phiên bản</a>
+                            </li>
 
-                    <li class="nav-item">
-                        <a class="nav-link" href="/about">Giới thiệu</a>
+                            <li>
+                                <a class="dropdown-item" href="/about">Giới thiệu</a>
+                            </li>
+                        </ul>
                     </li>
                 </ul>
             </div>
