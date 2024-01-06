@@ -47,7 +47,7 @@
                                 <option value="<%= u._id %>"><%= u.fullName || u.username %></option>
                                 <% }); %>
                                 <% }else { %>
-                                <option value="<%= user._id %>" selected><%= user.username %></option>
+                                <option value="<%= user._id %>" selected><%= user.fullName || user.username %></option>
                                 <% } %>
                             </select>
                         </div>
