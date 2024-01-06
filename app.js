@@ -134,10 +134,18 @@ app.post("/", (req, res) => {
 app.post("/download", (req, res) => {
     try {
         let aoa = req.body.aoa;
+        // replace null to empty string in aoa array of array
+        aoa = aoa.replace(/null/g, '""');
 
-        // Create Excel workbook and sheet
-        const ws = XLSX.utils.aoa_to_sheet(JSON.parse(aoa));
+        // replace empty string to null in aoa array of array
+        aoa = aoa.replace(/""/g, "null");
+
+        // parse aoa to array of array
         aoa = JSON.parse(aoa);
+
+        // create worksheet
+        const ws = XLSX.utils.aoa_to_sheet(aoa);
+
 
         ws['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }];
         ws['!merges'].push({ s: { r: 1, c: 0 }, e: { r: 1, c: 5 } });
@@ -161,6 +169,7 @@ app.post("/download", (req, res) => {
             }
         }
 
+        // create workbook
         const wb = XLSX.utils.book_new();
         XLSX.utils.book_append_sheet(wb, ws, 'Table');
 
