@@ -7,7 +7,7 @@ $(() => {
             {
                 text: `<i class="bi bi-plus"></i>`,
                 className: "them-internship-btn btn-outline-primary",
-                action: function (e, dt, node, config) {},
+                action: function (e, dt, node, config) { },
             },
             {
                 text: `<i class="bi bi-arrow-clockwise"></i>`,
@@ -88,7 +88,19 @@ $(() => {
                                     data-bs-target="#xoa-tai-khoang-internship-modal">
                           <i class="bi bi-trash"></i>
                       </button>`;
-                    return `${editBtn} ${deleteBtn}`;
+
+                    let resetPasswordBtn = `<button class="btn btn-outline-info btn-sm khoi-phuc-mat-khau-tai-khoang-btn" 
+                                    data-user-id="${row._id}"
+                                    data-user-name="${row.username}"
+                                    data-bs-toggle="modal" 
+                                    data-bs-target="#khoi-phuc-mat-khau-tai-khoang-internship-modal">
+                          <i class="bi bi-key"></i>
+                      </button>`;
+                    return `
+                            ${editBtn}
+                            ${deleteBtn}
+                            ${resetPasswordBtn}
+                            `;
                 },
             },
         ],

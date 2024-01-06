@@ -7,20 +7,29 @@ router.post("/cap-nhat-thong-tin", async (req, res) => {
 
     if (req.session.user.role !== "admin" && req.session.user._id !== userId) {
         return res.status(400).json({
-            message: "Bạn không được phép làm việc này đao.",
+            message: "Bạn không có quyền làm việc này.",
         });
     }
 
     const { fullName } = req.body;
+    const { password } = req.body;
 
     const user = await User.findById(userId);
     if (!user) {
         return res.status(400).json({
-            message: "Không tìm thấy user này đao.",
+            message: "Không tìm thấy thông tin.",
         });
     }
 
-    user.fullName = fullName;
+    // just update if fullName or password is not null
+    if (fullName) {
+        user.fullName = fullName;
+    }
+
+    if (password) {
+        user.password = password;
+    }
+
     await user.save();
 
     return res.status(200).json({
