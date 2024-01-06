@@ -62,7 +62,7 @@ $(() => {
             {
                 data: "soBuoi",
                 render: function (data) {
-                    return data || "";
+                    return data || 0;
                 },
             },
             {
