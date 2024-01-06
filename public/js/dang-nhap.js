@@ -9,7 +9,7 @@ $(() => {
         console.log(password);
 
         $.ajax({
-            url: "/login",
+            url: "/dang-nhap",
             type: "POST",
             data: {
                 username,

@@ -2,11 +2,11 @@
 const router = require("express").Router();
 const User = require("../models/user");
 
-router.get("/login", async (req, res) => {
-    return res.status(200).render("login", {});
+router.get("/dang-nhap", async (req, res) => {
+    return res.status(200).render("dang-nhap", {});
 });
 
-router.post("/login", async (req, res) => {
+router.post("/dang-nhap", async (req, res) => {
     const { username } = req.body;
     const { password } = req.body;
 

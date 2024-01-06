@@ -20,7 +20,7 @@ $(() => {
             },
             success: (response) => {
                 Swal.fire(response.message);
-                window.location.href = "/login";
+                window.location.href = "/dang-nhap";
             },
             error: (response) => {
                 Swal.fire(response.responseJSON?.message);
