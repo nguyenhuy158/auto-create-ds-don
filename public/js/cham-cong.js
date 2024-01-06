@@ -34,6 +34,7 @@ $(() => {
                     const ngayCong = response.data;
                     console.log("ngayCong: ", ngayCong);
                     $(".chinh-sua-ngay-cong-btn").data("ngay-lam-id", ngayCong._id);
+                    $(".xoa-ngay-cong-btn").data("ngay-lam-id", ngayCong._id);
 
                     $("#nguoi-lam-option-modal")
                         .text(ngayCong.nguoiLam.fullName || ngayCong.nguoiLam.username)
@@ -183,4 +184,40 @@ $(() => {
             },
         });
     });
+
+    /**
+     * Xoa ngay cong
+     */
+    $(".xoa-ngay-cong-btn").on("click", function () {
+
+        Swal.fire({
+            title: "Bạn có chắc chắn muốn xóa?",
+            text: "Bạn sẽ không thể hoàn tác hành động này!",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Xóa",
+            cancelButtonText: "Hủy",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const data = {
+                    id: $(this).data("ngay-lam-id"),
+                };
+
+                $.ajax({
+                    url: `/cham-cong`,
+                    type: "DELETE",
+                    data: data,
+                    success: (response) => {
+                        Swal.fire(response.message);
+                        calendar.refetchEvents();
+                        $("#chinh-sua-ngay-cong-modal").modal("hide");
+                    },
+                    error: (response) => {
+                        Swal.fire(response.responseJSON?.message);
+                    },
+                });
+            }
+        });
+    });
+
 });
