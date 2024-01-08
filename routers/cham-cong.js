@@ -280,16 +280,30 @@ router.get("/events", async (req, res) => {
  */
 router.get("/events/excel", async (req, res) => {
     try {
-        let { start, end } = req.query;
+        let { time } = req.query;
 
-        if (!start || !end) {
-            const currentMonthStart = moment().startOf("month");
-            const currentMonthEnd = moment().endOf("month");
-            start = start || currentMonthStart;
-            end = end || currentMonthEnd;
+        if (time) {
+            time = moment(time, 'DD/MM/YYYY');
+        } else {
+            time = moment();
         }
 
+        // copy time momentjs
+        let start = time.clone().startOf("month");
+        let end = time.clone().endOf("month");
+        // console.log(`router.get 🚀 time`, time.format('DD.MM.YYYY'));
+        // console.log(`router.get 🚀 start`, start.format('DD.MM.YYYY'));
+        // console.log(`router.get 🚀 end`, end.format('DD.MM.YYYY'));
+
         const result = await NgayLam.aggregate([
+            {
+                $match: {
+                    ngayLam: {
+                        $gte: new Date(start),
+                        $lte: new Date(end),
+                    },
+                },
+            },
             {
                 $group: {
                     _id: {
@@ -332,7 +346,8 @@ router.get("/events/excel", async (req, res) => {
             },
         ]).exec();
 
-        // console.log('result:', result);
+        console.log('result:', result);
+
         // Data transformation
         const transformedData = result.map((item) => {
             const nguoiLam = item.nguoiLam.map((person) => ({

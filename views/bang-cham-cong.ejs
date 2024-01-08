@@ -15,6 +15,13 @@
                 width: 100% !important;
             }
         </style>
+
+        <style>
+            .monthselect,
+            .yearselect {
+                border-radius: 10px;
+            }
+        </style>
     </head>
 
     <body>
@@ -27,21 +34,20 @@
 
         <div class="container mb-3 mt-3">
             <div class="row">
-                <h1 class="text-center">Bảng chấm công</h1>
+                <h2 class="text-center">Bảng chấm công</h2>
             </div>
 
             <!-- chọn tháng cần chấm công -->
             <div class="container">
-                <div class="col">
-                    <input type="text" class="form-control month" type="text" name="month" />
-                </div>
+                <div class="row">
+                    <div class="col-3">
+                        <input type="text" class="form-control month" type="text" name="month" />
+                    </div>
 
-                <div class="col">
-                    <button id="tai-du-lieu-btn" class="btn btn-outline-secondary btn-sm">Tải dữ liệu</button>
-                </div>
-
-                <div class="col">
-                    <button id="luu-bang-cham-cong-btn" class="btn btn-outline-primary btn-sm">Lưu</button>
+                    <div class="col">
+                        <button id="tai-du-lieu-btn" class="btn btn-outline-secondary btn-sm">Tải dữ liệu</button>
+                        <button id="luu-bang-cham-cong-btn" class="btn btn-outline-primary btn-sm">Lưu</button>
+                    </div>
                 </div>
             </div>
 
@@ -66,10 +72,33 @@
                         showDropdowns: true,
                         locale: {
                             format: 'DD/MM/YYYY',
+                            separator: ' - ',
+                            applyLabel: 'Chọn',
+                            cancelLabel: 'Hủy',
+                            fromLabel: 'Từ',
+                            toLabel: 'đến',
+                            customRangeLabel: 'Tùy chỉnh',
+                            weekLabel: 'W',
+                            daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
+                            monthNames: [
+                                'Tháng 1',
+                                'Tháng 2',
+                                'Tháng 3',
+                                'Tháng 4',
+                                'Tháng 5',
+                                'Tháng 6',
+                                'Tháng 7',
+                                'Tháng 8',
+                                'Tháng 9',
+                                'Tháng 10',
+                                'Tháng 11',
+                                'Tháng 12',
+                            ],
+                            firstDay: 1,
                         },
                     },
                     async function (start, end, label) {
-                        console.log(start.format('DD/MM/YYYY'))
+                        // console.log(start.format('DD/MM/YYYY'))
                         await taiBangChamCongToGrid(start.format('DD/MM/YYYY'))
                     },
                 )
