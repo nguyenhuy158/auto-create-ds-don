@@ -1,3 +1,4 @@
+const User = require("../models/user");
 
 exports.dangNhap = async (req, res) => {
     return res.status(200).render("dang-nhap", {});
@@ -19,7 +20,6 @@ exports.dangNhapPost = async (req, res) => {
     const isValid = await user.passwordValid(password);
 
     if (isValid) {
-
         req.session.user = user;
 
         return res.status(200).json({
@@ -91,7 +91,7 @@ exports.dangKyInternship = async (req, res) => {
             username,
             password: password || username,
             fullName,
-            role: 'internship'
+            role: "internship",
         });
         await newUser.save();
 

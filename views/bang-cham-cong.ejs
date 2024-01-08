@@ -30,11 +30,22 @@
                 <h1 class="text-center">Bảng chấm công</h1>
             </div>
 
-            <div class="row mb-3">
+            <!-- chọn tháng cần chấm công -->
+            <div class="container">
+                <div class="col">
+                    <input type="text" class="form-control month" type="text" name="month" />
+                </div>
+
+                <div class="col">
+                    <button id="tai-du-lieu-btn" class="btn btn-outline-secondary btn-sm">Tải dữ liệu</button>
+                </div>
+
                 <div class="col">
                     <button id="luu-bang-cham-cong-btn" class="btn btn-outline-primary btn-sm">Lưu</button>
                 </div>
             </div>
+
+            <div class="row mb-3"></div>
 
             <div class="row">
                 <div class="col">
@@ -47,5 +58,22 @@
         <%- include('./partials/footer'); -%>
 
         <script defer src="/js/bang-cham-cong.js"></script>
+        <script>
+            $(function () {
+                $('input[name="month"]').daterangepicker(
+                    {
+                        singleDatePicker: true,
+                        showDropdowns: true,
+                        locale: {
+                            format: 'DD/MM/YYYY',
+                        },
+                    },
+                    async function (start, end, label) {
+                        console.log(start.format('DD/MM/YYYY'))
+                        await taiBangChamCongToGrid(start.format('DD/MM/YYYY'))
+                    },
+                )
+            })
+        </script>
     </body>
 </html>
