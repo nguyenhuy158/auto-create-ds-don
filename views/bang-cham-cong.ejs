@@ -40,13 +40,36 @@
             <!-- chọn tháng cần chấm công -->
             <div class="container">
                 <div class="row">
+                    <!-- ô để chọn tháng -->
                     <div class="col-3">
-                        <input type="text" class="form-control month" type="text" name="month" />
+                        <input
+                            data-bs-toggle="tooltip"
+                            data-bs-title="Chọn tháng để lấy danh sách"
+                            type="text"
+                            class="form-control month"
+                            type="text"
+                            name="month"
+                        />
                     </div>
 
+                    <!-- các nút hành động -->
                     <div class="col">
-                        <button id="tai-du-lieu-btn" class="btn btn-outline-secondary btn-sm">Tải dữ liệu</button>
-                        <button id="luu-bang-cham-cong-btn" class="btn btn-outline-primary btn-sm">Lưu</button>
+                        <button
+                            id="tai-du-lieu-btn"
+                            data-bs-toggle="tooltip"
+                            data-bs-title="Tải dữ liệu từ server về"
+                            class="btn btn-outline-secondary btn-sm"
+                        >
+                            Tải dữ liệu
+                        </button>
+                        <button
+                            id="luu-bang-cham-cong-btn"
+                            data-bs-toggle="tooltip"
+                            data-bs-title="Tải file excel về máy"
+                            class="btn btn-outline-primary btn-sm"
+                        >
+                            Lưu file excel
+                        </button>
                     </div>
                 </div>
             </div>

@@ -1,7 +1,6 @@
 <!-- icon website -->
 <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" />
 
-
 <!-- jquery  -->
 <script
     src="https://code.jquery.com/jquery-3.7.1.js"
@@ -22,7 +21,7 @@
     crossorigin="anonymous"
 ></script>
 <!-- <link href='https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css' rel='stylesheet'> -->
-<link href='https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css' rel='stylesheet'>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css" rel="stylesheet" />
 
 <!-- toastr -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" rel="stylesheet" />
@@ -48,17 +47,19 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
 
 <!-- moment lib -->
-<script src='https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/moment@2.27.0/min/moment.min.js"></script>
 
 <!-- fullcalendar bundle -->
-<script src='https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js'></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.10/index.global.min.js"></script>
 
 <!-- the moment-to-fullcalendar connector. must go AFTER the moment lib -->
-<script src='https://cdn.jsdelivr.net/npm/@fullcalendar/moment@6.1.10/index.global.min.js'></script>
-
+<script src="https://cdn.jsdelivr.net/npm/@fullcalendar/moment@6.1.10/index.global.min.js"></script>
 
 <!-- datatables -->
-<link href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/sr-1.3.0/datatables.min.css" rel="stylesheet">
+<link
+    href="https://cdn.datatables.net/v/bs5/jszip-3.10.1/dt-1.13.8/b-2.4.2/b-colvis-2.4.2/b-html5-2.4.2/b-print-2.4.2/sr-1.3.0/datatables.min.css"
+    rel="stylesheet"
+/>
 
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/pdfmake.min.js"></script> -->
 <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.2.7/vfs_fonts.js"></script> -->
@@ -70,13 +71,20 @@
 <!-- xlsxspread.min.js xtos -> epxort file -->
 <script src="https://cdn.sheetjs.com/xspreadsheet/xlsxspread.min.js"></script>
 <!-- x-spreadsheet stylesheet -->
-<link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet/dist/xspreadsheet.css"/>
+<link rel="stylesheet" href="https://unpkg.com/x-data-spreadsheet/dist/xspreadsheet.css" />
 <!-- x-spreadsheet library -->
 <script src="https://unpkg.com/x-data-spreadsheet/dist/xspreadsheet.js"></script>
 
-
 <style>
-  body {
-      font-family: "Comfortaa", sans-serif;
-  }
+    body {
+        font-family: 'Comfortaa', sans-serif;
+    }
 </style>
+
+<script>
+    $(() => {
+        // sử dụng tooltip của bootstrap
+        const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+        const tooltipList = [...tooltipTriggerList].map((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl))
+    })
+</script>
