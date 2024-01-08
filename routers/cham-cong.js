@@ -40,7 +40,7 @@ router.get("", async (req, res) => {
  * @param {string} gioLamThem - giờ làm thêm
  * @param {string} nguoiLam - người làm
  * @returns {object} - thông tin ngày làm
- * 
+ *
  */
 router.post("", async (req, res) => {
     try {
@@ -53,7 +53,7 @@ router.post("", async (req, res) => {
         let tongGio = +gioBuoiSang + +gioBuoiChieu + +gioLamThem;
 
         // nguoiLam = await User.findById(nguoiLam);
-        ngayLam = moment(ngayLam, "DD/MM/YYYY").endOf('day');
+        ngayLam = moment(ngayLam, "DD/MM/YYYY").endOf("day");
 
         if (ngayLam.day() == 0) {
             return res.status(400).json({
@@ -103,7 +103,7 @@ router.post("", async (req, res) => {
  * @param {string} gioBuoiChieu - giờ buổi chiều
  * @param {string} gioLamThem - giờ làm thêm
  * @returns {object} - thông tin ngày làm
- * 
+ *
  */
 router.put("", async (req, res) => {
     const id = req.body.id;
@@ -132,6 +132,28 @@ router.put("", async (req, res) => {
         res.status(500).send(`Đã có lỗi xảy ra [code: ${error}]`);
     }
 });
+
+router.delete("", async (req, res) => {
+  const id = req.body.id;
+  if (!ObjectId.isValid(id)) {
+      return next();
+  }
+  try {
+    const result = await NgayLam.deleteOne({ _id: id });
+
+    if (result.deletedCount === 0) {
+      return res.status(404).json({
+        message: "Không tìm thấy dữ liệu",
+      });
+    }
+
+    res.status(200).json({
+      message: "Xóa dữ liệu thành công",
+    });
+  } catch (error) {
+      res.status(500).send(`Đã có lỗi xảy ra [code: ${error}]`);
+  }
+})
 
 /**
  * lấy thông tin ngày làm theo id
@@ -210,7 +232,6 @@ router.get("/events", async (req, res) => {
     }
 });
 
-
 // BẢNG CHẤM CÔNG //
 
 /**
@@ -223,15 +244,15 @@ router.get("/events", async (req, res) => {
  * http://localhost:3000/cham-cong/events/excel?start=2021-01-01
  * http://localhost:3000/cham-cong/events/excel?end=2021-01-31
  * http://localhost:3000/cham-cong/events/excel
- * 
+ *
  */
 router.get("/events/excel", async (req, res) => {
     try {
         let { start, end } = req.query;
 
         if (!start || !end) {
-            const currentMonthStart = moment().startOf('month');
-            const currentMonthEnd = moment().endOf('month');
+            const currentMonthStart = moment().startOf("month");
+            const currentMonthEnd = moment().endOf("month");
             start = start || currentMonthStart;
             end = end || currentMonthEnd;
         }
@@ -327,13 +348,11 @@ router.get("/events/excel", async (req, res) => {
             aoa.push([fullName, "bonus", ...values.bonus]);
         });
 
-
-
         // them dong o hang cuoi sao cho bang tong cac gia tri o cot hien tai tru dong dau tien
         let rowLast = aoa[aoa.length - 1];
         let rowTotal = Array(rowLast.length).fill(0);
-        rowTotal[0] = 'Tổng';
-        rowTotal[1] = 'Tổng';
+        rowTotal[0] = "Tổng";
+        rowTotal[1] = "Tổng";
         for (let i = 2; i < rowLast.length; i++) {
             let total = 0;
             for (let j = 1; j < aoa.length; j++) {
@@ -344,7 +363,7 @@ router.get("/events/excel", async (req, res) => {
                     continue;
                 }
 
-                if (row[1] == 'bonus') {
+                if (row[1] == "bonus") {
                     continue;
                 }
 
@@ -369,7 +388,7 @@ router.get("/events/excel", async (req, res) => {
         // console.log('aoa:', aoa);
         // console.log('rowTotal:', rowTotal);
 
-        // 
+        //
         // remove T7 & CN
         let rowHeader = aoa[0];
         rowHeader.forEach((item, column) => {
@@ -380,8 +399,8 @@ router.get("/events/excel", async (req, res) => {
                 // console.log(`🚀 currentDate`, currentDate.format('DD/MM/YYYY'));
                 // CN
                 aoa.forEach((person, row) => {
-                    if (row > 0 && aoa[row][1] != 'bonus') {
-                        aoa[row][column] = 'x';
+                    if (row > 0 && aoa[row][1] != "bonus") {
+                        aoa[row][column] = "x";
                     }
                 });
             }
@@ -390,146 +409,142 @@ router.get("/events/excel", async (req, res) => {
                 // T7
                 // console.log(`🚀 currentDate`, currentDate.format('DD/MM/YYYY'));
                 aoa.forEach((person, row) => {
-                    if (row > 0 && aoa[row][1] != 'bonus') {
-                        aoa[row][column] = 'x';
+                    if (row > 0 && aoa[row][1] != "bonus") {
+                        aoa[row][column] = "x";
                     }
                 });
             }
         });
 
+        // function calculateTotalBonus(personData) {
+        //     // Starting from the 3rd element (index 2) to exclude "nguoiLam" and "Shift"
+        //     if (personData[1] != "bonus") {
+        //         return 0;
+        //     }
+        //     let totalBonus = personData.slice(2).reduce((sum, bonus) => sum + +bonus, 0);
 
-        function calculateTotalBonus(personData) {
-            // Starting from the 3rd element (index 2) to exclude "nguoiLam" and "Shift"
-            if (personData[1] != 'bonus') {
-                return 0;
-            }
-            let totalBonus = personData.slice(2).reduce((sum, bonus) => sum + (+bonus), 0);
+        //     personData.forEach((bonus, index) => {
+        //         // personData[index] = bonus == 0 ? "" : bonus;
+        //         if (index > 1) {
+        //             personData[index] = 0;
+        //         }
+        //     });
+        //     return totalBonus;
+        // }
+        // function updateTotalRow() {
+        //     for (let i = 2; i < aoa[0].length - 1; i++) {
+        //         let total = 0;
+        //         for (let j = 1; j < aoa.length - 1; j++) {
+        //             const cellValue = aoa[j][i];
+        //             const row = aoa[j];
 
-            personData.forEach((bonus, index) => {
-                // personData[index] = bonus == 0 ? "" : bonus;
-                if (index > 1) {
-                    personData[index] = 0;
-                }
-            });
-            return totalBonus;
-        }
-        function updateTotalRow() {
-            for (let i = 2; i < aoa[0].length - 1; i++) {
-                let total = 0;
-                for (let j = 1; j < aoa.length - 1; j++) {
-                    const cellValue = aoa[j][i];
-                    const row = aoa[j];
+        //             if (isNaN(row[i])) {
+        //                 continue;
+        //             }
 
-                    if (isNaN(row[i])) {
-                        continue;
-                    }
+        //             if (row[1] == "bonus") {
+        //                 continue;
+        //             }
 
-                    if (row[1] == 'bonus') {
-                        continue;
-                    }
+        //             total += +cellValue;
+        //         }
+        //         aoa[aoa.length - 1][i] = total;
+        //     }
+        // }
+        // aoa.forEach((person, index) => {
+        //     // Calculate the total bonus for the person
+        //     let totalBonus = calculateTotalBonus(person);
 
-                    total += +cellValue;
-                }
-                aoa[aoa.length - 1][i] = total;
-            }
-        }
-        aoa.forEach((person, index) => {
-            // Calculate the total bonus for the person
-            let totalBonus = calculateTotalBonus(person);
+        //     // nếu giờ dư lớn hơn 0 thì thêm vào
+        //     // console.log(`🚀 🚀 file: cham-cong.js:300 🚀 aoa.forEach 🚀 totalBonus > 0`, totalBonus, totalBonus > 0);
+        //     if (totalBonus > 0) {
+        //         let rowAbove = aoa[index - 1];
+        //         // console.log(`🚀 🚀 file: cham-cong.js:301 🚀 aoa.forEach 🚀 rowAbove`, rowAbove);
+        //         let rowDoubleAbove = aoa[index - 2];
+        //         // console.log(`🚀 🚀 file: cham-cong.js:303 🚀 aoa.forEach 🚀 rowDoubleAbove`, rowDoubleAbove);
 
-            // nếu giờ dư lớn hơn 0 thì thêm vào
-            // console.log(`🚀 🚀 file: cham-cong.js:300 🚀 aoa.forEach 🚀 totalBonus > 0`, totalBonus, totalBonus > 0);
-            if (totalBonus > 0) {
-                let rowAbove = aoa[index - 1];
-                // console.log(`🚀 🚀 file: cham-cong.js:301 🚀 aoa.forEach 🚀 rowAbove`, rowAbove);
-                let rowDoubleAbove = aoa[index - 2];
-                // console.log(`🚀 🚀 file: cham-cong.js:303 🚀 aoa.forEach 🚀 rowDoubleAbove`, rowDoubleAbove);
+        //         let buoiThem = Math.ceil(totalBonus / 180);
+        //         totalBonus = totalBonus % 180;
 
+        //         for (let i = 0; i < buoiThem; i++) {
+        //             let columnTotals = aoa[aoa.length - 1];
+        //             columnTotals = columnTotals.map((item, column) =>
+        //                 isNaN(item) ||
+        //                 moment().date(aoa[0][column]).day() == 6 ||
+        //                 moment().date(aoa[0][column]).day() == 0 ||
+        //                 (rowAbove[column] == 1 && rowDoubleAbove[column] == 1)
+        //                     ? 99
+        //                     : item,
+        //             );
+        //             // console.log(`🚀 🚀 file: cham-cong.js:358 🚀 aoa.forEach 🚀 columnTotals`, columnTotals);
+        //             let used = false;
+        //             let minColumnIndex = columnTotals.indexOf(Math.min(...columnTotals.slice(2)));
+        //             // console.log(`🚀 🚀 file: cham-cong.js:363 🚀 aoa.forEach 🚀 minColumnIndex`, minColumnIndex);
 
-                let buoiThem = Math.ceil(totalBonus / 180);
-                totalBonus = totalBonus % 180;
+        //             for (let j = 2; j < rowAbove.length; j++) {
+        //                 if (rowAbove[j] == 0 && rowAbove[j] != 180 && j === minColumnIndex) {
+        //                     rowAbove[j] = 1;
+        //                     // console.log('rowAbove', j, rowAbove);
+        //                     used = true;
+        //                     break;
+        //                 }
 
-                for (let i = 0; i < buoiThem; i++) {
-                    let columnTotals = aoa[aoa.length - 1];
-                    columnTotals = columnTotals.map((item, column) =>
-                        isNaN(item) ||
-                            moment().date(aoa[0][column]).day() == 6 ||
-                            moment().date(aoa[0][column]).day() == 0 ||
-                            (rowAbove[column] == 1 &&
-                                rowDoubleAbove[column] == 1) ?
-                            99 : item);
-                    // console.log(`🚀 🚀 file: cham-cong.js:358 🚀 aoa.forEach 🚀 columnTotals`, columnTotals);
-                    let used = false;
-                    let minColumnIndex = columnTotals.indexOf(Math.min(...columnTotals.slice(2)));
-                    // console.log(`🚀 🚀 file: cham-cong.js:363 🚀 aoa.forEach 🚀 minColumnIndex`, minColumnIndex);
+        //                 if (rowDoubleAbove[j] == 0 && rowDoubleAbove[j] != 180 && j === minColumnIndex) {
+        //                     rowDoubleAbove[j] = 1;
+        //                     // console.log('rowDoubleAbove', j, rowDoubleAbove);
+        //                     used = true;
+        //                     break;
+        //                 }
+        //             }
 
+        //             if (!used) {
+        //                 totalBonus = totalBonus + 180;
+        //             }
 
-                    for (let j = 2; j < rowAbove.length; j++) {
-                        if (rowAbove[j] == 0 && rowAbove[j] != 180 && j === minColumnIndex) {
-                            rowAbove[j] = 1;
-                            // console.log('rowAbove', j, rowAbove);
-                            used = true;
-                            break;
-                        }
+        //             updateTotalRow();
+        //         }
+        //     }
 
-                        if (rowDoubleAbove[j] == 0 && rowDoubleAbove[j] != 180 && j === minColumnIndex) {
-                            rowDoubleAbove[j] = 1;
-                            // console.log('rowDoubleAbove', j, rowDoubleAbove);
-                            used = true;
-                            break;
-                        }
-                    }
+        //     // Add a new property "bonusTotal" with the calculated total bonus
+        //     person.push(totalBonus);
+        // });
 
-                    if (!used) {
-                        totalBonus = totalBonus + 180;
-                    }
-
-                    updateTotalRow();
-                }
-
-            }
-
-            // Add a new property "bonusTotal" with the calculated total bonus
-            person.push(totalBonus);
-        });
-
-        for (let i = 0; i < aoa.length; i++) {
-            const row = aoa[i];
-            for (let j = 0; j < row.length; j++) {
-                const cell = row[j];
-                if (cell == 'x') {
-                    aoa[i][j] = '';
-                }
-            }
-        }
-
-        // xoa dong bonus
         // for (let i = 0; i < aoa.length; i++) {
         //     const row = aoa[i];
-        //     if (row[1] == 'bonus') {
-        //         aoa.splice(i, 1);
-        //         i--;
+        //     for (let j = 0; j < row.length; j++) {
+        //         const cell = row[j];
+        //         if (cell == "x") {
+        //             aoa[i][j] = "";
+        //         }
         //     }
         // }
 
-        // them cot tong o cuoi
-        aoa[0].push('Tổng');
-        for (let i = 1; i < aoa.length; i++) {
-            const row = aoa[i];
-            let total = 0;
-            for (let j = 2; j < row.length; j++) {
-                const cell = row[j];
-                // if (isNaN(cell)) {
-                //     continue;
-                // }
-                // if (cell == 'x') {
-                //     continue;
-                // }
-                total += +cell;
-            }
-            aoa[i].push(total);
-        }
+        // // xoa dong bonus
+        // // for (let i = 0; i < aoa.length; i++) {
+        // //     const row = aoa[i];
+        // //     if (row[1] == 'bonus') {
+        // //         aoa.splice(i, 1);
+        // //         i--;
+        // //     }
+        // // }
 
+        // // them cot tong o cuoi
+        // aoa[0].push("Tổng");
+        // for (let i = 1; i < aoa.length; i++) {
+        //     const row = aoa[i];
+        //     let total = 0;
+        //     for (let j = 2; j < row.length; j++) {
+        //         const cell = row[j];
+        //         // if (isNaN(cell)) {
+        //         //     continue;
+        //         // }
+        //         // if (cell == 'x') {
+        //         //     continue;
+        //         // }
+        //         total += +cell;
+        //     }
+        //     aoa[i].push(total);
+        // }
 
         // update tong dong cuoi
 
@@ -553,7 +568,7 @@ router.get("/events/excel", async (req, res) => {
 /**
  * lấy trang bảng chấm công
  * @returns {object} - trang bảng chấm công
-*/
+ */
 router.get("/bang-cham-cong", async (req, res) => {
     try {
         const ngayLam = await NgayLam.find();
@@ -566,6 +581,5 @@ router.get("/bang-cham-cong", async (req, res) => {
         return res.redirect("/");
     }
 });
-
 
 module.exports = router;

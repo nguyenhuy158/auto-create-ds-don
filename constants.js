@@ -1,3 +1,4 @@
+
 exports.requestTypeToPerson = {
     "Đơn hoãn thi": "Ca Phú Phát",
     "Đăng ký dự thi": "Ca Phú Phát",
@@ -19,6 +20,7 @@ exports.requestTypeToPerson = {
     "Đơn đăng ký tập sự nghề nghiệp": "Nguyễn Văn Khoa",
     "Đơn đăng ký môn thay thế tốt nghiệp": "Nguyễn Văn Khoa",
     "Đơn xem xét kết quả xét luận văn": "Nguyễn Văn Khoa",
+    "Xem xét kết quả xét thực tập": "Nguyễn Văn Khoa",
     "Đơn xem xét kết quả xét môn thay thế tốt nghiệp": "Nguyễn Văn Khoa",
     "Chuyển nhóm môn học": "Nguyễn Thủy Kim Tuyền",
     "Hủy môn học trong KHHT": "Nguyễn Thủy Kim Tuyền",
@@ -54,6 +56,8 @@ exports.keepColumns = [
     "Loại đơn",
     "Mã số sinh viên",
     "Họ tên",
+
+    "Bộ phận xử lý",
 ];
 
 exports.keepColumnsV1 = [
@@ -69,14 +73,16 @@ exports.keepColumnsV1 = [
     "Mã số sinh viên",
     "Họ tên",
     "Bộ phận xử lý",
-    "Lớp"
+    "Lớp",
+
+    "Bộ phận xử lý",
 ];
 
 exports.cacLoaiDonSeBiXoa = [
     "Đơn đề nghị miễn Tiếng Anh",
     "Đơn xin cấp bảng điểm",
     "Gia hạn đóng học phí",
-    "Cấp bản sao bằng tốt nghiệp"
+    "Cấp bản sao bằng tốt nghiệp",
 ];
 
 exports.mongoURI = "mongodb+srv://github:mMWIrT4GWZ7gaPJv@github.ozgezwg.mongodb.net/e001";

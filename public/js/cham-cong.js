@@ -34,6 +34,7 @@ $(() => {
                     const ngayCong = response.data;
                     console.log("ngayCong: ", ngayCong);
                     $(".chinh-sua-ngay-cong-btn").data("ngay-lam-id", ngayCong._id);
+                    $(".xoa-ngay-cong-btn").data("ngay-lam-id", ngayCong._id);
 
                     $("#nguoi-lam-option-modal")
                         .text(ngayCong.nguoiLam.fullName || ngayCong.nguoiLam.username)
@@ -94,9 +95,8 @@ $(() => {
         },
     );
 
-
     /**
-     * 
+     *
      */
     $(".gio-buoi-sang-input, .gio-buoi-chieu-input, .gio-lam-them-input").on("input", function () {
         const isModal = $(this).attr("class").includes("modal");
@@ -181,6 +181,42 @@ $(() => {
             error: (response) => {
                 Swal.fire(response.responseJSON?.message);
             },
+        });
+    });
+
+    /**
+     * Xóa ngày công
+     */
+    $(".xoa-ngay-cong-btn").on("click", function () {
+        const ngayLamId = $(this).data("ngay-lam-id");
+
+        // Use SweetAlert2 for confirmation dialog
+        Swal.fire({
+            title: "Xác nhận xóa?",
+            text: "Bạn có chắc chắn muốn xóa dữ liệu này?",
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Đồng ý",
+            cancelButtonText: "Hủy bỏ",
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // User confirmed, proceed with the DELETE request
+                const data = { id: ngayLamId };
+
+                $.ajax({
+                    url: "/cham-cong",
+                    type: "DELETE",
+                    data: data,
+                    success: (response) => {
+                        Swal.fire(response.message, "", "success");
+                        calendar.refetchEvents();
+                        $("#chinh-sua-ngay-cong-modal").modal("hide");
+                    },
+                    error: (response) => {
+                        Swal.fire(response.responseJSON?.message, "", "error");
+                    },
+                });
+            }
         });
     });
 });
