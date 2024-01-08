@@ -587,7 +587,7 @@ router.get("/events/excel", async (req, res) => {
 
         // Send the Excel file as a response
         const buf = XLSX.write(wb, { type: "buffer", bookType: "xlsx" });
-        res.attachment("SheetJSExpress.xlsx");
+        res.attachment("DS_Don.xlsx");
         res.status(200).end(buf);
     } catch (error) {
         console.error(error);

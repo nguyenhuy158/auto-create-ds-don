@@ -273,7 +273,7 @@ $(() => {
                                     // Create a download link and trigger the download
                                     var link = document.createElement("a");
                                     link.href = URL.createObjectURL(blob);
-                                    link.download = "SheetJSExpress.xlsx";
+                                    link.download = "DS_Don." + moment().format("DD.MM.YYYY") + ".xlsx";
                                     document.body.appendChild(link);
                                     link.click();
                                     document.body.removeChild(link);
@@ -385,7 +385,7 @@ $(() => {
                                     // Create a download link and trigger the download
                                     var link = document.createElement("a");
                                     link.href = URL.createObjectURL(blob);
-                                    link.download = "SheetJSExpress.xlsx";
+                                    link.download = "DS_Don." + moment().format("DD.MM.YYYY") + ".xlsx";
                                     document.body.appendChild(link);
                                     link.click();
                                     document.body.removeChild(link);
