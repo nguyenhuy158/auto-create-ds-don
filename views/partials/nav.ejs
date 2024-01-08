@@ -28,7 +28,7 @@
                         <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
                             <% if (typeof user !== 'undefined') { %>
                             Người dùng:
-                            <%= user.username %>
+                            <%= user.fullName || user.username %>
                             <% } else { %>
                             Tính lương
                             <% } %>
@@ -38,7 +38,7 @@
                             <!-- <%= typeof user %> -->
                             <% if (typeof user === 'undefined') { %>
                             <li>
-                                <a class="dropdown-item" href="/login">Đăng nhập</a>
+                                <a class="dropdown-item" href="/dang-nhap">Đăng nhập</a>
                             </li>
                             <% } %>
 

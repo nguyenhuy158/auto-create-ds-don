@@ -41,18 +41,23 @@ $(() => {
         var theadContent = `
             <tr>
                 <td colspan="6" class="text-start fw-bold">Trường Đại học Tôn Đức Thắng</td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td colspan="6" class="text-start fw-bold">Phòng Đại học</td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td colspan="6" class="text-center h3">DANH SÁCH BÀN GIAO ĐƠN</td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td colspan="6" class="text-start">Ngày nhận: ${dateSent}</td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td colspan="6" class="text-start"></td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <th class="text-center">STT</th>
@@ -108,39 +113,46 @@ $(() => {
                 <td></td>
                 <td class="text-center pt-5"></td>
                 <td></td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td colspan="6" class="text-start">Tổng đơn: ${totalDon}</td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td colspan="3" class="text-center">${dateReceive}</td>
+                <td colspan="3" class="text-center fst-italic">${dateReceive}</td>
                 <td></td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td colspan="3" class="text-center">Người lập bảng</td>
                 <td></td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td colspan="3" class="text-center pt-5"></td>
                 <td></td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td></td>
                 <td></td>
                 <td colspan="3" class="text-center pt-5"></td>
                 <td></td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
             <tr>
                 <td></td>
                 <td></td>
-                <td colspan="3" class="text-center">Nguyễn Duy Khánh</td>
+                <td colspan="3" class="text-center fst-italic">Nguyễn Duy Khánh</td>
                 <td></td>
+                ${nguoinhan ? "<td></td>" : ""}
             </tr>
         `;
         tfoot.html(tfootContent);
@@ -198,6 +210,7 @@ $(() => {
         });
     });
 
+    // tạo danh sách đơn bình thường
     $("#createDS").on("submit", function (e) {
         showSpinner();
 
@@ -310,6 +323,8 @@ $(() => {
             hideSpinner();
         });
     });
+
+    // tạo danh sách đơn có người nhập đơn
     $("#taoDSCoNguoiNhapDon").on("click", function (e) {
         showSpinner();
 
@@ -358,12 +373,22 @@ $(() => {
                                 url: "/download",
                                 type: "POST",
                                 data: { aoa: JSON.stringify(aoa) },
+                                xhrFields: {
+                                    responseType: "blob", // Set the response type to 'blob'
+                                },
                                 success: function (data) {
-                                    if (data.error) {
-                                        toastr.error(data.message);
-                                    } else {
-                                        toastr.success(data.message);
-                                    }
+                                    // Create a blob from the response
+                                    var blob = new Blob([data], {
+                                        type: "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                                    });
+
+                                    // Create a download link and trigger the download
+                                    var link = document.createElement("a");
+                                    link.href = URL.createObjectURL(blob);
+                                    link.download = "SheetJSExpress.xlsx";
+                                    document.body.appendChild(link);
+                                    link.click();
+                                    document.body.removeChild(link);
                                 },
                                 error: function (error) {
                                     toastr.error(error.responseJSON?.message);

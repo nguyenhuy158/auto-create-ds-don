@@ -105,7 +105,7 @@ router.post("", async (req, res) => {
  * @returns {object} - thông tin ngày làm
  *
  */
-router.put("", async (req, res) => {
+router.put("", async (req, res, next) => {
     const id = req.body.id;
     if (!ObjectId.isValid(id)) {
         return next();
@@ -122,6 +122,16 @@ router.put("", async (req, res) => {
         event.gioLamThem = gioLamThem;
         event.tongGio = tongGio;
 
+        // kiểm tra người dùng hiện tại đang login có phải admin
+        // hoặc là người dùng đang login có phải là người làm
+        // nếu không phải thì không cho xóa
+        if (req.session.user.role !== "admin" &&
+            req.session.user._id != event.nguoiLam) {
+            return res.status(400).json({
+                message: "Bạn không có quyền cập nhật ngày làm của người khác",
+            });
+        }
+
         await event.save();
 
         res.status(200).json({
@@ -133,27 +143,49 @@ router.put("", async (req, res) => {
     }
 });
 
-router.delete("", async (req, res) => {
-  const id = req.body.id;
-  if (!ObjectId.isValid(id)) {
-      return next();
-  }
-  try {
-    const result = await NgayLam.deleteOne({ _id: id });
-
-    if (result.deletedCount === 0) {
-      return res.status(404).json({
-        message: "Không tìm thấy dữ liệu",
-      });
+/**
+ * xóa ngày làm theo id
+ * @param {string} id - id của ngày làm
+ * @returns {object} - thông tin ngày làm
+ */
+router.delete("", async (req, res, next) => {
+    const id = req.body.id;
+    if (!ObjectId.isValid(id)) {
+        return next();
     }
+    try {
 
-    res.status(200).json({
-      message: "Xóa dữ liệu thành công",
-    });
-  } catch (error) {
-      res.status(500).send(`Đã có lỗi xảy ra [code: ${error}]`);
-  }
-})
+        // tìm kiếm ngày làm theo id
+        const event = await NgayLam.findById(id);
+
+        // kiểm tra ngày làm có tồn tại hay không
+        if (!event) {
+            return res.status(400).json({
+                message: "Ngày làm không tồn tại",
+            });
+        }
+
+        // kiểm tra người dùng hiện tại đang login có phải admin
+        // hoặc là người dùng đang login có phải là người làm
+        // nếu không phải thì không cho xóa
+        if (req.session.user.role !== "admin" &&
+            req.session.user._id != event.nguoiLam) {
+            return res.status(400).json({
+                message: "Bạn không có quyền xóa dữ liệu của người khác",
+            });
+        }
+
+        // xóa ngày làm
+        await NgayLam.deleteOne({ _id: id });
+
+        res.status(200).json({
+            data: event,
+            message: "Xóa dữ liệu thành công",
+        });
+    } catch (error) {
+        res.status(500).send(`Đã có lỗi xảy ra [code: ${error}]`);
+    }
+});
 
 /**
  * lấy thông tin ngày làm theo id
