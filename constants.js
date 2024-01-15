@@ -17,6 +17,7 @@ exports.requestTypeToPerson = {
     "Đơn xác nhận liên quan tốt nghiệp": "Nguyễn Thị Kim Tuyến",
     "Đăng ký xét tốt nghiệp": "Nguyễn Thị Kim Tuyến",
     "Đơn xin cấp giấy chứng nhận tốt nghiệp tạm thời": "Nguyễn Thị Kim Tuyến",
+    "Đơn xin xem xét môn học tương đương": "Nguyễn Thị Kim Tuyến",
     "Đơn đăng ký tập sự nghề nghiệp": "Nguyễn Văn Khoa",
     "Đơn đăng ký môn thay thế tốt nghiệp": "Nguyễn Văn Khoa",
     "Đơn xem xét kết quả xét luận văn": "Nguyễn Văn Khoa",
