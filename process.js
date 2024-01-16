@@ -3,7 +3,7 @@ const path = require("path");
 const xlsx = require("xlsx");
 const moment = require("moment");
 
-const { requestTypeToPerson, keepColumns, keepColumnsV1, cacLoaiDonSeBiXoa } = require("./constants");
+const { requestTypeToPerson, keepColumnsV1, cacLoaiDonSeBiXoa } = require("./constants");
 
 function locRaCacCotCanThiet(obj, nguoinhan = false) {
     Object.keys(obj)
