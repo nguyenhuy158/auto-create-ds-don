@@ -23,6 +23,7 @@ exports.requestTypeToPerson = {
     "Đơn Đăng ký thi KNTHCM": "Nguyễn Thị Kim Tuyến",
     "Đơn xác nhận liên quan tốt nghiệp": "Nguyễn Thị Kim Tuyến",
     "Đăng ký xét tốt nghiệp": "Nguyễn Thị Kim Tuyến",
+    "Hoãn xét tốt nghiệp": "Nguyễn Thị Kim Tuyến",
     "Đơn xin cấp giấy chứng nhận tốt nghiệp tạm thời": "Nguyễn Thị Kim Tuyến",
     "Đơn xin xem xét môn học tương đương": "Nguyễn Thị Kim Tuyến",
 
@@ -31,6 +32,7 @@ exports.requestTypeToPerson = {
     "Đơn đăng ký môn thay thế tốt nghiệp": "Nguyễn Văn Khoa",
     "Đơn xem xét kết quả xét luận văn": "Nguyễn Văn Khoa",
     "Xem xét kết quả xét thực tập": "Nguyễn Văn Khoa",
+    "Đăng ký thực tập trễ hạn": "Nguyễn Văn Khoa",
     "Đơn xem xét kết quả xét môn thay thế tốt nghiệp": "Nguyễn Văn Khoa",
 
     // Nguyễn Thị Kim Tuyền
@@ -115,6 +117,17 @@ exports.cacLoaiDonSeBiXoa = [
     "Đơn xin cấp bảng điểm",
     "Gia hạn đóng học phí",
     "Cấp bản sao bằng tốt nghiệp",
+];
+
+// tên người dùng ngẫu nhiên để lưu lại lịch sử
+exports.names = [
+    "ai đó",
+    "một người ẩn danh",
+    "ai đó hong biết luôn",
+    "một người lạ",
+    "một người nào đó",
+    "người dùng ẩn danh",
+    "một người dễ thương nào đó",
 ];
 
 // URI connect to MongoDB
