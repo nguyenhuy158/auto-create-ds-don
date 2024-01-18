@@ -64,3 +64,46 @@ exports.xoaThongTin = async (req, res) => {
         });
     }
 };
+
+exports.hienThiTrangDoiMatKhau = async (req, res) => {
+    return res.render("doi-mat-khau");
+};
+
+exports.doiMatKhau = async (req, res) => {
+    try {
+        const { oldPassword, newPassword, confirmPassword } = req.body;
+
+        // console.log('oldPassword', oldPassword);
+        // console.log('newPassword', newPassword);
+        // console.log('confirmPassword', confirmPassword);
+
+        
+        const userId = req.session.user._id;
+
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(400).json({
+                message: "Không tìm thấy user này đao.",
+            });
+        }
+
+        if (!user.passwordValid(oldPassword)) {
+            return res.status(400).json({
+                message: "Mật khẩu cũ không đúng.",
+            });
+        }
+        
+        user.password = newPassword;
+        await user.save();
+
+        return res.status(200).json({
+            message: "Thay đổi mật khẩu thành công.",
+            success: true,
+        });
+    } catch (error) {
+        return res.status(400).json({
+            message: `Lỗi mất tiêu. [code: ${error}]`,
+        });
+    }
+};
