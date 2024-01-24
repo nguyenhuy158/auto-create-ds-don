@@ -8,6 +8,11 @@ const {
     removeOldFiles,
 } = require("./process");
 
+const {
+    taoDanhSachCuaMotNgay,
+    taoDanhSachCuaNhieuNgay
+} = require("./process");
+
 const { names } = require("./constants");
 
 exports.readArrayFromFile = async function readArrayFromFile(filePath = './data.json') {
@@ -123,5 +128,44 @@ exports.uploadFile = (req, res) => {
         }
     } catch (error) {
         res.json({ error: true, message: `Tải lên thất bại, nhớ chọn file excel nha. (Code - ${error})` });
+    }
+};
+
+
+exports.createTable = (req, res) => {
+    try {
+        const { filename } = req.body;
+        let processedData, dateSent, dateReceive, totalDon;
+        ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaMotNgay(
+            path.join("uploads", filename),
+            true,
+        ));
+
+        // kiem tra xem co undefined hay khong
+        let isHaveUndefinedData = processedData.some((item) => {
+            return Object.values(item).some((value) => value === undefined);
+        });
+
+        if (isHaveUndefinedData) {
+            ({ processedData, dateSent, dateReceive, totalDon } = taoDanhSachCuaNhieuNgay(
+                path.join("uploads", filename),
+                true,
+            ));
+        }
+
+        res.json({
+            error: false,
+            data: processedData,
+            dateSent,
+            dateReceive,
+            totalDon,
+            message: "Tạo danh sách thành công",
+        });
+    } catch (error) {
+        console.log(`error:219:`, error);
+        res.json({
+            error: true,
+            message: `Tạo danh sách thất bại, tải file lên và thử lại (Code - ${error})`,
+        });
     }
 };

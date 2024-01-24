@@ -98,22 +98,6 @@ exports.keepColumnsV1 = [
 
     "Bộ phận xử lý",
 ];
-// exports.keepColumns = [
-//     // cho danh sách đơn 1 ngày
-//     "Người giải quyết đơn",
-//     "Số BN",
-//     "Loại đơn (Tên đơn)",
-//     "MSSV",
-//     "Họ và tên",
-
-//     // cho danh sách đơn nhiều ngày
-//     "Mã số đơn",
-//     "Loại đơn",
-//     "Mã số sinh viên",
-//     "Họ tên",
-
-//     "Bộ phận xử lý",
-// ];
 
 // các loại đơn sẽ bị xóa
 exports.cacLoaiDonSeBiXoa = [
