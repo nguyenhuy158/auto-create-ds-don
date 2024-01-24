@@ -1,11 +1,7 @@
 const express = require("express");
-const xlsx = require("xlsx");
 const path = require("path");
-const moment = require("moment");
-const fs = require("fs");
 const multer = require("multer");
 const session = require("express-session");
-const XLSX = require("xlsx");
 
 const chamCongRouter = require("./routers/cham-cong");
 const internshipRouter = require("./routers/internship");
@@ -15,20 +11,15 @@ const otherRouter = require("./routers/other");
 const errorRouter = require("./routers/error");
 const mongoose = require("./database");
 
-const User = require("./models/user");
-const NgayLam = require("./models/ngay-lam");
 
 const {
-    readArrayFromFile,
-    writeArrayToFile,
-    downloadFile
+    downloadFile,
+    uploadFile,
 } = require("./utils");
-const { names } = require("./constants");
 
 const upload = multer({ dest: "uploads/" });
 
 const {
-    removeOldFiles,
     taoDanhSachCuaMotNgay,
     taoDanhSachCuaNhieuNgay
 } = require("./process");
@@ -52,43 +43,7 @@ app.use(
  * tải file excel lên
  * method: POST
  */
-app.post("/upload", upload.single("file"), (req, res) => {
-    try {
-        removeOldFiles();
-
-        if (req.file.originalname.endsWith(".xlsx") || req.file.originalname.endsWith(".xls")) {
-            console.log(req.file);
-
-            let oldPath = req.file.path;
-            let newPath = path.join(
-                path.dirname(oldPath),
-                "DS_NopDon_" + new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + ".xlsx",
-            );
-            let filename = path.basename(newPath);
-
-            fs.rename(oldPath, newPath, async (err) => {
-                if (err) {
-                    res.json({ error: true, message: `File rename failed: ${err}` });
-                } else {
-                    console.log(req.file);
-                    res.json({ error: false, message: `File uploaded and renamed successfully ${filename}`, filename });
-                }
-                await writeArrayToFile({
-                    filename,
-                    date: moment().format("DD/MM/YYYY HH:mm"),
-                    name: names[Math.floor(Math.random() * names.length)],
-                });
-            });
-        } else {
-            res.json({
-                error: true,
-                message: "Upload thất bại gòi, mọi người nhớ chọn đúng file excel (ích xeo nhoa).",
-            });
-        }
-    } catch (error) {
-        res.json({ error: true, message: `Upload thất bại rồi, mọi người nhớ chọn file nha nha. (Code - ${error})` });
-    }
-});
+app.post("/upload", upload.single("file"), uploadFile);
 
 /**
  * trang chủ

@@ -3,14 +3,14 @@ const { mongoURI } = require("./constants");
 
 mongoose.connect(mongoURI);
 
-const db = mongoose.connection;
+const database = mongoose.connection;
 
-db.once("open", () => {
-    console.log("Connected to MongoDB");
+database.once("open", () => {
+    console.log("[database] Connected");
 });
 
-db.on("error", (error) => {
-    console.error("MongoDB connection error:", error);
+database.on("error", (error) => {
+    console.error("[database] Error: ", error);
 });
 
 module.exports = mongoose;

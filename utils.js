@@ -1,27 +1,35 @@
-const fs = require('fs').promises;
-const xlsx = require("xlsx");
+const fsPromises = require('fs').promises;
 const XLSX = require("xlsx");
+const path = require("path");
+const moment = require("moment");
+const fs = require("fs");
+
+const {
+    removeOldFiles,
+} = require("./process");
+
+const { names } = require("./constants");
 
 exports.readArrayFromFile = async function readArrayFromFile(filePath = './data.json') {
     try {
-        const fileContent = await fs.readFile(filePath, 'utf-8');
+        const fileContent = await fsPromises.readFile(filePath, 'utf-8');
         const dataArray = JSON.parse(fileContent);
         return dataArray;
     } catch (error) {
         console.error('Error reading file:', error.message);
         if (error.code === 'ENOENT') {
-            await fs.writeFile(filePath, '[]', 'utf-8');
+            await fsPromises.writeFile(filePath, '[]', 'utf-8');
         }
         return [];
     }
 };
 
-exports.writeArrayToFile = async function writeArrayToFile(data, filePath = './data.json') {
+async function writeArrayToFile(data, filePath = './data.json') {
     try {
         const currentData = await exports.readArrayFromFile();
         const dataArray = [data, ...currentData];
         const jsonString = JSON.stringify(dataArray, null, 2);
-        await fs.writeFile(filePath, jsonString, 'utf-8');
+        await fsPromises.writeFile(filePath, jsonString, 'utf-8');
         console.log(`Data successfully written to ${filePath}`);
     } catch (error) {
         console.error('Error writing to file:', error.message);
@@ -77,5 +85,43 @@ exports.downloadFile = (req, res) => {
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: true, message: "Internal Server Error" });
+    }
+};
+
+exports.uploadFile = (req, res) => {
+    try {
+        removeOldFiles();
+
+        if (req.file.originalname.endsWith(".xlsx") || req.file.originalname.endsWith(".xls")) {
+            console.log(req.file);
+
+            let oldPath = req.file.path;
+            let newPath = path.join(
+                path.dirname(oldPath),
+                "DS_NopDon_" + new Date().toISOString().replace(/[-:]/g, "").slice(0, 15) + ".xlsx",
+            );
+            let filename = path.basename(newPath);
+
+            fs.rename(oldPath, newPath, async (error) => {
+                if (error) {
+                    res.json({ error: true, message: `Đổi tên file thất bại: (Code - ${error})` });
+                } else {
+                    console.log(req.file);
+                    res.json({ error: false, message: `Tải file lên thành công ${filename}`, filename });
+                }
+                await writeArrayToFile({
+                    filename,
+                    date: moment().format("DD/MM/YYYY HH:mm"),
+                    name: names[Math.floor(Math.random() * names.length)],
+                });
+            });
+        } else {
+            res.json({
+                error: true,
+                message: "Tải lên thất bại gòi, nhớ chọn đúng file excel.",
+            });
+        }
+    } catch (error) {
+        res.json({ error: true, message: `Tải lên thất bại, nhớ chọn file excel nha. (Code - ${error})` });
     }
 };

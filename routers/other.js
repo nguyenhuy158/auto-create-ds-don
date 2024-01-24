@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const { readArrayFromFile, writeArrayToFile } = require("../utils");
+const { readArrayFromFile } = require("../utils");
 
 router.get("/huong-dan-su-dung", (req, res) => {
     res.render("tutorial");
