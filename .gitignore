@@ -9,3 +9,4 @@ processedData.json
 yarn.lock
 views/partials/head.ejs
 
+yarn.lock
