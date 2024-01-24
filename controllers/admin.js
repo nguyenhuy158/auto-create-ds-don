@@ -77,7 +77,7 @@ exports.doiMatKhau = async (req, res) => {
         // console.log('newPassword', newPassword);
         // console.log('confirmPassword', confirmPassword);
 
-        
+
         const userId = req.session.user._id;
 
         const user = await User.findById(userId);
@@ -93,7 +93,7 @@ exports.doiMatKhau = async (req, res) => {
                 message: "Mật khẩu cũ không đúng.",
             });
         }
-        
+
         user.password = newPassword;
         await user.save();
 

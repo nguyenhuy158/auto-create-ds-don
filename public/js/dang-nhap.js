@@ -17,7 +17,7 @@ $(() => {
             },
             success: (response) => {
                 Swal.fire(response.message);
-                window.location.href = '/cham-cong'
+                window.location.href = '/cham-cong';
             },
             error: (response) => {
                 Swal.fire(response.responseJSON?.message);

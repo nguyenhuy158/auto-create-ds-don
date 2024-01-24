@@ -26,7 +26,7 @@ router.get("/list", async (req, res) => {
         ngayLam: { $gte: startOfMonth, $lte: endOfMonth },
     });
 
-    
+
     return res.json({
         data: users,
     });

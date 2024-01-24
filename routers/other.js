@@ -17,7 +17,7 @@ router.get("/", (req, res) => {
 });
 
 router.get("/huong-dan-su-dung", (req, res) => {
-    res.render("tutorial");
+    res.render("huong-dan");
 });
 
 router.get("/gioi-thieu", (req, res) => {

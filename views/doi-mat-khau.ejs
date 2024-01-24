@@ -1,97 +1,96 @@
-<!-- views/index.ejs -->
+<!-- views/doi-mat-khau.ejs -->
 
 <!doctype html>
 <html lang="en">
-     <head>
-          <meta charset="UTF-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-          <title>Đổi mật khẩu - Tạo danh sách đơn</title>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Đổi mật khẩu - Tạo danh sách đơn</title>
 
-          <%- include('./partials/head'); -%>
+        <%- include('./partials/head'); -%>
 
-          <style></style>
+        <style></style>
 
-          <style></style>
-     </head>
+        <style></style>
+    </head>
 
-     <body>
-          <!-- nav -->
-          <%- include('./partials/nav'); -%>
-          <!-- Bootstrap Spinner -->
-          <div class="box-spinner">
-                <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none"></div>
-          </div>
+    <body>
+        <!-- nav -->
+        <%- include('./partials/nav'); -%>
+        <!-- Bootstrap Spinner -->
+        <div class="box-spinner">
+            <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none"></div>
+        </div>
 
-          <div class="container mb-3 mt-3">
-                <div class="row">
-                     <h2 class="text-center">Đổi mật khẩu</h2>
+        <div class="container mb-3 mt-3">
+            <div class="row">
+                <h2 class="text-center">Đổi mật khẩu</h2>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <form>
+                        <div class="form-group">
+                            <label for="oldPassword">Mật khẩu cũ:</label>
+                            <input type="password" class="form-control" id="oldPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label for="newPassword">Mật khẩu mới:</label>
+                            <input type="password" class="form-control" id="newPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label for="confirmPassword">Xác nhận mật khẩu:</label>
+                            <input type="password" class="form-control" id="confirmPassword" />
+                        </div>
+
+                        <button type="button" class="btn btn-primary mt-3 doi-mat-khau-btn">Đổi mật khẩu</button>
+                    </form>
                 </div>
+            </div>
+        </div>
 
-                <div class="row">
-                     <div class="col">
-                          <form>
-                                <div class="form-group">
-                                     <label for="oldPassword">Mật khẩu cũ:</label>
-                                     <input type="password" class="form-control" id="oldPassword" />
-                                </div>
-                                <div class="form-group">
-                                     <label for="newPassword">Mật khẩu mới:</label>
-                                     <input type="password" class="form-control" id="newPassword" />
-                                </div>
-                                <div class="form-group">
-                                     <label for="confirmPassword">Xác nhận mật khẩu:</label>
-                                     <input type="password" class="form-control" id="confirmPassword" />
-                                </div>
-                              
-                                <button type="button" class="btn btn-primary mt-3 doi-mat-khau-btn">Đổi mật khẩu</button>
-                          </form>
-                     </div>
-                </div>
-          </div>
+        <!-- footer -->
+        <%- include('./partials/footer'); -%>
 
-          <!-- footer -->
-          <%- include('./partials/footer'); -%>
+        <script defer src="/js/bang-cham-cong.js"></script>
+        <script>
+            $(function () {
+                $('.doi-mat-khau-btn').click(function (e) {
+                    const oldPassword = $('#oldPassword').val()
+                    const newPassword = $('#newPassword').val()
+                    const confirmPassword = $('#confirmPassword').val()
 
-          <script defer src="/js/bang-cham-cong.js"></script>
-          <script>
-                $(function () {
-                    $('.doi-mat-khau-btn').click(function (e) {
-                        const oldPassword = $('#oldPassword').val();
-                        const newPassword = $('#newPassword').val();
-                        const confirmPassword = $('#confirmPassword').val();
+                    if (newPassword != confirmPassword) {
+                        Swal.fire('Mật khẩu mới không khớp.')
+                        return
+                    }
 
+                    const data = {
+                        oldPassword,
+                        newPassword,
+                        confirmPassword,
+                    }
 
-                        if (newPassword != confirmPassword) {
-                            Swal.fire("Mật khẩu mới không khớp.");
-                            return;
-                        }
+                    // console.log(data);
 
-                        const data = {
-                            oldPassword,
-                            newPassword,
-                            confirmPassword
-                        };
-
-                        // console.log(data);
-
-                        $.ajax({
-                            url: "/doi-mat-khau",
-                            type: "POST",
-                            data: data,
-                            success: (response) => {
-                                Swal.fire(response.message);
-                                if (response.success) {
-                                    $('#oldPassword').val('');
-                                    $('#newPassword').val('');
-                                    $('#confirmPassword').val('');
-                                }
-                            },
-                            error: (response) => {
-                                Swal.fire(response.responseJSON?.message);
-                            },
-                        });
+                    $.ajax({
+                        url: '/doi-mat-khau',
+                        type: 'POST',
+                        data: data,
+                        success: (response) => {
+                            Swal.fire(response.message)
+                            if (response.success) {
+                                $('#oldPassword').val('')
+                                $('#newPassword').val('')
+                                $('#confirmPassword').val('')
+                            }
+                        },
+                        error: (response) => {
+                            Swal.fire(response.responseJSON?.message)
+                        },
                     })
                 })
-          </script>
-     </body>
+            })
+        </script>
+    </body>
 </html>
