@@ -18,15 +18,23 @@ const mongoose = require("./database");
 const User = require("./models/user");
 const NgayLam = require("./models/ngay-lam");
 
-const { readArrayFromFile, writeArrayToFile } = require("./utils");
+const {
+    readArrayFromFile,
+    writeArrayToFile,
+    downloadFile
+} = require("./utils");
 const { names } = require("./constants");
 
 const upload = multer({ dest: "uploads/" });
 
-const { removeOldFiles, taoDanhSachCuaMotNgay, taoDanhSachCuaNhieuNgay } = require("./process");
+const {
+    removeOldFiles,
+    taoDanhSachCuaMotNgay,
+    taoDanhSachCuaNhieuNgay
+} = require("./process");
 
 const app = express();
-const port = 3000;
+const { PORT } = require('./constants');
 app.set("view engine", "ejs");
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.json());
@@ -143,67 +151,11 @@ app.post("/", (req, res) => {
  * tải file excel xuống
  * method: POST
  */
-app.post("/download", (req, res) => {
-    try {
-        let aoa = req.body.aoa;
-        // replace null to empty string in aoa array of array
-        aoa = aoa.replace(/null/g, '""');
+app.post("/download", downloadFile);
 
-        // replace empty string to null in aoa array of array
-        aoa = aoa.replace(/""/g, "null");
+app.use(otherRouter);
 
-        // parse aoa to array of array
-        aoa = JSON.parse(aoa);
-
-        // create worksheet
-        const ws = XLSX.utils.aoa_to_sheet(aoa);
-
-        ws["!merges"] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 5 } }];
-        ws["!merges"].push({ s: { r: 1, c: 0 }, e: { r: 1, c: 5 } });
-        ws["!merges"].push({ s: { r: 2, c: 0 }, e: { r: 2, c: 5 } });
-        ws["!merges"].push({ s: { r: 3, c: 0 }, e: { r: 3, c: 5 } });
-        ws["!merges"].push({ s: { r: aoa.length - 1, c: 2 }, e: { r: aoa.length - 1, c: 5 } });
-        ws["!merges"].push({ s: { r: aoa.length - 2, c: 2 }, e: { r: aoa.length - 2, c: 5 } });
-        ws["!merges"].push({ s: { r: aoa.length - 3, c: 2 }, e: { r: aoa.length - 3, c: 5 } });
-        ws["!merges"].push({ s: { r: aoa.length - 4, c: 2 }, e: { r: aoa.length - 4, c: 5 } });
-        ws["!merges"].push({ s: { r: aoa.length - 5, c: 2 }, e: { r: aoa.length - 5, c: 5 } });
-        ws["!merges"].push({ s: { r: aoa.length - 6, c: 0 }, e: { r: aoa.length - 6, c: 2 } });
-
-        for (let index = 5; index < aoa.length - 7; index++) {
-            let item = aoa[index];
-            // console.log(`🚀 item`, item);
-            if (item[1] == undefined && item[2] == undefined && item[3] == undefined) {
-                // console.log(`🚀 🚀 file: app.js:148 🚀 app.post 🚀 item[1] == '' && item[2] == '' && item[3] == ''`, item[1] == '' && item[2] == '' && item[3] == '');
-                // console.log(`🚀 🚀 file: app.js:149 🚀 app.post 🚀 { s: { r: index, c: 0 }, e: { r: index, c: 3 } }`, { s: { r: index, c: 0 }, e: { r: index, c: 3 } });
-                ws["!merges"].push({ s: { r: index, c: 0 }, e: { r: index, c: 3 } });
-            }
-        }
-
-        // create workbook
-        const wb = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(wb, ws, "Table");
-
-        // Send the Excel file as a response
-        const buf = XLSX.write(wb, { bookType: "xlsx", type: "buffer" });
-        res.setHeader("Content-Disposition", "attachment; filename=DS_Don.xlsx");
-        res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
-        res.status(200).end(buf);
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: true, message: "Internal Server Error" });
-    }
-});
-
-app.use("", otherRouter);
-
-app.use("", authRouter);
-app.use((req, res, next) => {
-    if (req.session.user) {
-        res.app.locals.user = req.session.user;
-        return next();
-    }
-    return res.redirect("/");
-});
+app.use(authRouter);
 
 app.use("/cham-cong", chamCongRouter);
 
@@ -213,6 +165,6 @@ app.use(adminRouter);
 
 app.use(errorRouter);
 
-app.listen(port, () => {
-    console.log(`Server is running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`[running] at http://localhost:${PORT}`);
 });

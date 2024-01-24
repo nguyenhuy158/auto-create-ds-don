@@ -111,3 +111,11 @@ exports.dangXuat = async (req, res) => {
     req.app.locals.user = undefined;
     return res.redirect("/");
 };
+
+exports.updateUser = (req, res, next) => {
+    if (req.session.user) {
+        res.app.locals.user = req.session.user;
+        return next();
+    }
+    return res.redirect("/");
+};

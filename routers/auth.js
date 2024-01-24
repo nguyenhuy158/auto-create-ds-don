@@ -15,4 +15,6 @@ router.post('/dang-ky-internship', authController.dangKyInternship);
 
 router.get("/dang-xuat", authController.dangXuat);
 
+router.use(authController.updateUser);
+
 module.exports = router;

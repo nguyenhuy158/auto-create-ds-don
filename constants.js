@@ -1,3 +1,7 @@
+
+// port 
+exports.PORT = 3000;
+
 // loại đơn và người xử lý đơn tương ứng
 exports.requestTypeToPerson = {
     // Ca Phú Phát
