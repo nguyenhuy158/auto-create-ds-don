@@ -1,4 +1,4 @@
-// create router file in nodejs
+
 const router = require("express").Router();
 const User = require("../models/user");
 const authController = require("../controllers/auth");

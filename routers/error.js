@@ -1,12 +1,8 @@
 const router = require("express").Router();
+const errorController = require("../controllers/error");
 
-router.use(function (req, res) {
-    res.status(404).render("404");
-});
+router.use(errorController.error404);
 
-router.use(function (err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).render("500");
-});
+router.use(errorController.error500);
 
 module.exports = router;

@@ -1,8 +1,12 @@
 let internshipTable;
+
 $(() => {
     internshipTable = $("#internship-table").DataTable({
         ajax: "/internship/list",
         rowId: "_id",
+        columnDefs: [
+            { className: "dt-center", targets: "_all" }
+        ],
         buttons: [
             {
                 text: `<i class="bi bi-plus"></i>`,
@@ -44,6 +48,10 @@ $(() => {
             infoFiltered: "(filtered from _MAX_ total entries)",
             lengthMenu: "Hiển thị _MENU_ người",
             search: "Tìm kiếm",
+            paginate: {
+                previous: "Trước",
+                next: "Sau"
+            }
         },
         columns: [
             {
@@ -77,6 +85,8 @@ $(() => {
                     let editBtn = `<button class="btn btn-outline-primary btn-sm cap-nhat-tai-khoang-btn" 
                                     data-user-id="${row._id}"
                                     data-bs-toggle="modal" 
+                                    data-bs-toggle="tooltip"
+                                    data-bs-title="Chọn tháng để lấy danh sách"
                                     data-bs-target="#cap-nhat-tai-khoang-internship-modal">
                           <i class="bi bi-pencil-square"></i>
                       </button>`;

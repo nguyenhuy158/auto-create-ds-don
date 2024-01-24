@@ -19,15 +19,41 @@
                 <form id="register-form" method="post">
                     <div class="form-group mb-3">
                         <label for="username">Tài khoản:</label>
-                        <input type="text" class="form-control" id="username" name="username" required />
+                        <input
+                            data-bs-toggle="tooltip"
+                            data-bs-title="Dùng để đăng nhập"
+                            type="text"
+                            class="form-control"
+                            id="username"
+                            name="username"
+                            required
+                        />
                     </div>
+
                     <div class="form-group mb-3">
-                        <label for="password">Tên:</label>
-                        <input type="text" class="form-control" id="fullName" name="fullName" required />
+                        <label for="fullName">Tên:</label>
+                        <input
+                            data-bs-toggle="tooltip"
+                            data-bs-title="Tên đầy đủ"
+                            type="text"
+                            class="form-control"
+                            id="fullName"
+                            name="fullName"
+                            required
+                        />
                     </div>
+
                     <div class="form-group mb-3">
                         <label for="password">Mật khẩu:</label>
-                        <input type="password" class="form-control" id="password" name="password" required />
+                        <input
+                            data-bs-toggle="tooltip"
+                            data-bs-title="Mật khẩu đăng nhập (mặc định giống tài khoản)"
+                            type="password"
+                            class="form-control"
+                            id="password"
+                            name="password"
+                            required
+                        />
                     </div>
                 </form>
             </div>

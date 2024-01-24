@@ -1,4 +1,3 @@
-// create router file in nodejs
 
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
