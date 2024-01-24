@@ -32,7 +32,7 @@
             <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none"></div>
         </div>
 
-        <div class="container mb-3 mt-3">
+        <div class="container-fluid mb-3 mt-3">
             <div class="row">
                 <h2 class="text-center">Bảng chấm công</h2>
             </div>
@@ -42,14 +42,30 @@
                 <div class="row">
                     <!-- ô để chọn tháng -->
                     <div class="col-3">
-                        <input
+                        <!-- <input
                             data-bs-toggle="tooltip"
                             data-bs-title="Chọn tháng để lấy danh sách"
                             type="text"
                             class="form-control month"
                             type="text"
                             name="month"
-                        />
+                        /> -->
+                        <div class="row">
+                            <div class="col">
+                                <select class="form-select" name="bao-cao-thang" id="thangSelect"></select>
+                            </div>
+                            <div class="col">
+                                <select class="form-select" name="bao-cao-nam" id="namSelect"></select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col">
+                                <p class="my-2">
+                                    Tháng hiện tại:
+                                    <span id="thang-hien-tai"></span>
+                                </p>
+                            </div>
+                        </div>
                     </div>
 
                     <!-- các nút hành động -->
@@ -87,44 +103,78 @@
         <%- include('./partials/footer'); -%>
 
         <script defer src="/js/bang-cham-cong.js"></script>
+
+        <!-- Tạo dữ liệu select tháng và năm -->
         <script>
-            $(function () {
-                $('input[name="month"]').daterangepicker(
-                    {
-                        singleDatePicker: true,
-                        showDropdowns: true,
-                        locale: {
-                            format: 'DD/MM/YYYY',
-                            separator: ' - ',
-                            applyLabel: 'Chọn',
-                            cancelLabel: 'Hủy',
-                            fromLabel: 'Từ',
-                            toLabel: 'đến',
-                            customRangeLabel: 'Tùy chỉnh',
-                            weekLabel: 'W',
-                            daysOfWeek: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-                            monthNames: [
-                                'Tháng 1',
-                                'Tháng 2',
-                                'Tháng 3',
-                                'Tháng 4',
-                                'Tháng 5',
-                                'Tháng 6',
-                                'Tháng 7',
-                                'Tháng 8',
-                                'Tháng 9',
-                                'Tháng 10',
-                                'Tháng 11',
-                                'Tháng 12',
-                            ],
-                            firstDay: 1,
-                        },
-                    },
-                    async function (start, end, label) {
-                        // console.log(start.format('DD/MM/YYYY'))
-                        await taiBangChamCongToGrid(start.format('DD/MM/YYYY'))
-                    },
-                )
+            // Function to generate options for months
+            function taoThangTuDong() {
+                const startMonth = 1 // Start from January
+
+                // Get the selected year
+                const selectedYear = parseInt(document.getElementById('namSelect').value, 10)
+
+                // Calculate endMonth based on the selected year
+                const endMonth = selectedYear === new Date().getFullYear() ? new Date().getMonth() + 1 : 12
+
+                const select = document.getElementById('thangSelect')
+                select.innerHTML = '' // Clear existing options
+
+                for (let i = startMonth; i <= endMonth; i++) {
+                    const option = document.createElement('option')
+                    option.value = i
+                    option.text = 'Tháng ' + i
+                    select.appendChild(option)
+                }
+            }
+
+            // Function to generate options for years
+            function taoNamTuDong() {
+                const startYear = 2020
+                const currentYear = new Date().getFullYear()
+
+                const select = document.getElementById('namSelect')
+                for (let i = currentYear; i >= startYear; i--) {
+                    const option = document.createElement('option')
+                    option.value = i
+                    option.text = 'Năm ' + i
+                    select.appendChild(option)
+                }
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                // Generate options when the page loads
+                taoNamTuDong()
+                taoThangTuDong()
+
+                // Attach event listener to year select to update month options
+                document.getElementById('namSelect').addEventListener('change', taoThangTuDong)
+            })
+        </script>
+
+        <!-- Tự động load dữ liệu của tháng hiện tại -->
+        <script>
+
+            // hàm tạo ra ngày đầu tiên của tháng dữ liệu từ select
+            function taoNgayTuSelect() {
+                const thangSelect = document.getElementById('thangSelect')
+                const namSelect = document.getElementById('namSelect')
+                const thangHienTai = document.getElementById('thang-hien-tai')
+
+                const thang = thangSelect.value
+                const nam = namSelect.value
+
+                const date = moment(`01/${thang}/${nam}`, 'DD/MM/YYYY')
+
+                thangHienTai.innerHTML = date.format('MM/YYYY')
+
+                return date.format('DD/MM/YYYY')
+            }
+
+            // hàm tải dữ liệu từ server về tự động
+            document.addEventListener('DOMContentLoaded', async function () {
+                const date = taoNgayTuSelect()
+
+                await taiBangChamCongToGrid(date)
             })
         </script>
     </body>

@@ -20,23 +20,30 @@
             <div id="spinner" class="spinner-border text-primary mt-3" role="status" style="display: none"></div>
         </div>
 
-        <div class="container mb-3 mt-3">
+        <div class="container-fluid mb-3 mt-3">
             <div class="row">
                 <h1 class="text-center">Chấm công</h1>
             </div>
 
             <div class="row">
-                <div class="col-4">
-                    <div class="row">
-                        <div class="col">
+                <!-- Cột tự chấm công -->
+                <div class="col-12 col-md-2">
+                    <div class="row mb-3">
+                        <div class="col d-flex align-items-center">
+                            <button class="btn btn-outline-primary btn-sm me-2">
+                                <i class="bi bi-arrow-left"></i>
+                            </button>
                             <input
                                 data-bs-toggle="tooltip"
                                 data-bs-title="Chọn ngày làm (không chọn T7&CN)"
-                                class="form-control mb-3 ngay-lam-input"
+                                class="form-control ngay-lam-input me-2"
                                 type="text"
                                 name="daterange"
                                 value="01/01/2018 - 01/15/2018"
                             />
+                            <button class="btn btn-outline-primary btn-sm">
+                                <i class="bi bi-arrow-right"></i>
+                            </button>
                         </div>
                     </div>
 
@@ -104,13 +111,14 @@
                     </div>
                 </div>
 
-                <div class="col-8">
+                <!-- Cột bảng dữ liệu của tháng -->
+                <div class="col-12 col-md-10">
                     <div id="calendar"></div>
                 </div>
             </div>
         </div>
 
-        <!-- footer -->
+        <!-- các modal và footer -->
         <%- include('./partials/update-ngay-cong-modal'); -%>
         <%- include('./partials/footer'); -%>
 

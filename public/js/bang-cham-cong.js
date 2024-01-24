@@ -30,7 +30,9 @@ $(() => {
 
     // tải dữ liệu chấm công về từ server
     $("#tai-du-lieu-btn").on("click", async function () {
-        await taiBangChamCongToGrid($('.month').val());
+        const date = taoNgayTuSelect();
+
+        await taiBangChamCongToGrid(date);
     });
 
 });

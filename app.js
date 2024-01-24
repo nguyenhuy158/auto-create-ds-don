@@ -11,6 +11,8 @@ const chamCongRouter = require("./routers/cham-cong");
 const internshipRouter = require("./routers/internship");
 const authRouter = require("./routers/auth");
 const adminRouter = require("./routers/admin");
+const otherRouter = require("./routers/other");
+const errorRouter = require("./routers/error");
 const mongoose = require("./database");
 
 const User = require("./models/user");
@@ -38,6 +40,10 @@ app.use(
     }),
 );
 
+/**
+ * tải file excel lên
+ * method: POST
+ */
 app.post("/upload", upload.single("file"), (req, res) => {
     try {
         removeOldFiles();
@@ -76,6 +82,11 @@ app.post("/upload", upload.single("file"), (req, res) => {
     }
 });
 
+/**
+ * trang chủ
+ * chỉ hiển thị bảng rỗng
+ * method: GET
+ */
 app.get("/", (req, res) => {
     // const { processedData, dateSent, dateReceive, totalDon } = taoDanhSach();
     processedData = {};
@@ -85,6 +96,11 @@ app.get("/", (req, res) => {
     res.render("table", { data: processedData, dateSent, dateReceive, totalDon });
 });
 
+/**
+ * trang chủ luôn
+ * hiển thị bảng đã được xử lý
+ * method: POST
+ */
 app.post("/", (req, res) => {
     try {
         const { filename } = req.body;
@@ -123,6 +139,10 @@ app.post("/", (req, res) => {
     }
 });
 
+/**
+ * tải file excel xuống
+ * method: POST
+ */
 app.post("/download", (req, res) => {
     try {
         let aoa = req.body.aoa;
@@ -174,22 +194,7 @@ app.post("/download", (req, res) => {
     }
 });
 
-app.get("/huong-dan-su-dung", (req, res) => {
-    res.render("tutorial");
-});
-
-app.get("/about", (req, res) => {
-    res.render("about");
-});
-
-app.get("/lich-su", async (req, res) => {
-    let history = await readArrayFromFile();
-    res.render("history", { history });
-});
-
-app.get("/version", async (req, res) => {
-    res.render("version");
-});
+app.use("", otherRouter);
 
 app.use("", authRouter);
 app.use((req, res, next) => {
@@ -206,14 +211,7 @@ app.use("/internship", internshipRouter);
 
 app.use(adminRouter);
 
-app.use(function (req, res) {
-    res.status(404).render("404");
-});
-
-app.use(function (err, req, res, next) {
-    console.error(err.stack);
-    res.status(500).render("500");
-});
+app.use(errorRouter);
 
 app.listen(port, () => {
     console.log(`Server is running at http://localhost:${port}`);
