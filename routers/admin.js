@@ -10,5 +10,9 @@ router.post("/doi-mat-khau", adminController.doiMatKhau);
 
 router.get("/doi-mat-khau", adminController.hienThiTrangDoiMatKhau);
 
+router.post("/doi-thong-tin-ca-nhan", adminController.doiThongTinCaNhan);
+
+router.get("/doi-thong-tin-ca-nhan", adminController.hienThiTrangDoiThongTinCaNhan);
+
 
 module.exports = router;

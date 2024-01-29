@@ -82,6 +82,7 @@ $(() => {
             {
                 data: null,
                 render: function (data, type, row) {
+
                     let editBtn = `<button class="btn btn-outline-primary btn-sm cap-nhat-tai-khoang-btn" 
                                     data-user-id="${row._id}"
                                     data-bs-toggle="modal" 
@@ -106,6 +107,12 @@ $(() => {
                                     data-bs-target="#khoi-phuc-mat-khau-tai-khoang-internship-modal">
                           <i class="bi bi-key"></i>
                       </button>`;
+
+                    // ẩn nút xóa tài khoản nếu là admin
+                    if (data.role === "admin") {
+                        deleteBtn = "";
+                    };
+
                     return `
                             ${editBtn}
                             ${deleteBtn}

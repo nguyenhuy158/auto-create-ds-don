@@ -46,3 +46,8 @@
 ---
 
 Deploy the application: [Deploy Link](https://api.render.com/deploy/srv-clbhlvofvntc73eatf2g?key=Dxhlm3rXgNs)
+
+
+## Documentation
+
+[Google Doc](https://docs.google.com/document/d/1OBXevSk6701DcC80UplR8MZp2PXEtIxQmz_-JG80kkI/edit)

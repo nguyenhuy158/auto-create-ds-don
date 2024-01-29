@@ -5,7 +5,7 @@
     <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Đổi mật khẩu - Tạo danh sách đơn</title>
+        <title>Đổi thông tin - Tạo danh sách đơn</title>
 
         <%- include('./partials/head'); -%>
 
@@ -24,27 +24,28 @@
 
         <div class="container mb-3 mt-3">
             <div class="row">
-                <h2 class="text-center">Đổi mật khẩu</h2>
+                <h2 class="text-center">Đổi họ và tên</h2>
             </div>
 
             <div class="row">
                 <div class="col">
                     <form>
                         <div class="form-group">
-                            <label for="oldPassword">Mật khẩu cũ:</label>
+                            <label for="oldPassword">Tên mới:</label>
                             <input type="password" class="form-control" id="oldPassword" />
                         </div>
-                        <div class="form-group">
+
+                        <!-- <div class="form-group">
                             <label for="newPassword">Mật khẩu mới:</label>
                             <input type="password" class="form-control" id="newPassword" />
                         </div>
                         <div class="form-group">
                             <label for="confirmPassword">Xác nhận mật khẩu:</label>
                             <input type="password" class="form-control" id="confirmPassword" />
-                        </div>
+                        </div> -->
 
                         <button type="button" class="btn btn-outline-primary mt-3 doi-mat-khau-btn">
-                            Đổi mật khẩu
+                            Cập nhật thông tin
                         </button>
                     </form>
                 </div>
