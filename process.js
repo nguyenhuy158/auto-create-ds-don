@@ -82,6 +82,10 @@ function createArrayOfObjects(sheet) {
 
 function xoaCacDonNhuMienTaVaCapBangDiem(data, removeTypes) {
     const result = data.filter((obj) => {
+        // fix cho trường hợp đơn miễn mos 2021
+        if (obj["Loại đơn (Tên đơn)"] === undefined) {
+            obj["Loại đơn (Tên đơn)"] = obj["Loại đơn"];
+        }
         const co_nam_trong_ds_don_bi_xoa_hay_khong = removeTypes.includes(obj["Loại đơn (Tên đơn)"]);
         let keep = !co_nam_trong_ds_don_bi_xoa_hay_khong;
         if (obj["Loại đơn (Tên đơn)"] === removeTypes[0]) {
@@ -264,9 +268,9 @@ exports.taoDanhSachCuaNhieuNgay = function taoDanhSachCuaNhieuNgay(
 
     processedData.forEach((obj) => locRaCacCotCanThiet(obj, nguoinhan));
 
-    processedData = themNguoiXuLyDon(processedData, requestTypeToPerson);
-
     processedData = xoaCacDonNhuMienTaVaCapBangDiemV2(processedData, cacLoaiDonSeBiXoa);
+
+    processedData = themNguoiXuLyDon(processedData, requestTypeToPerson);
 
     processedData.sort((a, b) => {
         // First, sort by 'Người giải quyết đơn'

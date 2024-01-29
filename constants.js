@@ -10,6 +10,7 @@ exports.requestTypeToPerson = {
     "Đơn xin gỡ điểm F": "Ca Phú Phát",
     "Chuyển giờ thi": "Ca Phú Phát",
     "Đơn xin gỡ cấm thi": "Ca Phú Phát",
+    "Hoãn thi MOS": "Ca Phú Phát",
 
     // Ngô Thị Hoàng Phương
     "Cấp bản sao bằng tốt nghiệp": "Ngô Thị Hoàng Phương",
@@ -41,6 +42,8 @@ exports.requestTypeToPerson = {
 
     // Nguyễn Thị Kim Tuyền
     "Chuyển nhóm môn học": "Nguyễn Thủy Kim Tuyền",
+    "Đơn đăng ký mở lớp học": "Nguyễn Thủy Kim Tuyền",
+    "Đăng ký môn học vào lớp đầy": "Nguyễn Thủy Kim Tuyền",
     "Hủy môn học trong KHHT": "Nguyễn Thủy Kim Tuyền",
     "Xem xét kết quả ĐKMH": "Nguyễn Thủy Kim Tuyền",
     "Đăng ký môn học trùng thời khóa biểu": "Nguyễn Thủy Kim Tuyền",
@@ -57,11 +60,13 @@ exports.requestTypeToPerson = {
 
     // Phùng Văn Trúc
     "Xác nhận liên quan đến tuyển sinh": "Phùng Văn Trúc",
+    "Chuyển giờ thi MOS": "Phùng Văn Trúc",
 
     // Phạm Thị Kim Điệp
     "Đăng ký tiếng Anh bổ sung": "Phạm Thị Kim Điệp",
     "Chuyển nhóm môn tiếng Anh": "Phạm Thị Kim Điệp",
     "Hủy lịch học Tiếng Anh": "Phạm Thị Kim Điệp",
+    "Đăng ký thi đánh giá năng lực tiếng Anh": "Phạm Thị Kim Điệp",
 
     // Nguyễn Thanh Song Trúc
     "Xác nhận tình hình nợ môn học": "Nguyễn Thanh Song Trúc",
@@ -105,6 +110,9 @@ exports.cacLoaiDonSeBiXoa = [
     "Đơn xin cấp bảng điểm",
     "Gia hạn đóng học phí",
     "Cấp bản sao bằng tốt nghiệp",
+
+    "Đơn miễn chứng chỉ MOS (2021)",
+    "Chuyển môn bơi lội sang giáo dục thể chất 1",
 ];
 
 // tên người dùng ngẫu nhiên để lưu lại lịch sử
