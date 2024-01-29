@@ -25,7 +25,7 @@ $(() => {
     $("#luu-bang-cham-cong-btn").on("click", function () {
         var new_wb = xtos(grid.getData());
 
-        XLSX.writeFile(new_wb, 'bang-cham-cong.xlsx', {});
+        XLSX.writeFile(new_wb, `bang-cham-cong-${moment(taoNgayTuSelect(), 'DD_MM_YYYY').format('MM-YYYY')}.xlsx`, {});
     });
 
     // tải dữ liệu chấm công về từ server
