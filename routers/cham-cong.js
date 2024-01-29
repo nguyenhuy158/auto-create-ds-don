@@ -439,7 +439,7 @@ router.get("/events/excel", async (req, res) => {
         let rowHeader = aoa[0];
         rowHeader.forEach((item, column) => {
             let day = item;
-            let currentDate = moment().date(day);
+            let currentDate = moment(time, 'DD/MM/YYYY').date(day);
 
             if (currentDate.day() == 0) {
                 // console.log(`🚀 currentDate`, currentDate.format('DD/MM/YYYY'));
