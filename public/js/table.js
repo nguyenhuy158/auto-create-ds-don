@@ -85,9 +85,9 @@ $(() => {
             } else {
                 tr.html(`
                     <td class="text-center">${row["STT"]}</td>
-                    <td class="text-center">${row["Số BN"]}</td>
-                    <td class="text-center">${row["MSSV"]}</td>
-                    <td class="text-center">${row["Họ và tên"]}</td>
+                    <td class="text-center">${row["Số BN"] || row["Mã số đơn"]}</td>
+                    <td class="text-center">${row["MSSV"] || row["Mã số sinh viên"]}</td>
+                    <td class="text-center">${row["Họ và tên"] || row["Họ tên"]}</td>
                     <td class="text-center">${row["Người giải quyết đơn"]}</td>
                     <td class="text-center">${row["Ghi chú"] || ""}</td>
                     // ${nguoinhan ? `<td class="text-center">${row["Người tiếp nhận"] || ""}</td>` : ""}
