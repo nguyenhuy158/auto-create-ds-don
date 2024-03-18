@@ -66,6 +66,19 @@ router.post("", async (req, res) => {
             });
         }
 
+        if (req.session.user.role !== "admin") {
+            // Dữ liệu chấm công của tuần trước sẽ được khóa vào 17h00 thứ 2 tuần kế tiếp
+            let currentDay = moment();
+            const nextMonday = currentDay.clone().startOf('week').add(1, 'day');
+            const lockTime = moment(nextMonday).set('hour', 17).set('minute', 0); // Đặt thời gian khóa là 17:00
+
+            if (ngayLam.isBefore(currentDay) && currentDay.isAfter(lockTime)) {
+                return res.status(400).json({
+                    message: `Dữ liệu chấm công của tuần trước đã bị khóa vào ${lockTime.format('DD/MM/YYYY HH:mm')}.`,
+                });
+            }
+        }
+
         const existNgayLamModel = await NgayLam.findOne({ ngayLam: ngayLam.toDate(), nguoiLam });
         if (existNgayLamModel) {
             return res.status(400).json({
