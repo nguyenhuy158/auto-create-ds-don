@@ -28,7 +28,7 @@ exports.dangNhapPost = async (req, res) => {
     }
 
     return res.status(400).json({
-        message: "Sai thông gì nào đó gòiii :((",
+        message: "Mật khẩu không đúng rồi liên hệ anh/chị để xin cấp lại nha nha :((",
     });
 };
 
