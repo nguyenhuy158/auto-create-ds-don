@@ -594,6 +594,18 @@ router.get("/events/excel", async (req, res) => {
 
         // update tong dong cuoi
 
+
+        // xóa "x" và "0" chỉ giữ lại số 1 cho buổi có làm
+        for (let i = 0; i < aoa.length; i++) {
+            const row = aoa[i];
+            for (let j = 0; j < row.length; j++) {
+                const cell = row[j];
+                if (cell == "x" || cell == 0) {
+                    aoa[i][j] = "";
+                }
+            }
+        }
+
         // Create Excel workbook and sheet
         const ws = XLSX.utils.aoa_to_sheet(aoa);
         const wb = XLSX.utils.book_new();
