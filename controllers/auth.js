@@ -113,9 +113,14 @@ exports.dangXuat = async (req, res) => {
 };
 
 exports.updateUser = (req, res, next) => {
+    // console.log("116:req.session.user: ", req.session.user);
+    // console.log("116:res.app.locals.user: ", res.app.locals.user);
     if (req.session.user) {
         res.app.locals.user = req.session.user;
         return next();
+    } else {
+        res.app.locals.user = undefined;
+        // return next();
+        return res.redirect("/");
     }
-    return res.redirect("/");
 };

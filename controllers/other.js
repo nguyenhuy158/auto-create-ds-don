@@ -12,6 +12,12 @@ exports.getTrangChu = (req, res) => {
     dateSent = "";
     dateReceive = "";
     totalDon = "";
+
+    // fix error app.local store data
+    if (!req.session.user) {
+        res.app.locals.user = undefined;
+    }
+
     res.render("table", { data: processedData, dateSent, dateReceive, totalDon });
 };
 
