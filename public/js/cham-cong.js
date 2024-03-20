@@ -1,7 +1,7 @@
 let calendar;
 
 $(() => {
-    // Initialize FullCalendar
+    // lấy calendar theo id và khởi tạo
     const calendarEl = document.getElementById("calendar");
     calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: "dayGridMonth",
@@ -14,9 +14,23 @@ $(() => {
         },
         headerToolbar: {
             left: "prev,next today",
-            center: "title",
-            right: "dayGridMonth,timeGridWeek,timeGridDay",
+            center: "",
+            right: "title",
+            // right: "dayGridMonth,timeGridWeek,timeGridDay",
         },
+        buttonText: {
+            today: 'hôm nay',
+            month: 'tháng',
+            week: 'tuần',
+            day: 'ngày',
+            list: 'danh sách'
+        },
+        buttonIcons: {
+            prev: 'chevrons-left',
+            next: 'chevrons-right',
+            prevYear: 'chevrons-left', // double chevron
+            nextYear: 'chevrons-right' // double chevron
+        },                
         eventSources: [
             {
                 url: "/cham-cong/events",
