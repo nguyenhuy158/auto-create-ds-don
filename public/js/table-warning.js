@@ -8,12 +8,14 @@ $(() => {
         localStorage.setItem("access-time", currentTime);
 
         Swal.fire({
-            icon: "info",
+            // icon: "info",
             title: "Nhớ nhe mọi người!",
             timer: 5000,
             timerProgressBar: true,
+            imageUrl: "images/piggy-mengmeng/sticker_10.webp",
+            imageHeight: 150,
             text: "Mọi người nhớ check lại danh sách trước khi in nha nha nha!",
-            footer: '<a target="_blank" href="https://www.facebook.com/nguyenhuy158">Nếu có lỗi nhớ báo cho huy với nhoa?</a>'
+            // footer: '<a target="_blank" href="https://www.facebook.com/nguyenhuy158">Nếu có lỗi nhớ báo cho huy với nhoa?</a>'
         }).then((result) => {
             Swal.fire({
                 title: "Lần đầu truy cập!",
@@ -23,7 +25,7 @@ $(() => {
                 imageUrl: "images/piggy-mengmeng/sticker_14.webp",
                 html: "Nếu lần đầu mọi người truy cập thì nhớ xem hướng dẫn ở đây ha ha!" +
                     `<br><a target="_blank" href="/huong-dan-su-dung">Click đây noà</a>`,
-                footer: '<a target="_blank" href="https://www.facebook.com/nguyenhuy158">Nếu có lỗi nhớ báo cho huy với nhoa?</a>'
+                // footer: '<a target="_blank" href="https://www.facebook.com/nguyenhuy158">Nếu có lỗi nhớ báo cho huy với nhoa?</a>'
             });
         });
 

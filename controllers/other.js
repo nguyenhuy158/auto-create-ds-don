@@ -1,5 +1,6 @@
 
 const session = require("express-session");
+const { readArrayFromFile } = require("../utils");
 
 exports.useSession = session({
     secret: "E0001",

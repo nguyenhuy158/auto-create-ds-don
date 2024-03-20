@@ -1,7 +1,5 @@
 const session = require("express-session");
 const router = require("express").Router();
-const { readArrayFromFile } = require("../utils");
-
 
 const otherController = require("../controllers/other");
 

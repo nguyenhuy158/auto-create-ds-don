@@ -13,7 +13,7 @@ exports.dangNhapPost = async (req, res) => {
 
     if (!user) {
         return res.status(400).json({
-            message: "Không tìm thấy tài khoản rồi :((",
+            message: "Không tìm thấy tài khoản",
         });
     }
 
@@ -23,12 +23,12 @@ exports.dangNhapPost = async (req, res) => {
         req.session.user = user;
 
         return res.status(200).json({
-            message: "Đăng nhập thành công :)",
+            message: "Đăng nhập thành công",
         });
     }
 
     return res.status(400).json({
-        message: "Mật khẩu không đúng rồi liên hệ anh/chị để xin cấp lại nha nha :((",
+        message: "Mật khẩu không đúng liên hệ anh/chị để xin cấp lại nha",
     });
 };
 
@@ -49,7 +49,7 @@ exports.dangKyPost = async (req, res) => {
 
         if (existingUser) {
             return res.status(400).json({
-                message: "Tài khoản đã tồn tại rồi :((",
+                message: "Tài khoản đã tồn tại" + username,
             });
         }
 
@@ -58,7 +58,7 @@ exports.dangKyPost = async (req, res) => {
         await newUser.save();
 
         return res.status(200).json({
-            message: "Tạo tài khoản thành công :))",
+            message: "Tạo tài khoản thành công",
         });
     } catch (error) {
         console.error(error);
@@ -83,7 +83,7 @@ exports.dangKyInternship = async (req, res) => {
 
         if (existingUser) {
             return res.status(400).json({
-                message: "Tài khoản đã tồn tại rồi :((",
+                message: "Tài khoản đã tồn tại rồi" + username,
             });
         }
 
@@ -96,7 +96,7 @@ exports.dangKyInternship = async (req, res) => {
         await newUser.save();
 
         return res.status(200).json({
-            message: "Tạo tài khoản thành công :))",
+            message: "Tạo tài khoản thành công",
         });
     } catch (error) {
         console.error(error);
